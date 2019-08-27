@@ -1,0 +1,37 @@
+﻿@model IEnumerable<FreelanceService.DAL.Entities.User>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<table>
+    <tr>
+        <td>Id</td>
+        <td>Email</td>
+        <td>PassHash</td>
+        <td>FirstName</td>
+        <td>LastName</td>
+        <td>Phone</td>
+        <td>DynamicSalt</td>
+        <td>DateRegistration</td>
+        <td>Image</td>
+        <td>Role</td>
+        <td>Email</td>
+    </tr>
+    @foreach (var not in Model)
+    {
+<tr>
+    <td>@not.Id</td>
+    <td>@not.Email</td>
+    <td>@not.PassHash</td>
+    <td>@not.FirstName</td>
+    <td>@not.LastName</td>
+    <td>@not.Phone</td>
+    <td>@not.DynamicSalt</td>
+    <td>@not.DateRegistration</td>
+    <td>@not.Image</td>
+    <td>@not.Role</td>
+    <td>@not.Email</td>
+
+</tr>
+    }
+</table>

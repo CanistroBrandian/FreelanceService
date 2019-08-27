@@ -1,0 +1,90 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService\\FreelanceService.Web.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj",
+        "projectName": "FreelanceService.DAL",
+        "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj"
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService\\FreelanceService.Web.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService\\FreelanceService.Web.csproj",
+        "projectName": "FreelanceService.Web",
+        "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService\\FreelanceService.Web.csproj",
+        "packagesPath": "C:\\Users\\brovk\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\brovk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj": {
+                "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.AspNetCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.AspNetCore.Razor.Design": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
