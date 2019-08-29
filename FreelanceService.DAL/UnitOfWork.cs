@@ -1,79 +1,50 @@
-﻿using FreelanceService.DAL.Repositories;
-using System;
+﻿using FreelanceService.DAL.Interfaces;
 using System.Data;
-using System.Data.SqlClient;
 
 namespace FreelanceService.DAL
 {
-    public class UnitOfWork : IUnitOfWork
+    public sealed class UnitOfWork : IUnitOfWork
     {
-        private IDbConnection _connection;
-        private IDbTransaction _transaction;
-        private IUserRepository _userRepository;
-        private bool _disposed;
+        public UnitOfWork(IDbConnection connection)
+        {
+            _connection = connection;
+        }
 
-        public UnitOfWork(string connectionString)
+        IDbConnection _connection = null;
+        IDbTransaction _transaction = null;
+
+        IDbConnection IUnitOfWork.Connection
         {
-            _connection = new SqlConnection(connectionString);
-            _connection.Open();
-      //      _transaction = _connection.BeginTransaction();
+            get { return _connection; }
         }
-        public IUserRepository UserRepository
+        IDbTransaction IUnitOfWork.Transaction
         {
-            get { return _userRepository ?? (_userRepository = new UserRepository(_connection)); }
+            get { return _transaction; }
         }
+
+        public void Begin()
+        {
+            _transaction = _connection.BeginTransaction();
+        }
+
         public void Commit()
         {
-            try
-            {
-                _transaction.Commit();
-            }
-            catch
-            {
-                _transaction.Rollback();
-                throw;
-            }
-            finally
-            {
-                _transaction.Dispose();
-                _transaction = _connection.BeginTransaction();
-                resetRepositories();
-            }
+            _transaction.Commit();
+            Dispose();
         }
-        private void resetRepositories()
+
+        public void Rollback()
         {
-            _userRepository = null;
+            _transaction.Rollback();
+            Dispose();
         }
 
         public void Dispose()
         {
-            dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    if (_transaction != null)
-                    {
-                        _transaction.Dispose();
-                        _transaction = null;
-                    }
-                    if (_connection != null)
-                    {
-                        _connection.Dispose();
-                        _connection = null;
-                    }
-                }
-                _disposed = true;
-            }
-        }
-        ~UnitOfWork()
-        {
-            dispose(false);
+            if (_transaction != null)
+                _transaction.Dispose();
+            _transaction = null;
         }
     }
+
 }

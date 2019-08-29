@@ -1,25 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using FreelanceService.DAL;
+using FreelanceService.DAL.Interfaces;
 using FreelanceService.Models;
-using FreelanceService.DAL.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace FreelanceService.Controllers
 {
     public class HomeController : Controller
     {
 
-        IUserRepository repo;
-        public HomeController(IUserRepository r)
+        IUserRepository _repo;
+        IUnitOfWork _uow;
+       
+        public HomeController(IUserRepository repo, IUnitOfWork uow)
         {
-            repo = r;
+            _repo = repo;
+            _uow = uow;
+
         }
         public IActionResult Index()
         {
-            return View(repo.GetAll());
+            using (DalSession dalSession = new DalSession())
+            {
+                UnitOfWork unitOfWork = dalSession.UnitOfWork;
+                unitOfWork.Begin();
+                try
+                {
+                    unitOfWork.Commit();
+                    return View(_repo.GetAll());
+                }
+                catch
+                {
+                    unitOfWork.Rollback();
+                    throw;
+                }
+            }
+            
         }
 
         public IActionResult Privacy()

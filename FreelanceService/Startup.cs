@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using FreelanceService.DAL;
+using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +29,7 @@ namespace FreelanceService
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionStr = Configuration.GetConnectionString("DefaultConnection");
-            SqlConnection connection = new SqlConnection(connectionStr);
+           SqlConnection connection = new SqlConnection(connectionStr);
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -35,8 +37,10 @@ namespace FreelanceService
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddTransient<IUserRepository, UserRepository>(provider => new UserRepository(connection));
-          //  services.AddTransient<IUserRepository, UserRepository>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connection));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
         }

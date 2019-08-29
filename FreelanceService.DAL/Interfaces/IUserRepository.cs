@@ -1,7 +1,7 @@
 ﻿using FreelanceService.DAL.Entities;
 using System.Collections.Generic;
 
-namespace FreelanceService.DAL.Repositories
+namespace FreelanceService.DAL.Interfaces
 {
     public interface IUserRepository
     {
