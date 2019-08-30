@@ -20,21 +20,19 @@ namespace FreelanceService.Controllers
         }
         public IActionResult Index()
         {
-            using (DalSession dalSession = new DalSession())
-            {
-                UnitOfWork unitOfWork = dalSession.UnitOfWork;
-                unitOfWork.Begin();
+           
+                _uow.Begin();
                 try
                 {
-                    unitOfWork.Commit();
+                _uow.Commit();
                     return View(_repo.GetAll());
                 }
                 catch
                 {
-                    unitOfWork.Rollback();
+                _uow.Rollback();
                     throw;
                 }
-            }
+            
             
         }
 

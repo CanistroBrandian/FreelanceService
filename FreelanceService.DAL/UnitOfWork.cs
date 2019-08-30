@@ -24,6 +24,7 @@ namespace FreelanceService.DAL
 
         public void Begin()
         {
+            _connection.Open();
             _transaction = _connection.BeginTransaction();
         }
 
@@ -44,6 +45,7 @@ namespace FreelanceService.DAL
             if (_transaction != null)
                 _transaction.Dispose();
             _transaction = null;
+            _connection.Close();
         }
     }
 
