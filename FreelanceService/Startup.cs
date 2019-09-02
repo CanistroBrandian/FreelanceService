@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
-using FreelanceService.DAL;
+﻿using FreelanceService.DAL.Concrate;
 using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Data.SqlClient;
 
 namespace FreelanceService
 {
@@ -39,7 +34,10 @@ namespace FreelanceService
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connection));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory<SqlConnection>>(provider => new UnitOfWorkFactory<SqlConnection>(connectionStr));
+
+            services.AddScoped<IDbContext, DbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -64,7 +62,7 @@ namespace FreelanceService
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller}/{action}/{id?}");
             });
         }
     }

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 
 namespace FreelanceService.DAL.Interfaces
 {
-    public interface IUnitOfWork:IDisposable
+    public interface IUnitOfWork 
     {
-        IDbConnection Connection { get; }
         IDbTransaction Transaction { get; }
-        void Begin();
         void Commit();
         void Rollback();
     }

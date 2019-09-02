@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FreelanceService.DAL.Entities
 {
@@ -11,7 +12,7 @@ namespace FreelanceService.DAL.Entities
         public string LastName { get; set; }
         public string Phone { get; set; }
         public string DynamicSalt { get; set; }
-        public string DateRegistration { get; set; }
+        public DateTime DateRegistration { get; set; }
         public string Image { get; set; }
         public decimal? Rating { get; set; }
         public string Role { get; set; }

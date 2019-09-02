@@ -18,4 +18,9 @@
     <ProjectReference Include="..\FreelanceService.DAL\FreelanceService.DAL.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="HtmlHelpers\" />
+  </ItemGroup>
+
 </Project>

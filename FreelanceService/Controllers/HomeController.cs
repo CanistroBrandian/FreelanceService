@@ -1,5 +1,4 @@
-﻿using FreelanceService.DAL;
-using FreelanceService.DAL.Interfaces;
+﻿using FreelanceService.DAL.Interfaces;
 using FreelanceService.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -9,31 +8,31 @@ namespace FreelanceService.Controllers
     public class HomeController : Controller
     {
 
-        IUserRepository _repo;
-        IUnitOfWork _uow;
+        IDbContext _db;
        
-        public HomeController(IUserRepository repo, IUnitOfWork uow)
+
+        public HomeController(IDbContext db)
         {
-            _repo = repo;
-            _uow = uow;
+            _db = db;
 
         }
+
         public IActionResult Index()
         {
-           
-                _uow.Begin();
-                try
-                {
-                _uow.Commit();
-                    return View(_repo.GetAll());
-                }
-                catch
-                {
-                _uow.Rollback();
-                    throw;
-                }
-            
-            
+            try
+            {
+
+               var query = _db.UserRepos.GetAll();
+                _db.Commit();
+                return View(query);
+            }
+            catch
+            {
+                _db.Rollback();
+                throw;
+            }
+
+
         }
 
         public IActionResult Privacy()
