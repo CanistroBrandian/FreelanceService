@@ -29,7 +29,7 @@ namespace FreelanceService.DAL.Repositories
                 throw new ArgumentNullException("entity");
 
 
-            _connection.Execute(
+            _transaction.Connection.Execute(
                 query, param:new
                 {
                     Id = entity.Id,

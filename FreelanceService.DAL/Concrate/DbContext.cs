@@ -1,73 +1,64 @@
-﻿using FreelanceService.DAL.Interfaces;
+﻿using Dapper;
+using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
+using System.Collections.Generic;
+using System.Data;
 
 namespace FreelanceService.DAL.Concrate
 {
     public class DbContext : IDbContext
     {
-        private IUnitOfWorkFactory unitOfWorkFactory;
+        //IDbTransaction _transaction;
 
-        private UnitOfWork unitOfWork;
+        private List<Command> Queue { get; set; } = new List<Command>();
 
-        private UserRepository user;
-        private ProjectRepository project;
-        private TaskRepository task;
-        private CategoryRepository category;
-        private ReviewRepository review;
-        private ResponseRepository response;
+        //public DbContext(IDbTransaction transaction)
+        //{
+        //    _transaction = transaction;
+        //}
 
-        public DbContext(IUnitOfWorkFactory unitOfWorkFactory)
+        public void Execute(string sql, object param)
         {
-            this.unitOfWorkFactory = unitOfWorkFactory;
+            Queue.Add(new ExecureCommand(sql, param));
+            //_transaction.Connection..Execute(sql, param);
         }
 
-        public ProjectRepository ProjectRepos =>
-            project ?? (project = new ProjectRepository(UnitOfWork));
-        public TaskRepository TaskRepos =>
-          task ?? (task = new TaskRepository(UnitOfWork));
-        public CategoryRepository CategoryRepos =>
-           category ?? (category = new CategoryRepository(UnitOfWork));
-        public ReviewRepository ReviewRepos =>
-           review ?? (review = new ReviewRepository(UnitOfWork));
-        public ResponseRepository ResponseRepos =>
-           response ?? (response = new ResponseRepository(UnitOfWork));
-        public UserRepository UserRepos =>
-           user ?? (user = new UserRepository(UnitOfWork));
-
-  
-
-        protected UnitOfWork UnitOfWork =>
-            unitOfWork ?? (unitOfWork = unitOfWorkFactory.Create());
-
-
-        public void Commit()
+        public void Query(string sql, object param)
         {
-            try
-            {
-                UnitOfWork.Commit();
-            }
-            finally
-            {
-                Reset();
-            }
+            Queue.Add(new QueryCommand(sql, param));
+            //_transaction.Connection.Query(sql, param);
         }
 
-        public void Rollback()
+        public IReadOnlyList<Command> GetQueue()
         {
-            try
-            {
-                UnitOfWork.Rollback();
-            }
-            finally
-            {
-                Reset();
-            }
+            return Queue.AsReadOnly();
         }
 
-        private void Reset()
+    }
+
+    public abstract class Command
+    {
+        public Command(string sql, object parameters)
         {
-            unitOfWork = null;
-            user = null;
+            Sql = sql;
+            Params = parameters;
+        }
+        public string Sql { get; private set; }
+
+        public object Params { get; private set; }
+    }
+
+    public class ExecureCommand : Command
+    {
+        public ExecureCommand(string sql, object parameters) : base(sql, parameters)
+        {
+        }
+    }
+
+    public class QueryCommand : Command
+    {
+        public QueryCommand(string sql, object parameters) : base(sql, parameters)
+        {
         }
     }
 }

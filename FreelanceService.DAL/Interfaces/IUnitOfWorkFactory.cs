@@ -4,6 +4,6 @@ namespace FreelanceService.DAL.Interfaces
 {
     public interface IUnitOfWorkFactory
     {
-        UnitOfWork Create();
+        IUnitOfWork Create();
     }
 }

@@ -4721,6 +4721,18 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
+      "FreelanceService.BLL/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "FreelanceService.DAL": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/FreelanceService.BLL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FreelanceService.BLL.dll": {}
+        }
+      },
       "FreelanceService.DAL/1.0.0": {
         "type": "project",
         "compile": {
@@ -12935,6 +12947,11 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
+    "FreelanceService.BLL/1.0.0": {
+      "type": "project",
+      "path": "../FreelanceService.BLL/FreelanceService.BLL.csproj",
+      "msbuildProject": "../FreelanceService.BLL/FreelanceService.BLL.csproj"
+    },
     "FreelanceService.DAL/1.0.0": {
       "type": "project",
       "path": "../FreelanceService.DAL/FreelanceService.DAL.csproj",
@@ -12943,6 +12960,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
+      "FreelanceService.BLL >= 1.0.0",
       "FreelanceService.DAL >= 1.0.0",
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
@@ -12980,6 +12998,9 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
+            "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.BLL\\FreelanceService.BLL.csproj": {
+              "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.BLL\\FreelanceService.BLL.csproj"
+            },
             "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj": {
               "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj"
             }

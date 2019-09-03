@@ -4,6 +4,26 @@
     "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService\\FreelanceService.Web.csproj": {}
   },
   "projects": {
+    "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.BLL\\FreelanceService.BLL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.BLL\\FreelanceService.BLL.csproj",
+        "projectName": "FreelanceService.BLL",
+        "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.BLL\\FreelanceService.BLL.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj": {
+                "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
     "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -41,6 +61,9 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
+              "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.BLL\\FreelanceService.BLL.csproj": {
+                "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.BLL\\FreelanceService.BLL.csproj"
+              },
               "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj": {
                 "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj"
               }

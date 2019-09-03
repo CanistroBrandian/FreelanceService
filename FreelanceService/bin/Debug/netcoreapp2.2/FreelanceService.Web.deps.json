@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v2.2": {
       "FreelanceService.Web/1.0.0": {
         "dependencies": {
+          "FreelanceService.BLL": "1.0.0",
           "FreelanceService.DAL": "1.0.0",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
@@ -341,6 +342,17 @@
           "System.Runtime.Extensions": "4.3.0",
           "System.Threading": "4.3.0",
           "System.Threading.Tasks": "4.3.0"
+        }
+      },
+      "FreelanceService.BLL/1.0.0": {
+        "dependencies": {
+          "FreelanceService.DAL": "1.0.0"
+        },
+        "runtime": {
+          "FreelanceService.BLL.dll": {}
+        },
+        "compile": {
+          "FreelanceService.BLL.dll": {}
         }
       },
       "FreelanceService.DAL/1.0.0": {
@@ -3689,6 +3701,11 @@
       "sha512": "sha512-td7x21K8LalpjTWCzW/nQboQIFbq9i0r+PCyBBCdLWWnm4NBcdN18vpz/G9hCpUaCIfRL+ZxJNVTywlNlB1aLQ==",
       "path": "system.linq.parallel/4.3.0",
       "hashPath": "system.linq.parallel.4.3.0.nupkg.sha512"
+    },
+    "FreelanceService.BLL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "FreelanceService.DAL/1.0.0": {
       "type": "project",

@@ -15,6 +15,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\FreelanceService.BLL\FreelanceService.BLL.csproj" />
     <ProjectReference Include="..\FreelanceService.DAL\FreelanceService.DAL.csproj" />
   </ItemGroup>
 

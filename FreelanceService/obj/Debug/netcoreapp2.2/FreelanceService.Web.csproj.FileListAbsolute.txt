@@ -33,3 +33,5 @@ C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcorea
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\FreelanceService.Web.Views.pdb
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\FreelanceService.Web.csproj.CopyComplete
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\View\Create.g.cshtml.cs
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService\bin\Debug\netcoreapp2.2\FreelanceService.BLL.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService\bin\Debug\netcoreapp2.2\FreelanceService.BLL.pdb

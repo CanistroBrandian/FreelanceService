@@ -1,19 +1,23 @@
-﻿using FreelanceService.DAL.Interfaces;
+﻿using FreelanceService.BLL.DTO;
+using FreelanceService.BLL.Services;
+using FreelanceService.DAL.Interfaces;
 using FreelanceService.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
 
-namespace FreelanceService.Controllers
+namespace FreelanceService.Web.Controllers
 {
     public class HomeController : Controller
     {
-
         IDbContext _db;
-       
+        private readonly IConfiguration _config;
 
-        public HomeController(IDbContext db)
+
+        public HomeController(IDbContext db, IConfiguration config)
         {
             _db = db;
+            _config = config;
 
         }
 
@@ -21,8 +25,17 @@ namespace FreelanceService.Controllers
         {
             try
             {
+                // EmailModel emailModel = new EmailModel();
+                //var asd = new EmailModel
+                //{
+                //    NameUser = "User",
+                //    Subject = "asd",
+                //    Description = "description"
+                //};
+                //EmailService email = new EmailService(_config);
+                //email.SendAsync(asd);
 
-               var query = _db.UserRepos.GetAll();
+                var query = _db.UserRepos.GetAll();
                 _db.Commit();
                 return View(query);
             }

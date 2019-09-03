@@ -18,8 +18,9 @@ namespace FreelanceService.DAL.Concrate
             this.connectionString = connectionString;
         }
 
-        public UnitOfWork Create()
+        public IUnitOfWork Create()
         {
+
             return new UnitOfWork(CreateOpenConnection());
         }
 
@@ -27,7 +28,7 @@ namespace FreelanceService.DAL.Concrate
         {
             var conn = new TConnection();
             conn.ConnectionString = connectionString;
-            
+
             try
             {
                 if (conn.State != ConnectionState.Open)

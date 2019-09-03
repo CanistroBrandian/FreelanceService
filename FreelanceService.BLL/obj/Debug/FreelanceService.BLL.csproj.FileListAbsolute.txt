@@ -1,0 +1,13 @@
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\FreelanceService.BLL.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\FreelanceService.BLL.pdb
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\FreelanceService.DAL.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Dapper.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\FreelanceService.DAL.pdb
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Dapper.xml
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\FreelanceService.BLL.csprojAssemblyReference.cache
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\FreelanceService.BLL.csproj.CoreCompileInputs.cache
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\FreelanceService.BLL.csproj.CopyComplete
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\FreelanceService.BLL.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\FreelanceService.BLL.pdb
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Microsoft.Extensions.Configuration.Abstractions.xml

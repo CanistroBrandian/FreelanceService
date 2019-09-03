@@ -1,0 +1,6 @@
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.Common\bin\Debug\FreelanceService.Common.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.Common\bin\Debug\FreelanceService.Common.pdb
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.Common\obj\Debug\FreelanceService.Common.csprojAssemblyReference.cache
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.Common\obj\Debug\FreelanceService.Common.csproj.CoreCompileInputs.cache
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.Common\obj\Debug\FreelanceService.Common.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.Common\obj\Debug\FreelanceService.Common.pdb
