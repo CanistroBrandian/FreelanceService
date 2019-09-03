@@ -1,24 +1,20 @@
-﻿using Dapper;
-using FreelanceService.DAL.Concrate;
-using FreelanceService.DAL.Entities;
+﻿using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 
 namespace FreelanceService.DAL.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        protected readonly IDbConnection _connection;
-        protected readonly IDbTransaction _transaction;
-        public UserRepository(UnitOfWork unitOfWork)
+
+        protected readonly IDbContext _context;
+        public UserRepository(IDbContext context)
         {
-            _connection = unitOfWork.Transaction.Connection;
-            _transaction = unitOfWork.Transaction;
+            _context = context;
         }
-     
+
 
         public void AddUser(User entity)
         {
@@ -29,23 +25,22 @@ namespace FreelanceService.DAL.Repositories
                 throw new ArgumentNullException("entity");
 
 
-            _transaction.Connection.Execute(
-                query, param:new
+            _context.Execute(
+                query, param: new
                 {
                     Id = entity.Id,
                     Email = entity.Email,
-                    PassHash= entity.PassHash,
-                    FirstName= entity.FirstName,
-                    LastName= entity.LastName,
-                    Phone= entity.Phone,
-                    DynamicSalt= entity.DynamicSalt,
+                    PassHash = entity.PassHash,
+                    FirstName = entity.FirstName,
+                    LastName = entity.LastName,
+                    Phone = entity.Phone,
+                    DynamicSalt = entity.DynamicSalt,
                     DateRegistration = entity.DateRegistration,
                     Image = entity.Image,
                     Rating = entity.Rating,
                     Role = entity.Role
 
                 }
-                , transaction: _transaction
             );
 
         }
@@ -57,17 +52,16 @@ namespace FreelanceService.DAL.Repositories
             if (id == 0)
                 throw new ArgumentNullException("id");
 
-            return _connection.Query<User>(
+            return _context.Query<User>(
                 query,
-                param: new { Id = id },
-                    transaction: _transaction
+                param: new { Id = id }
             ).FirstOrDefault();
         }
 
         public IEnumerable<User> GetAll()
         {
             string query = "SELECT * FROM Users";
-            return _connection.Query<User>(query, transaction: _transaction);
+            return _context.Query<User>(query);
         }
 
         public void Remove(int id)
@@ -76,7 +70,7 @@ namespace FreelanceService.DAL.Repositories
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            _connection.Execute(query, transaction: _transaction);
+            _context.Execute(query);
 
         }
 
@@ -84,7 +78,7 @@ namespace FreelanceService.DAL.Repositories
         {
             string query = "UPDATE Users SET {0}=@{0},{1}=@{1},{2}=@{2},{3}=@{3},{4}=@{4},{5}=@{5},{6}=@{6},{7}=@{7},{8}=@{8},{9}=@{9},{10}=@{10} WHERE Id = @Id",
                  Id, Email, PassHash, FirstName, LastName, Phone, DynamicSalt, DateRegistration, Image, Rating, Role;
-            _connection.Execute(query,
+            _context.Execute(query,
                     param: new
                     {
                         Id = entity.Id,
@@ -98,8 +92,7 @@ namespace FreelanceService.DAL.Repositories
                         Image = entity.Image,
                         Rating = entity.Rating,
                         Role = entity.Role
-                    },
-                    transaction: _transaction
+                    }
                 );
         }
     }

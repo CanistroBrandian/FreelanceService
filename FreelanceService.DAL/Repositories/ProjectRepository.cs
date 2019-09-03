@@ -11,12 +11,10 @@ namespace FreelanceService.DAL.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {
-        protected readonly IDbConnection _connection;
-        protected readonly IDbTransaction _transaction;
-        public ProjectRepository(UnitOfWork unitOfWork)
+        protected readonly IDbContext _context;
+        public ProjectRepository(IDbContext context)
         {
-            _connection = unitOfWork.Transaction.Connection;
-            _transaction = unitOfWork.Transaction;
+            _context = context;
         }
 
 
@@ -28,8 +26,8 @@ namespace FreelanceService.DAL.Repositories
                 throw new ArgumentNullException("entity");
 
 
-            _connection.Execute(
-                query, param: entity, transaction: _transaction
+            _context.Execute(
+                query, param: entity
             );
 
         }
@@ -41,17 +39,15 @@ namespace FreelanceService.DAL.Repositories
             if (id == 0)
                 throw new ArgumentNullException("id");
 
-            return _connection.Query<Project>(
+            return _context.Query<Project>(
                 query,
-                param: new { Id = id },
-                    transaction: _transaction
-            ).FirstOrDefault();
+                param: new { Id = id }).FirstOrDefault();
         }
 
         public IEnumerable<Project> GetAll()
         {
             string query = "SELECT * FROM Projects";
-            return _connection.Query<Project>(query, transaction: _transaction);
+            return _context.Query<Project>(query);
         }
 
         public void Remove(int id)
@@ -60,7 +56,7 @@ namespace FreelanceService.DAL.Repositories
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            _connection.Execute(query, transaction: _transaction);
+            _context.Execute(query);
 
         }
 
@@ -68,10 +64,8 @@ namespace FreelanceService.DAL.Repositories
         {
             string query = "UPDATE Projects SET Id=@Id, Name=@Name, Description=@Description, Image=@Image WHERE Id = @Id";
 
-            _connection.Execute(query,
-                    param: entity,
-                    transaction: _transaction
-                );
+            _context.Execute(query,
+                    param: entity);
         }
     }
 }

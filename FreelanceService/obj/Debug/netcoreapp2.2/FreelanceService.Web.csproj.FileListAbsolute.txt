@@ -20,7 +20,6 @@ C:\Users\brovk\source\repos\FreelanceService\FreelanceService\bin\Debug\netcorea
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\FreelanceService.Web.TagHelpers.input.cache
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\FreelanceService.Web.TagHelpers.output.cache
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\FreelanceService.Web.RazorCoreGenerate.cache
-C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.g.cshtml.cs
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.g.cshtml.cs
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
@@ -32,6 +31,7 @@ C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcorea
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\FreelanceService.Web.RazorTargetAssemblyInfo.cs
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\FreelanceService.Web.Views.pdb
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\FreelanceService.Web.csproj.CopyComplete
-C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\View\Create.g.cshtml.cs
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\bin\Debug\netcoreapp2.2\FreelanceService.BLL.dll
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\bin\Debug\netcoreapp2.2\FreelanceService.BLL.pdb
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Users\Create.g.cshtml.cs
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Users\Index.g.cshtml.cs

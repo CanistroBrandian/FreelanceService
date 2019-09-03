@@ -35,13 +35,11 @@ namespace FreelanceService.Web.Controllers
                 //EmailService email = new EmailService(_config);
                 //email.SendAsync(asd);
 
-                var query = _db.UserRepos.GetAll();
-                _db.Commit();
-                return View(query);
+
+                return View();
             }
             catch
             {
-                _db.Rollback();
                 throw;
             }
 

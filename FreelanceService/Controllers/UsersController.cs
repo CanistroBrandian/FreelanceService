@@ -9,20 +9,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FreelanceService.Web.Controllers
 {
-    public class ViewController : Controller
+    public class UsersController : Controller
     {
-        IDbContext _db;
+        IUnitOfWork _unitOfWork;
 
-        public ViewController(IDbContext db)
+        public UsersController(IUnitOfWork uow)
         {
-            _db = db;
+            _unitOfWork = uow;
 
         }
         // GET: View
         public ActionResult Index()
         {
+            var users = _unitOfWork.UserRepos.GetAll();
         
-            return View();
+            return View(users);
         }
 
         // GET: View/Details/5
@@ -45,8 +46,9 @@ namespace FreelanceService.Web.Controllers
             try
             {
 
-                _db.UserRepos.AddUser(model);
-             //   _db.Commit();
+                _unitOfWork.UserRepos.AddUser(model);
+                _unitOfWork.Commit();
+
                 return RedirectToAction();
             }
             catch

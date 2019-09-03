@@ -9,14 +9,12 @@ using System.Linq;
 
 namespace FreelanceService.DAL.Repositories
 {
-    public class CategoryRepository:ICategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
-        protected readonly IDbConnection _connection;
-        protected readonly IDbTransaction _transaction;
-        public CategoryRepository(UnitOfWork unitOfWork)
+        protected readonly IDbContext _context;
+        public CategoryRepository(IDbContext context)
         {
-            _connection = unitOfWork.Transaction.Connection;
-            _transaction = unitOfWork.Transaction;
+            _context = context;
         }
 
 
@@ -28,8 +26,8 @@ namespace FreelanceService.DAL.Repositories
                 throw new ArgumentNullException("entity");
 
 
-            _connection.Execute(
-                query, param: entity, transaction: _transaction
+            _context.Execute(
+                query, param: entity
             );
 
         }
@@ -41,17 +39,15 @@ namespace FreelanceService.DAL.Repositories
             if (id == 0)
                 throw new ArgumentNullException("id");
 
-            return _connection.Query<Category>(
+            return _context.Query<Category>(
                 query,
-                param: new { Id = id },
-                    transaction: _transaction
-            ).FirstOrDefault();
+                param: new { Id = id }).FirstOrDefault();
         }
 
         public IEnumerable<Category> GetAll()
         {
             string query = "SELECT * FROM Categories";
-            return _connection.Query<Category>(query, transaction: _transaction);
+            return _context.Query<Category>(query);
         }
 
         public void Remove(int id)
@@ -60,17 +56,15 @@ namespace FreelanceService.DAL.Repositories
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            _connection.Execute(query, transaction: _transaction);
+            _context.Execute(query);
 
         }
 
         public void Update(Category entity)
         {
             string query = "UPDATE Categorys SET Id=@Id, Name=@Name WHERE Id = @Id";
-            _connection.Execute(query,
-                    param: entity,
-                    transaction: _transaction
-                );
+            _context.Execute(query,
+                    param: entity);
         }
     }
 }

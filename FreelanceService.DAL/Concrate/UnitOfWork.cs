@@ -2,20 +2,21 @@
 using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace FreelanceService.DAL.Concrate
 {
     public class UnitOfWork : IUnitOfWork
     {
-        protected IDbTransaction _transaction;
         protected IDbContext _dbContext;
+        private readonly string _connectionString;
 
-        public UnitOfWork(IDbConnection connection)
+        public UnitOfWork(
+            string connectionString, 
+            IDbContext dbContext)
         {
-            _transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted);
-            _dbContext = new DbContext();
-         
-            
+            _dbContext = dbContext;
+            _connectionString = connectionString;
         }
 
 
@@ -40,61 +41,53 @@ namespace FreelanceService.DAL.Concrate
            response ?? (response = new ResponseRepository(_dbContext));
         public IUserRepository UserRepos =>
            user ?? (user = new UserRepository(_dbContext));
-
-
-        public IDbTransaction Transaction =>
-            _transaction;
-
       
         public void Commit()
         {
-            try
+            using (var _connection = new SqlConnection(_connectionString))
             {
-                foreach(var command in _dbContext.GetQueue())
+                _connection.Open();
+                var _transaction = _connection.BeginTransaction();
+                try
                 {
-                    if(command is ExecureCommand execureCommand)
+                    foreach (var command in _dbContext.GetQueue())
                     {
-                        _transaction.Connection.Execute(execureCommand.Sql, execureCommand.Params);
-                    }
-                    else if (command is QueryCommand queryCommand)
-                    {
-                        _transaction.Connection.Query(queryCommand.Sql, queryCommand.Params);
-                    }
+                        command.Execute(_transaction);
 
+                    }
+                    _transaction.Commit();
+                    _connection.Close();
                 }
-                _transaction.Commit();
-                _transaction.Connection?.Close();
-            }
-            catch
-            {
-                _transaction.Rollback();
-                throw;
-            }
-            finally
-            {
-                _transaction?.Dispose();
-                _transaction.Connection?.Dispose();
-                _transaction = null;
-            }
+                catch
+                {
+                    _transaction.Rollback();
+                    throw;
+                }
+                finally
+                {
+                    _transaction?.Dispose();
+                }
+            }           
         }
 
         public void Rollback()
         {
-            try
-            {
-                _transaction.Rollback();
-                _transaction.Connection?.Close();
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                _transaction?.Dispose();
-                _transaction.Connection?.Dispose();
-                _transaction = null;
-            }
+            //var _transaction = _connection.BeginTransaction(IsolationLevel.ReadUncommitted);
+            //try
+            //{
+            //    _transaction.Rollback();
+            //    _transaction.Connection?.Close();
+            //}
+            //catch
+            //{
+            //    throw;
+            //}
+            //finally
+            //{
+            //    _transaction?.Dispose();
+            //    _transaction.Connection?.Dispose();
+            //    _transaction = null;
+            //}
         }
     }
 }

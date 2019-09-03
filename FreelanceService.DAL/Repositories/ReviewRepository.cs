@@ -11,12 +11,10 @@ namespace FreelanceService.DAL.Repositories
 {
     public class ReviewRepository : IReviewRepository
     {
-        protected readonly IDbConnection _connection;
-        protected readonly IDbTransaction _transaction;
-        public ReviewRepository(UnitOfWork unitOfWork)
+        protected readonly IDbContext _context;
+        public ReviewRepository(IDbContext context)
         {
-            _connection = unitOfWork.Transaction.Connection;
-            _transaction = unitOfWork.Transaction;
+            _context = context;
         }
 
 
@@ -28,8 +26,8 @@ namespace FreelanceService.DAL.Repositories
                 throw new ArgumentNullException("entity");
 
 
-            _connection.Execute(
-                query, param: entity, transaction: _transaction
+            _context.Execute(
+                query, param: entity
             );
 
         }
@@ -41,17 +39,15 @@ namespace FreelanceService.DAL.Repositories
             if (id == 0)
                 throw new ArgumentNullException("id");
 
-            return _connection.Query<Review>(
+            return _context.Query<Review>(
                 query,
-                param: new { Id = id },
-                    transaction: _transaction
-            ).FirstOrDefault();
+                param: new { Id = id }).FirstOrDefault();
         }
 
         public IEnumerable<Review> GetAll()
         {
             string query = "SELECT * FROM Reviews";
-            return _connection.Query<Review>(query, transaction: _transaction);
+            return _context.Query<Review>(query);
         }
 
         public void Remove(int id)
@@ -60,17 +56,14 @@ namespace FreelanceService.DAL.Repositories
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            _connection.Execute(query, transaction: _transaction);
+            _context.Execute(query);
 
         }
 
         public void Update(Review entity)
         {
             string query = "UPDATE Reviews SET Id=@Id, UserId=@UserId, Name=@Name, Description=@Description, DateOfWriting=@DateOfWriting, Feedback=@Feedback, Rating=@Rating WHERE Id = @Id";
-            _connection.Execute(query,
-                    param: entity,
-                    transaction: _transaction
-                );
+            _context.Execute(query, param: entity);
         }
     }
 }

@@ -27,10 +27,9 @@ namespace FreelanceService
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionStr = Configuration.GetConnectionString("DefaultConnection");
-           SqlConnection connection = new SqlConnection(connectionStr);
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options => 
+                .AddCookie(options =>
                 {
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
                 });
@@ -45,11 +44,10 @@ namespace FreelanceService
 
 
             services.AddScoped<IUserRepository, UserRepository>();
-          
-            services.AddScoped<IUnitOfWorkFactory, UnitOfWorkFactory<SqlConnection>>(provider => new UnitOfWorkFactory<SqlConnection>(connectionStr));
-            services.AddScoped<IUnitOfWork, UnitOfWork>(provider => ((IUnitOfWorkFactory)provider.GetService(typeof(IUnitOfWorkFactory))).Create());
-            services.AddScoped<IDbContext, DbContext>();
 
+            services.AddScoped<IDbContext, DbContext>(provider => new DbContext(connectionStr));
+            services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connectionStr, (IDbContext)provider.GetService(typeof(IDbContext))));
+           
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
         }
@@ -75,7 +73,7 @@ namespace FreelanceService
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Users}/{action=Index}/{id?}");
             });
         }
     }

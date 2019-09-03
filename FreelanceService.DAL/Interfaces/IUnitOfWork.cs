@@ -2,9 +2,14 @@
 
 namespace FreelanceService.DAL.Interfaces
 {
-    public interface IUnitOfWork 
+    public interface IUnitOfWork
     {
-        IDbTransaction Transaction { get; }
+        IProjectRepository ProjectRepos { get; }
+        ITaskRepository TaskRepos { get; }
+        ICategoryRepository CategoryRepos { get; }
+        IReviewRepository ReviewRepos { get; }
+        IResponseRepository ResponseRepos { get; }
+        IUserRepository UserRepos { get; }
         void Commit();
         void Rollback();
     }

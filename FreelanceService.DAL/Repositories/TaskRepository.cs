@@ -1,22 +1,17 @@
-﻿using Dapper;
-using FreelanceService.DAL.Concrate;
-using FreelanceService.DAL.Entities;
+﻿using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 
 namespace FreelanceService.DAL.Repositories
 {
     public class TaskRepository : ITaskRepository
     {
-        protected readonly IDbConnection _connection;
-        protected readonly IDbTransaction _transaction;
-        public TaskRepository(UnitOfWork unitOfWork)
+        protected readonly IDbContext _context;
+        public TaskRepository(IDbContext context)
         {
-            _connection = unitOfWork.Transaction.Connection;
-            _transaction = unitOfWork.Transaction;
+            _context = context;
         }
 
 
@@ -28,9 +23,8 @@ namespace FreelanceService.DAL.Repositories
                 throw new ArgumentNullException("entity");
 
 
-            _connection.Execute(
-                query, param: entity, transaction: _transaction
-            );
+            _context.Execute(
+                query, param: entity);
 
         }
 
@@ -41,17 +35,15 @@ namespace FreelanceService.DAL.Repositories
             if (id == 0)
                 throw new ArgumentNullException("id");
 
-            return _connection.Query<Task>(
+            return _context.Query<Task>(
                 query,
-                param: new { Id = id },
-                    transaction: _transaction
-            ).FirstOrDefault();
+                param: new { Id = id }).FirstOrDefault();
         }
 
         public IEnumerable<Task> GetAll()
         {
             string query = "SELECT * FROM Tasks";
-            return _connection.Query<Task>(query, transaction: _transaction);
+            return _context.Query<Task>(query);
         }
 
         public void Remove(int id)
@@ -60,17 +52,15 @@ namespace FreelanceService.DAL.Repositories
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            _connection.Execute(query, transaction: _transaction);
+            _context.Execute(query);
 
         }
 
         public void Update(Task entity)
         {
             string query = "UPDATE Tasks SET Id=@Id,UserId_Executor=@UserId_Executor,CategoryId=@CategoryId,Name=@Name,Description=@Description,City=@City,Status=@Status,StartDate=@StartDate,FinishedDate=@FinishedDate,Price=@Price WHERE Id = @Id";
-            _connection.Execute(query,
-                    param: entity,
-                    transaction: _transaction
-                );
+            _context.Execute(query,
+                    param: entity);
         }
     }
 }

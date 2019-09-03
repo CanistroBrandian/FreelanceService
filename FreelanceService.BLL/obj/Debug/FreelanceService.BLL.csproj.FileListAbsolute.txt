@@ -11,3 +11,11 @@ C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\Free
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\FreelanceService.BLL.pdb
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Microsoft.Extensions.Configuration.Abstractions.xml
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Microsoft.AspNetCore.Authentication.Cookies.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Microsoft.AspNetCore.Http.Abstractions.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Microsoft.AspNetCore.Mvc.Abstractions.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\System.ComponentModel.Annotations.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Microsoft.AspNetCore.Authentication.Cookies.xml
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Microsoft.AspNetCore.Http.Abstractions.xml
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Microsoft.AspNetCore.Mvc.Abstractions.xml
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\System.ComponentModel.Annotations.xml

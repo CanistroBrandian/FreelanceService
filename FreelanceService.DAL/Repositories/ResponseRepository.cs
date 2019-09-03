@@ -1,22 +1,18 @@
 ﻿using Dapper;
-using FreelanceService.DAL.Concrate;
 using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 
 namespace FreelanceService.DAL.Repositories
 {
     public class ResponseRepository : IResponseRepository
     {
-        protected readonly IDbConnection _connection;
-        protected readonly IDbTransaction _transaction;
-        public ResponseRepository(UnitOfWork unitOfWork)
+        protected readonly IDbContext _context;
+        public ResponseRepository(IDbContext context)
         {
-            _connection = unitOfWork.Transaction.Connection;
-            _transaction = unitOfWork.Transaction;
+            _context = context;
         }
 
 
@@ -28,8 +24,8 @@ namespace FreelanceService.DAL.Repositories
                 throw new ArgumentNullException("entity");
 
 
-            _connection.Execute(
-                query, param: entity, transaction: _transaction
+            _context.Execute(
+                query, param: entity
             );
 
         }
@@ -41,17 +37,15 @@ namespace FreelanceService.DAL.Repositories
             if (id == 0)
                 throw new ArgumentNullException("id");
 
-            return _connection.Query<Response>(
+            return _context.Query<Response>(
                 query,
-                param: new { Id = id },
-                    transaction: _transaction
-            ).FirstOrDefault();
+                param: new { Id = id }).FirstOrDefault();
         }
 
         public IEnumerable<Response> GetAll()
         {
             string query = "SELECT * FROM Responses";
-            return _connection.Query<Response>(query, transaction: _transaction);
+            return _context.Query<Response>(query);
         }
 
         public void Remove(int id)
@@ -60,17 +54,15 @@ namespace FreelanceService.DAL.Repositories
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            _connection.Execute(query, transaction: _transaction);
+            _context.Execute(query);
 
         }
 
         public void Update(Response entity)
         {
             string query = "UPDATE Responses SET Id=@Id,UserId_Executor=@UserId_Executor,TaskId=@TaskId,Status=@Status,Description=@Description,DateTimeOfResponse=@DateTimeOfResponse WHERE Id = @Id";
-            _connection.Execute(query,
-                    param: entity,
-                    transaction: _transaction
-                );
+            _context.Execute(query,
+                    param: entity);
         }
     }
 }

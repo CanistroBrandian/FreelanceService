@@ -57,7 +57,6 @@
     <Compile Include="Interfaces\IResponseRepository.cs" />
     <Compile Include="Interfaces\IReviewRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Interfaces\IUnitOfWorkFactory.cs" />
     <Compile Include="Interfaces\ITaskRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,7 +67,6 @@
     <Compile Include="Repositories\TaskRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Concrate\UnitOfWork.cs" />
-    <Compile Include="Concrate\UnitOfWorkFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

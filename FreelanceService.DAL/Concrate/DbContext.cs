@@ -3,40 +3,48 @@ using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace FreelanceService.DAL.Concrate
 {
     public class DbContext : IDbContext
     {
-        //IDbTransaction _transaction;
+        private List<ICommand> Queue { get; set; } = new List<ICommand>();
 
-        private List<Command> Queue { get; set; } = new List<Command>();
+        private readonly string _connectionString;
 
-        //public DbContext(IDbTransaction transaction)
-        //{
-        //    _transaction = transaction;
-        //}
-
-        public void Execute(string sql, object param)
+        public DbContext(string connectionString)
         {
-            Queue.Add(new ExecureCommand(sql, param));
-            //_transaction.Connection..Execute(sql, param);
+            _connectionString = connectionString;
         }
 
-        public void Query(string sql, object param)
+        public void Execute(string sql, object param = null)
         {
-            Queue.Add(new QueryCommand(sql, param));
-            //_transaction.Connection.Query(sql, param);
+            Queue.Add(new ExecuteCommand(sql, param));
+
         }
 
-        public IReadOnlyList<Command> GetQueue()
+        public IEnumerable<T> Query<T>(string sql, object param = null) where T: class
+        {
+            using (var _connection = new SqlConnection(_connectionString))
+            {
+                return _connection.Query<T>(sql, param);
+            }   
+        }
+
+        public IReadOnlyList<ICommand> GetQueue()
         {
             return Queue.AsReadOnly();
         }
 
     }
 
-    public abstract class Command
+    public interface ICommand
+    {
+        void Execute(IDbTransaction transaction);
+    }
+
+    public abstract class Command : ICommand
     {
         public Command(string sql, object parameters)
         {
@@ -46,19 +54,19 @@ namespace FreelanceService.DAL.Concrate
         public string Sql { get; private set; }
 
         public object Params { get; private set; }
+
+        public abstract void Execute(IDbTransaction transaction);
     }
 
-    public class ExecureCommand : Command
+    public class ExecuteCommand : Command
     {
-        public ExecureCommand(string sql, object parameters) : base(sql, parameters)
+        public ExecuteCommand(string sql, object parameters) : base(sql, parameters)
         {
         }
-    }
 
-    public class QueryCommand : Command
-    {
-        public QueryCommand(string sql, object parameters) : base(sql, parameters)
+        public override void Execute(IDbTransaction transaction)
         {
+            transaction.Connection.Execute(Sql, Params, transaction);
         }
     }
 }
