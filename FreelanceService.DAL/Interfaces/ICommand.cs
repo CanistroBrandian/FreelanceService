@@ -9,6 +9,6 @@ namespace FreelanceService.DAL.Interfaces
 {
     public interface ICommand
     {
-        Task Execute(IDbTransaction transaction);
+        void Execute(IDbTransaction transaction);
     }
 }

@@ -15,6 +15,6 @@ namespace FreelanceService.DAL.Concrate
 
         public object Params { get; private set; }
 
-        public abstract Task Execute(IDbTransaction transaction);
+        public abstract void Execute(IDbTransaction transaction);
     }
 }
