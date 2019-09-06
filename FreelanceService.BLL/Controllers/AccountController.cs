@@ -7,7 +7,7 @@
 
 //namespace FreelanceService.BLL.Controllers
 //{
-//    public class AccountController: Controller
+//    public class AccountController : Controller
 //    {
 //        [HttpGet]
 //        public IActionResult Login()
@@ -45,7 +45,7 @@
 //                User user = await db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
 //                if (user == null)
 //                {
-//                    // добавляем пользователя в бд
+//                    добавляем пользователя в бд
 //                    db.Users.Add(new User { Email = model.Email, Password = model.Password });
 //                    await db.SaveChangesAsync();
 
@@ -61,15 +61,15 @@
 
 //        private async Task Authenticate(string userName)
 //        {
-//            // создаем один claim
-//            var claims = new List<Claim>
-//            {
+//            создаем один claim
+//           var claims = new List<Claim>
+//           {
 //                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
-//            };
-//            // создаем объект ClaimsIdentity
-//            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-//            // установка аутентификационных куки
-//            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+//           };
+//            создаем объект ClaimsIdentity
+//           ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+//            установка аутентификационных куки
+//           await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
 //        }
 
 //        public async Task<IActionResult> Logout()

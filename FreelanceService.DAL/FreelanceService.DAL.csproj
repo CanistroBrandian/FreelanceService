@@ -44,13 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concrate\Command.cs" />
     <Compile Include="Concrate\DbContext.cs" />
+    <Compile Include="Concrate\ExecuteCommand.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\Response.cs" />
     <Compile Include="Entities\Review.cs" />
     <Compile Include="Entities\Task.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Enum\CityEnum.cs" />
+    <Compile Include="Enum\RoleEnum.cs" />
+    <Compile Include="Enum\StatusEnum.cs" />
+    <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Interfaces\IDbContext.cs" />
     <Compile Include="Interfaces\ICategoryRepository.cs" />
     <Compile Include="Interfaces\IProjectRepository.cs" />

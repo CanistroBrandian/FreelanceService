@@ -19,3 +19,10 @@ C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Micr
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Microsoft.AspNetCore.Http.Abstractions.xml
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Microsoft.AspNetCore.Mvc.Abstractions.xml
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\System.ComponentModel.Annotations.xml
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\MailKit.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\MimeKit.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\MailKit.xml
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\MimeKit.xml
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\Interop.MIMEDIRLib.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\FreelanceService.BLL.csproj.ResolveComReference.cache

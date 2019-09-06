@@ -1,0 +1,58 @@
+﻿@model FreelanceService.BLL.Models.RegisterViewModel
+@using FreelanceService.BLL.Enum
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+
+<form asp-action="Register" asp-controller="Account" asp-anti-forgery="true" method="post">
+    <div class="validation" asp-validation-summary="ModelOnly" />
+    <div>
+        <div>
+            <label asp-for="Email">Введите Email</label><br />
+            <input type="text" asp-for="Email" />
+            <span asp-validation-for="Email" />
+        </div>
+        <div>
+            <label asp-for="Password">Введите пароль</label><br />
+            <input asp-for="Password" />
+            <span asp-validation-for="Password" />
+        </div>
+        <div>
+            <label asp-for="ConfirmPassword">Повторите пароль</label><br />
+            <input asp-for="ConfirmPassword" />
+            <span asp-validation-for="ConfirmPassword" />
+        </div>
+        <div>
+            <label asp-for="FirstName">Введите Имя</label><br />
+            <input type="text" asp-for="FirstName" />
+            <span asp-validation-for="FirstName" />
+        </div>
+        <div>
+            <label asp-for="LastName">Введите Фамилию</label><br />
+            <input type="text" asp-for="LastName" />
+            <span asp-validation-for="LastName" />
+        </div>
+        <div>
+            <label asp-for="Phone">Введите Телефон</label><br />
+            <input type="number" asp-for="Phone" />
+            <span asp-validation-for="Phone" />
+        </div>
+        <div>
+            <label asp-for="City">Выберете город проживания</label><br />
+            @Html.DropDownList("City", Html.GetEnumSelectList(typeof(City)))
+            <span asp-validation-for="City" />
+        </div>
+        <div>
+
+            <label asp-for="Role"></label><br />
+            @Html.DropDownList("Role", Html.GetEnumSelectList(typeof(Role)))
+            <span asp-validation-for="Role"></span>
+        </div>
+        <div>
+            <input type="submit" value="Регистрация" />
+        </div>
+    </div>
+</form>
+

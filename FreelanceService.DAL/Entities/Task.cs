@@ -12,6 +12,7 @@ namespace FreelanceService.DAL.Entities
         public string Description { get; set; }
         public int City { get; set; }
         public int Status { get; set; }
+        public DateTime RegistrationTaskDateTime { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime FinishedDate { get; set; }
         public decimal? Price { get; set; }

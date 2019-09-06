@@ -1,8 +1,6 @@
 ﻿using Dapper;
 using FreelanceService.DAL.Interfaces;
-using FreelanceService.DAL.Repositories;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 
 namespace FreelanceService.DAL.Concrate
@@ -39,34 +37,4 @@ namespace FreelanceService.DAL.Concrate
 
     }
 
-    public interface ICommand
-    {
-        void Execute(IDbTransaction transaction);
-    }
-
-    public abstract class Command : ICommand
-    {
-        public Command(string sql, object parameters)
-        {
-            Sql = sql;
-            Params = parameters;
-        }
-        public string Sql { get; private set; }
-
-        public object Params { get; private set; }
-
-        public abstract void Execute(IDbTransaction transaction);
-    }
-
-    public class ExecuteCommand : Command
-    {
-        public ExecuteCommand(string sql, object parameters) : base(sql, parameters)
-        {
-        }
-
-        public override void Execute(IDbTransaction transaction)
-        {
-            transaction.Connection.Execute(Sql, Params, transaction);
-        }
-    }
 }

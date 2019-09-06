@@ -1,7 +1,5 @@
-﻿using Dapper;
-using FreelanceService.DAL.Interfaces;
+﻿using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
-using System.Data;
 using System.Data.SqlClient;
 
 namespace FreelanceService.DAL.Concrate
@@ -19,15 +17,12 @@ namespace FreelanceService.DAL.Concrate
             _connectionString = connectionString;
         }
 
-
         private IUserRepository user;
         private IProjectRepository project;
         private ITaskRepository task;
         private ICategoryRepository category;
         private IReviewRepository review;
         private IResponseRepository response;
-
-     
 
         public IProjectRepository ProjectRepos =>
             project ?? (project = new ProjectRepository(_dbContext));
@@ -72,21 +67,22 @@ namespace FreelanceService.DAL.Concrate
 
         public void Rollback()
         {
-            //var _transaction = _connection.BeginTransaction(IsolationLevel.ReadUncommitted);
-            //try
-            //{
-            //    _transaction.Rollback();
-            //    _transaction.Connection?.Close();
-            //}
-            //catch
-            //{
-            //    throw;
-            //}
-            //finally
-            //{
-            //    _transaction?.Dispose();
-            //    _transaction.Connection?.Dispose();
-            //    _transaction = null;
+            //    var _transaction = _connection.BeginTransaction(IsolationLevel.ReadUncommitted);
+            //    try
+            //    {
+            //        _transaction.Rollback();
+            //        _transaction.Connection?.Close();
+            //    }
+            //    catch
+            //    {
+            //        throw;
+            //    }
+            //    finally
+            //    {
+            //        _transaction?.Dispose();
+            //        _transaction.Connection?.Dispose();
+            //        _transaction = null;
+            //    }
             //}
         }
     }

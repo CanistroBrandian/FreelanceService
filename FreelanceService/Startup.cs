@@ -1,4 +1,7 @@
-﻿using FreelanceService.DAL.Concrate;
+﻿using FreelanceService.BLL.Helpers;
+using FreelanceService.BLL.Interfaces;
+using FreelanceService.BLL.Services;
+using FreelanceService.DAL.Concrate;
 using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -44,7 +47,8 @@ namespace FreelanceService
 
 
             services.AddScoped<IUserRepository, UserRepository>();
-
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IGetConfigString, GetConfigString>();
             services.AddScoped<IDbContext, DbContext>(provider => new DbContext(connectionStr));
             services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connectionStr, (IDbContext)provider.GetService(typeof(IDbContext))));
            

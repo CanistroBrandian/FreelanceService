@@ -7,7 +7,8 @@ namespace FreelanceService.DAL.Interfaces
     {
         void AddUser(User entity);
         IEnumerable<User> GetAll();
-        User Find(int id);
+        User FindById(int id);
+        User FindByEmail(string email);
         void Remove(int id);
         void Update(User entity);
     }

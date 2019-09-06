@@ -1,6 +1,6 @@
-﻿namespace FreelanceService.BLL.DTO
+﻿namespace FreelanceService.BLL.Models
 {
-    public class EmailModel
+    public class EmailViewModel
     {
         public string NameUser { get; set; }
         public string EmailUser { get; set; }

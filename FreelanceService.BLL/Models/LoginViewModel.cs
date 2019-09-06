@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FreelanceService.BLL.DTO
+namespace FreelanceService.BLL.Models
 {
-    public class LoginModel
+    public class LoginViewModel
     {
         [Required(ErrorMessage = "Не указан Email")]
         public string Email { get; set; }

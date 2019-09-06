@@ -1,4 +1,6 @@
 ﻿using FreelanceService.BLL.DTO;
+using FreelanceService.BLL.Helpers;
+using FreelanceService.BLL.Interfaces;
 using FreelanceService.BLL.Services;
 using FreelanceService.DAL.Interfaces;
 using FreelanceService.Models;
@@ -10,14 +12,12 @@ namespace FreelanceService.Web.Controllers
 {
     public class HomeController : Controller
     {
-        IDbContext _db;
-        private readonly IConfiguration _config;
 
+        IUnitOfWork _unitOfWork;
 
-        public HomeController(IDbContext db, IConfiguration config)
+        public HomeController(IUnitOfWork uow)
         {
-            _db = db;
-            _config = config;
+            _unitOfWork = uow;
 
         }
 
@@ -25,18 +25,9 @@ namespace FreelanceService.Web.Controllers
         {
             try
             {
-                // EmailModel emailModel = new EmailModel();
-                //var asd = new EmailModel
-                //{
-                //    NameUser = "User",
-                //    Subject = "asd",
-                //    Description = "description"
-                //};
-                //EmailService email = new EmailService(_config);
-                //email.SendAsync(asd);
-
-
-                return View();
+                var users = _unitOfWork.UserRepos.GetAll();
+                
+                return View(users);
             }
             catch
             {

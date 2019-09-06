@@ -17,7 +17,7 @@ namespace FreelanceService.DAL.Repositories
 
         public void AddTask(Task entity)
         {
-            string query = "INSERT INTO Tasks VALUES(@Id,@UserId_Executor,@CategoryId,@Name,@Description,@City,@Status,@StartDate,@FinishedDate,@Price);SELECT CAST(SCOPE_IDENTITY() as int)";
+            string query = "INSERT INTO Tasks VALUES(@Id,@UserId_Executor,@CategoryId,@Name,@Description,@City,@Status,@RegistrationTaskDateTime,@StartDate,@FinishedDate,@Price);SELECT CAST(SCOPE_IDENTITY() as int)";
 
             if (entity == null)
                 throw new ArgumentNullException("entity");

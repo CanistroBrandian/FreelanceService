@@ -3,6 +3,7 @@ using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FreelanceService.DAL.Repositories
 {
@@ -18,8 +19,7 @@ namespace FreelanceService.DAL.Repositories
 
         public void AddUser(User entity)
         {
-            string query = "INSERT INTO Users(Id,Email,PassHash,FirstName,LastName,Phone,DynamicSalt,DateRegistration,Image,Rating,Role)" +
-                "VALUES(@Id,@Email,@PassHash,@FirstName,@LastName,@Phone,@DynamicSalt,@DateRegistration,@Image,@Rating,@Role);SELECT CAST(SCOPE_IDENTITY() as int)";
+            string query = "INSERT INTO Users(Email,PassHash,FirstName,LastName,Phone,DynamicSalt,RegistrationDateTime,City,Rating,Role) VALUES(@Email,@PassHash,@FirstName,@LastName,@Phone,@DynamicSalt,@RegistrationDateTime,@City,@Rating,@Role);SELECT CAST(SCOPE_IDENTITY() as int)";
 
             if (entity == null)
                 throw new ArgumentNullException("entity");
@@ -28,15 +28,14 @@ namespace FreelanceService.DAL.Repositories
             _context.Execute(
                 query, param: new
                 {
-                    Id = entity.Id,
                     Email = entity.Email,
                     PassHash = entity.PassHash,
                     FirstName = entity.FirstName,
                     LastName = entity.LastName,
                     Phone = entity.Phone,
                     DynamicSalt = entity.DynamicSalt,
-                    DateRegistration = entity.DateRegistration,
-                    Image = entity.Image,
+                    RegistrationDateTime = entity.RegistrationDateTime,
+                    City = entity.City,
                     Rating = entity.Rating,
                     Role = entity.Role
 
@@ -45,7 +44,7 @@ namespace FreelanceService.DAL.Repositories
 
         }
 
-        public User Find(int id)
+        public User FindById(int id)
         {
             string query = "SELECT * FROM Users WHERE Id = @id";
 
@@ -54,8 +53,19 @@ namespace FreelanceService.DAL.Repositories
 
             return _context.Query<User>(
                 query,
-                param: new { Id = id }
-            ).FirstOrDefault();
+                param: new { Id = id }).FirstOrDefault();
+        }
+
+        public  User FindByEmail(string email)
+        {
+            string query = "Select * From Users Where Email = @email";
+
+            if (email == null)
+                throw new ArgumentNullException("email");
+
+            return  _context.Query<User>(
+                query,
+                param: new { Email = email }).FirstOrDefault();
         }
 
         public IEnumerable<User> GetAll()
@@ -76,8 +86,7 @@ namespace FreelanceService.DAL.Repositories
 
         public void Update(User entity)
         {
-            string query = "UPDATE Users SET {0}=@{0},{1}=@{1},{2}=@{2},{3}=@{3},{4}=@{4},{5}=@{5},{6}=@{6},{7}=@{7},{8}=@{8},{9}=@{9},{10}=@{10} WHERE Id = @Id",
-                 Id, Email, PassHash, FirstName, LastName, Phone, DynamicSalt, DateRegistration, Image, Rating, Role;
+            string query = "UPDATE Users SET Email=@Email, PassHash=@PassHash, FirstName=@FirstName, LastName=@LastName, Phone=@Phone, DynamicSalt=@DynamicSalt, RegistrationDateTime=@RegistrationDateTime, City=@City, Rating=@Rating, Role=@Role WHERE Id=@Id";
             _context.Execute(query,
                     param: new
                     {
@@ -88,8 +97,8 @@ namespace FreelanceService.DAL.Repositories
                         LastName = entity.LastName,
                         Phone = entity.Phone,
                         DynamicSalt = entity.DynamicSalt,
-                        DateRegistration = entity.DateRegistration,
-                        Image = entity.Image,
+                        RegistrationDateTime = entity.RegistrationDateTime,
+                        City = entity.City,
                         Rating = entity.Rating,
                         Role = entity.Role
                     }
