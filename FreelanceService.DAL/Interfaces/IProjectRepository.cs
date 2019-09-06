@@ -1,14 +1,16 @@
 ﻿using FreelanceService.DAL.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace FreelanceService.DAL.Interfaces
 {
     public interface IProjectRepository
     {
-        void AddProject(Project entity);
-        IEnumerable<Project> GetAll();
-        Project Find(int id);
-        void Remove(int id);
-        void Update(Project entity);
+        Task AddProject(Project entity);
+        Task<IEnumerable<Project>> GetAll();
+        Task<Project> FindById(int id);
+        Task Remove(int id);
+        Task Update(Project entity);
     }
 }

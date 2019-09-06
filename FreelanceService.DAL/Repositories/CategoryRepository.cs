@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace FreelanceService.DAL.Repositories
 {
@@ -18,7 +20,7 @@ namespace FreelanceService.DAL.Repositories
         }
 
 
-        public void AddCategory(Category entity)
+        public async Task AddCategory(Category entity)
         {
             string query = "INSERT INTO Categories VALUES(@Id,@Name);SELECT CAST(SCOPE_IDENTITY() as int)";
 
@@ -26,44 +28,42 @@ namespace FreelanceService.DAL.Repositories
                 throw new ArgumentNullException("entity");
 
 
-            _context.Execute(
-                query, param: entity
-            );
+            await _context.Execute(query, param: entity);
 
         }
 
-        public Category Find(int id)
+        public async Task<Category> FindById(int id)
         {
             string query = "SELECT * FROM Categories WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("id");
 
-            return _context.Query<Category>(
+            return  await _context.QueryFirst<Category>(
                 query,
-                param: new { Id = id }).FirstOrDefault();
+                param: new { Id = id });
         }
 
-        public IEnumerable<Category> GetAll()
+        public async Task< IEnumerable<Category>> GetAll()
         {
             string query = "SELECT * FROM Categories";
-            return _context.Query<Category>(query);
+            return await _context.Query<Category>(query);
         }
 
-        public void Remove(int id)
+        public async Task Remove(int id)
         {
             string query = "DELETE FROM Categories WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            _context.Execute(query);
+            await _context.Execute(query);
 
         }
 
-        public void Update(Category entity)
+        public async Task Update(Category entity)
         {
             string query = "UPDATE Categorys SET Id=@Id, Name=@Name WHERE Id = @Id";
-            _context.Execute(query,
+           await _context.Execute(query,
                     param: entity);
         }
     }

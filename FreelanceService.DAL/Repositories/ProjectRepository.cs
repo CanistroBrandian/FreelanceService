@@ -1,11 +1,9 @@
-﻿using Dapper;
-using FreelanceService.DAL.Concrate;
-using FreelanceService.DAL.Entities;
+﻿using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
+using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace FreelanceService.DAL.Repositories
 {
@@ -18,53 +16,50 @@ namespace FreelanceService.DAL.Repositories
         }
 
 
-        public void AddProject(Project entity)
+        public async Task AddProject(Project entity)
         {
             string query = "INSERT INTO Projects VALUES(@Id,@Name,@Description,@Image);SELECT CAST(SCOPE_IDENTITY() as int)";
 
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-
-            _context.Execute(
-                query, param: entity
-            );
+           await _context.Execute(query, param: entity );
 
         }
 
-        public Project Find(int id)
+        public async Task<Project> FindById(int id)
         {
             string query = "SELECT * FROM Projects WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("id");
 
-            return _context.Query<Project>(
+            return await _context.QueryFirst<Project>(
                 query,
-                param: new { Id = id }).FirstOrDefault();
+                param: new { Id = id });
         }
 
-        public IEnumerable<Project> GetAll()
+        public async Task<IEnumerable<Project>> GetAll()
         {
             string query = "SELECT * FROM Projects";
-            return _context.Query<Project>(query);
+            return await _context.Query<Project>(query);
         }
 
-        public void Remove(int id)
+        public async Task Remove(int id)
         {
             string query = "DELETE FROM Projects WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            _context.Execute(query);
+           await _context.Execute(query);
 
         }
 
-        public void Update(Project entity)
+        public async Task Update(Project entity)
         {
             string query = "UPDATE Projects SET Id=@Id, Name=@Name, Description=@Description, Image=@Image WHERE Id = @Id";
 
-            _context.Execute(query,
+            await _context.Execute(query,
                     param: entity);
         }
     }

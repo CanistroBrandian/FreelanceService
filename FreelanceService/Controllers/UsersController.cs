@@ -19,9 +19,9 @@ namespace FreelanceService.Web.Controllers
 
         }
         // GET: View
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var users = _unitOfWork.UserRepos.GetAll();
+            var users = await _unitOfWork.UserRepos.GetAll();
         
             return View(users);
         }
@@ -41,12 +41,12 @@ namespace FreelanceService.Web.Controllers
         // POST: View/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(User model)
+        public async Task<ActionResult> Create(User model)
         {
             try
             {
 
-                _unitOfWork.UserRepos.AddUser(model);
+                await _unitOfWork.UserRepos.AddUser(model);
                 _unitOfWork.Commit();
 
                 return RedirectToAction();

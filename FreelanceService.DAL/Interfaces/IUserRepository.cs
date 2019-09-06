@@ -1,15 +1,17 @@
 ﻿using FreelanceService.DAL.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace FreelanceService.DAL.Interfaces
 {
     public interface IUserRepository
     {
-        void AddUser(User entity);
-        IEnumerable<User> GetAll();
-        User FindById(int id);
-        User FindByEmail(string email);
-        void Remove(int id);
-        void Update(User entity);
+        Task AddUser(User entity);
+        Task<IEnumerable<User>> GetAll();
+        Task<User> FindById(int id);
+        Task<User> FindByEmail(string email);
+        Task Remove(int id);
+        Task Update(User entity);
     }
 }

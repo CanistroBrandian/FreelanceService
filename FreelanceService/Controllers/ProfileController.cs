@@ -25,21 +25,21 @@ namespace FreelanceService.Web.Controllers
 
         // GET: Profile
         [Authorize]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
 
-                var user = _unitOfWork.UserRepos.FindByEmail(User.Identity.Name);
-  
-                var viewProfile = new ProfileViewModel
-                {
-                    City = user.City,
-                    Email = user.Email,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Phone = user.Phone,
-                    Role = user.Role
-                };
-            
+            var user = await _unitOfWork.UserRepos.FindByEmail(User.Identity.Name);
+
+            var viewProfile = new ProfileViewModel
+            {
+                City = user.City,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Phone = user.Phone,
+                Role = user.Role
+            };
+
             return View(viewProfile);
         }
 
@@ -55,8 +55,8 @@ namespace FreelanceService.Web.Controllers
         {
             try
             {
-                var user = _unitOfWork.UserRepos.FindByEmail(User.Identity.Name);
-                _unitOfWork.UserRepos.Update(new User
+                var user = await _unitOfWork.UserRepos.FindByEmail(User.Identity.Name);
+                await _unitOfWork.UserRepos.Update(new User
                 {
                     Id = user.Id,
                     DynamicSalt = user.DynamicSalt,
@@ -71,7 +71,7 @@ namespace FreelanceService.Web.Controllers
                     Phone = model.Phone,
                 });
                 _unitOfWork.Commit();
-              await Authenticate(model.Email);
+                await Authenticate(model.Email);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -82,14 +82,11 @@ namespace FreelanceService.Web.Controllers
 
         private async Task Authenticate(string userName)
         {
-            // создаем один claim
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
             };
-            // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 

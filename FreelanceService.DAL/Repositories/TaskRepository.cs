@@ -1,8 +1,11 @@
-﻿using FreelanceService.DAL.Entities;
+﻿
+using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace FreelanceService.DAL.Repositories
 {
@@ -15,7 +18,7 @@ namespace FreelanceService.DAL.Repositories
         }
 
 
-        public void AddTask(Task entity)
+        public async Task AddTask(FreelanceService.DAL.Entities.Task entity)
         {
             string query = "INSERT INTO Tasks VALUES(@Id,@UserId_Executor,@CategoryId,@Name,@Description,@City,@Status,@RegistrationTaskDateTime,@StartDate,@FinishedDate,@Price);SELECT CAST(SCOPE_IDENTITY() as int)";
 
@@ -23,44 +26,51 @@ namespace FreelanceService.DAL.Repositories
                 throw new ArgumentNullException("entity");
 
 
-            _context.Execute(
+           await _context.Execute(
                 query, param: entity);
 
         }
 
-        public Task Find(int id)
+ 
+
+        public async Task<FreelanceService.DAL.Entities.Task> FindById(int id)
         {
             string query = "SELECT * FROM Tasks WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("id");
 
-            return _context.Query<Task>(
+            return await _context.QueryFirst<FreelanceService.DAL.Entities.Task>(
                 query,
-                param: new { Id = id }).FirstOrDefault();
+                param: new { Id = id });
         }
 
-        public IEnumerable<Task> GetAll()
+        public async Task<IEnumerable<FreelanceService.DAL.Entities.Task>> GetAll()
         {
             string query = "SELECT * FROM Tasks";
-            return _context.Query<Task>(query);
+            return await _context.Query<FreelanceService.DAL.Entities.Task>(query);
         }
 
-        public void Remove(int id)
+        public async Task Remove(int id)
         {
             string query = "DELETE FROM Tasks WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            _context.Execute(query);
+           await _context.Execute(query);
 
         }
 
-        public void Update(Task entity)
+        public async Task Update(FreelanceService.DAL.Entities.Task entity)
         {
             string query = "UPDATE Tasks SET Id=@Id,UserId_Executor=@UserId_Executor,CategoryId=@CategoryId,Name=@Name,Description=@Description,City=@City,Status=@Status,StartDate=@StartDate,FinishedDate=@FinishedDate,Price=@Price WHERE Id = @Id";
-            _context.Execute(query,
+           await _context.Execute(query,
                     param: entity);
+        }
+
+        System.Threading.Tasks.Task ITaskRepository.FindById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

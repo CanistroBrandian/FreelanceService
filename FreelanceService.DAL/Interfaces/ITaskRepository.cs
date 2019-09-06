@@ -1,14 +1,14 @@
-﻿using FreelanceService.DAL.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FreelanceService.DAL.Interfaces
 {
     public interface ITaskRepository
     {
-        void AddTask(Task entity);
-        IEnumerable<Task> GetAll();
-        Task Find(int id);
-        void Remove(int id);
-        void Update(Task entity);
+        Task AddTask(FreelanceService.DAL.Entities.Task entity);
+        Task<IEnumerable<FreelanceService.DAL.Entities.Task>> GetAll();
+        Task FindById(int id);
+        Task Remove(int id);
+        Task Update(FreelanceService.DAL.Entities.Task entity);
     }
 }

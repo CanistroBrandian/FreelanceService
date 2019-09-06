@@ -1,12 +1,8 @@
-﻿using FreelanceService.BLL.DTO;
-using FreelanceService.BLL.Helpers;
-using FreelanceService.BLL.Interfaces;
-using FreelanceService.BLL.Services;
-using FreelanceService.DAL.Interfaces;
+﻿using FreelanceService.DAL.Interfaces;
 using FreelanceService.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace FreelanceService.Web.Controllers
 {
@@ -21,11 +17,11 @@ namespace FreelanceService.Web.Controllers
 
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var users = _unitOfWork.UserRepos.GetAll();
+                var users = await _unitOfWork.UserRepos.GetAll();
                 
                 return View(users);
             }

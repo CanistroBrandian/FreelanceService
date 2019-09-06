@@ -2,6 +2,7 @@
 using FreelanceService.DAL.Interfaces;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace FreelanceService.DAL.Concrate
 {
@@ -16,18 +17,25 @@ namespace FreelanceService.DAL.Concrate
             _connectionString = connectionString;
         }
 
-        public void Execute(string sql, object param = null)
+        public async Task Execute(string sql, object param = null)
         {
             Queue.Add(new ExecuteCommand(sql, param));
 
         }
 
-        public IEnumerable<T> Query<T>(string sql, object param = null) where T: class
+        public async Task<IEnumerable<T>> Query<T>(string sql, object param = null) where T : class
         {
             using (var _connection = new SqlConnection(_connectionString))
             {
-                return _connection.Query<T>(sql, param);
-            }   
+                return await _connection.QueryAsync<T>(sql, param);
+            }
+        }
+        public async Task<T> QueryFirst<T>(string sql, object param = null) where T : class
+        {
+            using (var _connection = new SqlConnection(_connectionString))
+            {
+                return await _connection.QueryFirstOrDefaultAsync<T>(sql, param);
+            }
         }
 
         public IReadOnlyList<ICommand> GetQueue()

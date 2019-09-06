@@ -4,6 +4,8 @@ using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace FreelanceService.DAL.Repositories
 {
@@ -16,53 +18,50 @@ namespace FreelanceService.DAL.Repositories
         }
 
 
-        public void AddResponse(Response entity)
+        public async Task AddResponse(Response entity)
         {
             string query = "INSERT INTO Responses VALUES(@Id,@UserId_Executor,@TaskId,@Status,@Description,@DateTimeOfResponse);SELECT CAST(SCOPE_IDENTITY() as int)";
 
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-
-            _context.Execute(
-                query, param: entity
-            );
+            await _context.Execute(query, param: entity);
 
         }
 
-        public Response Find(int id)
+        public async Task<Response> FindById(int id)
         {
             string query = "SELECT * FROM Responses WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("id");
 
-            return _context.Query<Response>(
+            return await _context.QueryFirst<Response>(
                 query,
-                param: new { Id = id }).FirstOrDefault();
+                param: new { Id = id });
         }
 
-        public IEnumerable<Response> GetAll()
+        public async Task<IEnumerable<Response>> GetAll()
         {
             string query = "SELECT * FROM Responses";
-            return _context.Query<Response>(query);
+            return await _context.Query<Response>(query);
         }
 
-        public void Remove(int id)
+        public async Task Remove(int id)
         {
             string query = "DELETE FROM Responses WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            _context.Execute(query);
+            await _context.Execute(query);
 
         }
 
-        public void Update(Response entity)
+        public async Task Update(Response entity)
         {
             string query = "UPDATE Responses SET Id=@Id,UserId_Executor=@UserId_Executor,TaskId=@TaskId,Status=@Status,Description=@Description,DateTimeOfResponse=@DateTimeOfResponse WHERE Id = @Id";
-            _context.Execute(query,
-                    param: entity);
+            await _context.Execute(query,
+                     param: entity);
         }
     }
 }

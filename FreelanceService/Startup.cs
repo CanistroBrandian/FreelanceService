@@ -48,7 +48,7 @@ namespace FreelanceService
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IGetConfigString, GetConfigString>();
+           // services.AddScoped<IGetConfigString, GetConfigString>();
             services.AddScoped<IDbContext, DbContext>(provider => new DbContext(connectionStr));
             services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connectionStr, (IDbContext)provider.GetService(typeof(IDbContext))));
            

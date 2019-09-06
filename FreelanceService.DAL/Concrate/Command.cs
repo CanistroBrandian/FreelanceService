@@ -1,5 +1,6 @@
 ﻿using FreelanceService.DAL.Interfaces;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace FreelanceService.DAL.Concrate
 {
@@ -14,6 +15,6 @@ namespace FreelanceService.DAL.Concrate
 
         public object Params { get; private set; }
 
-        public abstract void Execute(IDbTransaction transaction);
+        public abstract Task Execute(IDbTransaction transaction);
     }
 }

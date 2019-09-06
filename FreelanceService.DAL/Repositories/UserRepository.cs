@@ -1,9 +1,11 @@
-﻿using FreelanceService.DAL.Entities;
+﻿
+using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace FreelanceService.DAL.Repositories
 {
@@ -17,7 +19,7 @@ namespace FreelanceService.DAL.Repositories
         }
 
 
-        public void AddUser(User entity)
+        public async Task AddUser(User entity)
         {
             string query = "INSERT INTO Users(Email,PassHash,FirstName,LastName,Phone,DynamicSalt,RegistrationDateTime,City,Rating,Role) VALUES(@Email,@PassHash,@FirstName,@LastName,@Phone,@DynamicSalt,@RegistrationDateTime,@City,@Rating,@Role);SELECT CAST(SCOPE_IDENTITY() as int)";
 
@@ -25,7 +27,7 @@ namespace FreelanceService.DAL.Repositories
                 throw new ArgumentNullException("entity");
 
 
-            _context.Execute(
+            await _context.Execute(
                 query, param: new
                 {
                     Email = entity.Email,
@@ -44,50 +46,50 @@ namespace FreelanceService.DAL.Repositories
 
         }
 
-        public User FindById(int id)
+        public async Task<User> FindById(int id)
         {
             string query = "SELECT * FROM Users WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("id");
 
-            return _context.Query<User>(
+            return await _context.QueryFirst<User>(
                 query,
-                param: new { Id = id }).FirstOrDefault();
+                param: new { Id = id });
         }
 
-        public  User FindByEmail(string email)
+        public async Task<User> FindByEmail(string email)
         {
             string query = "Select * From Users Where Email = @email";
 
             if (email == null)
                 throw new ArgumentNullException("email");
 
-            return  _context.Query<User>(
+            return await _context.QueryFirst<User>(
                 query,
-                param: new { Email = email }).FirstOrDefault();
+                param: new { Email = email });
         }
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAll()
         {
             string query = "SELECT * FROM Users";
-            return _context.Query<User>(query);
+            return  await _context.Query<User>(query);
         }
 
-        public void Remove(int id)
+        public async Task Remove(int id)
         {
             string query = "DELETE FROM Users WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            _context.Execute(query);
+            await _context.Execute(query);
 
         }
 
-        public void Update(User entity)
+        public async Task Update(User entity)
         {
             string query = "UPDATE Users SET Email=@Email, PassHash=@PassHash, FirstName=@FirstName, LastName=@LastName, Phone=@Phone, DynamicSalt=@DynamicSalt, RegistrationDateTime=@RegistrationDateTime, City=@City, Rating=@Rating, Role=@Role WHERE Id=@Id";
-            _context.Execute(query,
+            await _context.Execute(query,
                     param: new
                     {
                         Id = entity.Id,

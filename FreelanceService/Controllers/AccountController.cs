@@ -9,15 +9,20 @@ using FreelanceService.DAL.Interfaces;
 using FreelanceService.BLL.Models;
 using Task = System.Threading.Tasks.Task;
 using System;
+using FreelanceService.BLL.Interfaces;
 
 namespace FreelanceService.Web.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public AccountController(IUnitOfWork unitOfWork)
+        IUnitOfWork _unitOfWork;
+        IEmailService _emailService;
+
+        public AccountController(IUnitOfWork uow, IEmailService emailService)
         {
-            _unitOfWork = unitOfWork;
+            _unitOfWork = uow;
+            _emailService = emailService;
+
         }
 
         [HttpGet]
@@ -31,10 +36,10 @@ namespace FreelanceService.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user =  _unitOfWork.UserRepos.FindByEmail(model.Email);
+                var user = await _unitOfWork.UserRepos.FindByEmail(model.Email);
                 if (user != null)
                 {
-                    await Authenticate(model.Email); // аутентификация
+                    await Authenticate(model.Email); 
 
                     return RedirectToAction("Index", "Profile");
                 }
@@ -54,16 +59,23 @@ namespace FreelanceService.Web.Controllers
             var registrationDateTime = DateTime.Now;
             if (ModelState.IsValid)
             {
-                User user =  _unitOfWork.UserRepos.FindByEmail(model.Email);
+                var user = await _unitOfWork.UserRepos.FindByEmail(model.Email);
                 if (user == null)
                 {
-                    // добавляем пользователя в бд
-                    _unitOfWork.UserRepos.AddUser(new User { Email = model.Email, PassHash = model.Password
-                        , DynamicSalt = "default", FirstName = model.FirstName,LastName = model.FirstName
-                    , Phone= model.Phone, Role = model.Role, RegistrationDateTime = registrationDateTime,});
-                     _unitOfWork.Commit();
-
-                    await Authenticate(model.Email); // аутентификация
+                   await _unitOfWork.UserRepos.AddUser(new User
+                    {
+                        Email = model.Email,
+                        PassHash = model.Password,
+                        DynamicSalt = model.Password,
+                        FirstName = model.FirstName,
+                        LastName = model.FirstName,
+                        Phone = model.Phone,
+                        Role = model.Role,
+                        RegistrationDateTime = registrationDateTime,
+                    });
+                    _unitOfWork.Commit();
+                    await _emailService.SendEmailAsync(model.Email, "Succses registration", "You Login:" + model.Email + " You Pass:" + model.Password);
+                    await Authenticate(model.Email); 
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -75,14 +87,12 @@ namespace FreelanceService.Web.Controllers
 
         private async Task Authenticate(string userName)
         {
-            // создаем один claim
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
             };
-            // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
