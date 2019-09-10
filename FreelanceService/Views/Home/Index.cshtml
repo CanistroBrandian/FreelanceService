@@ -1,4 +1,5 @@
-﻿@model IEnumerable<FreelanceService.DAL.Entities.User>
+﻿@model IEnumerable<FreelanceService.BLL.DTO.UserDTO>
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -7,13 +8,10 @@
     <tr>
         <td>Id</td>
         <td>Email</td>
-        <td>PassHash</td>
         <td>FirstName</td>
         <td>LastName</td>
         <td>Phone</td>
-        <td>DynamicSalt</td>
-        <td>DateRegistration</td>
-        <td>Image</td>
+        <td>RegistrationDateTime</td>
         <td>Role</td>
         <td>City</td>
         <td>Rating</td>
@@ -24,11 +22,9 @@
 <tr>
     <td>@not.Id</td>
     <td>@not.Email</td>
-    <td>@not.PassHash</td>
     <td>@not.FirstName</td>
     <td>@not.LastName</td>
     <td>@not.Phone</td>
-    <td>@not.DynamicSalt</td>
     <td>@not.RegistrationDateTime</td>
     <td>@not.Role</td>
     <td>@not.City</td>

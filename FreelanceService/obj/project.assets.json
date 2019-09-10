@@ -2,6 +2,32 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.2": {
+      "AutoMapper/9.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.5.0",
+          "System.Reflection.Emit": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AutoMapper.dll": {}
+        }
+      },
+      "AutoMapper.Extensions.Microsoft.DependencyInjection/7.0.0": {
+        "type": "package",
+        "dependencies": {
+          "AutoMapper": "9.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
+        }
+      },
       "MailKit/2.3.0": {
         "type": "package",
         "dependencies": {
@@ -4898,6 +4924,7 @@
       "FreelanceService.BLL/1.0.0": {
         "type": "project",
         "dependencies": {
+          "FreelanceService.Common": "1.0.0",
           "FreelanceService.DAL": "1.0.0"
         },
         "compile": {
@@ -4905,6 +4932,15 @@
         },
         "runtime": {
           "bin/placeholder/FreelanceService.BLL.dll": {}
+        }
+      },
+      "FreelanceService.Common/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/FreelanceService.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FreelanceService.Common.dll": {}
         }
       },
       "FreelanceService.DAL/1.0.0": {
@@ -4919,6 +4955,36 @@
     }
   },
   "libraries": {
+    "AutoMapper/9.0.0": {
+      "sha512": "xCqvoxT4HIrNY/xlXG9W+BA/awdrhWvMTKTK/igkGSRbhOhpl3Q8O8Gxlhzjc9JsYqE7sS6AxgyuUUvZ6R5/Bw==",
+      "type": "package",
+      "path": "automapper/9.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "automapper.9.0.0.nupkg.sha512",
+        "automapper.nuspec",
+        "lib/net461/AutoMapper.dll",
+        "lib/net461/AutoMapper.pdb",
+        "lib/net461/AutoMapper.xml",
+        "lib/netstandard2.0/AutoMapper.dll",
+        "lib/netstandard2.0/AutoMapper.pdb",
+        "lib/netstandard2.0/AutoMapper.xml"
+      ]
+    },
+    "AutoMapper.Extensions.Microsoft.DependencyInjection/7.0.0": {
+      "sha512": "szI4yeRIM7GWe9JyekW0dKYehPB0t6M+I55fPeCebN6PhS7zQZa0eG3bgOnOx+eP3caSNoE7KEJs2rk7MLsh8w==",
+      "type": "package",
+      "path": "automapper.extensions.microsoft.dependencyinjection/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
+        "automapper.extensions.microsoft.dependencyinjection.nuspec",
+        "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll",
+        "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.pdb"
+      ]
+    },
     "MailKit/2.3.0": {
       "sha512": "+B+d8jJWx2nmypSiTqul/pKGRYbQ49SFSSTUOIIIXG4BlrMDs7WPRW/F7En+hjJAmz4eoFxyp7oFgfTkDUL0OA==",
       "type": "package",
@@ -13424,6 +13490,11 @@
       "path": "../FreelanceService.BLL/FreelanceService.BLL.csproj",
       "msbuildProject": "../FreelanceService.BLL/FreelanceService.BLL.csproj"
     },
+    "FreelanceService.Common/1.0.0": {
+      "type": "project",
+      "path": "../FreelanceService.Common/FreelanceService.Common.csproj",
+      "msbuildProject": "../FreelanceService.Common/FreelanceService.Common.csproj"
+    },
     "FreelanceService.DAL/1.0.0": {
       "type": "project",
       "path": "../FreelanceService.DAL/FreelanceService.DAL.csproj",
@@ -13432,6 +13503,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
+      "AutoMapper >= 9.0.0",
+      "AutoMapper.Extensions.Microsoft.DependencyInjection >= 7.0.0",
       "FreelanceService.BLL >= 1.0.0",
       "FreelanceService.DAL >= 1.0.0",
       "MailKit >= 2.3.0",
@@ -13489,6 +13562,14 @@
     "frameworks": {
       "netcoreapp2.2": {
         "dependencies": {
+          "AutoMapper": {
+            "target": "Package",
+            "version": "[9.0.0, )"
+          },
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+            "target": "Package",
+            "version": "[7.0.0, )"
+          },
           "MailKit": {
             "target": "Package",
             "version": "[2.3.0, )"

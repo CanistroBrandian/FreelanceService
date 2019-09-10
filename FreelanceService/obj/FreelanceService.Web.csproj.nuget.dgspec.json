@@ -13,12 +13,26 @@
         "frameworks": {
           "net472": {
             "projectReferences": {
+              "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj": {
+                "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj"
+              },
               "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj": {
                 "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj"
               }
             }
           }
         }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj",
+        "projectName": "FreelanceService.Common",
+        "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj"
       },
       "frameworks": {
         "net472": {}
@@ -79,6 +93,14 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "MailKit": {
               "target": "Package",
               "version": "[2.3.0, )"

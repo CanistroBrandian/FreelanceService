@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Task = System.Threading.Tasks.Task;
+
 
 namespace FreelanceService.DAL.Repositories
 {
@@ -27,7 +27,7 @@ namespace FreelanceService.DAL.Repositories
                 throw new ArgumentNullException("entity");
 
 
-            await _context.Execute(
+            await _context.ExecuteAsync(
                 query, param: new
                 {
                     Email = entity.Email,
@@ -82,14 +82,14 @@ namespace FreelanceService.DAL.Repositories
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            await _context.Execute(query);
+            await _context.ExecuteAsync(query);
 
         }
 
         public async Task Update(User entity)
         {
             string query = "UPDATE Users SET Email=@Email, PassHash=@PassHash, FirstName=@FirstName, LastName=@LastName, Phone=@Phone, DynamicSalt=@DynamicSalt, RegistrationDateTime=@RegistrationDateTime, City=@City, Rating=@Rating, Role=@Role WHERE Id=@Id";
-            await _context.Execute(query,
+            await _context.ExecuteAsync(query,
                     param: new
                     {
                         Id = entity.Id,

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FreelanceService.BLL.Enum
+namespace FreelanceService.Common.Enum
 {
 
     public enum City

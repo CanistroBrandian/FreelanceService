@@ -1,31 +1,62 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FreelanceService.BLL.Models
 {
-    public class RegisterViewModel
+    public class RegisterViewModel :IValidatableObject
     {
-        [Required(ErrorMessage = "Не указан Email")]
+        [Display(Name ="Почтовый ящик")]
+        [EmailAddress]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Не указано Ваше Имя")]
+        [Display(Name = "Имя")]
         public string FirstName { get; set; }
-        [Required(ErrorMessage = "Не указана Ваша Фамилия")]
+        [Display(Name = "Фамилия")]
         public string LastName { get; set; }
-        [Required(ErrorMessage = "Не указан Ваш Телефон")]
+        [Display(Name = "Телефон")]
         public string Phone { get; set; }
-
-        [Required(ErrorMessage = "Не указан Ваш Город")]
+        [Display(Name = "Город")]
         public int City { get; set; }
-          [Required(ErrorMessage = "Не указана Ваша Роль")]
+        [Display(Name = "Ваша роль")]
         public int Role { get; set; }
-
-        [Required(ErrorMessage = "Не указан пароль")]
+        [Display(Name = "Пароль")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
+        [Display(Name = "Повторите пароль")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Пароль введен неверно")]
         public string ConfirmPassword { get; set; }
 
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            List<ValidationResult> errors = new List<ValidationResult>();
+
+            if (string.IsNullOrWhiteSpace(this.FirstName))
+            {
+                errors.Add(new ValidationResult("Введите имя!", new List<string>() { "FirstName" }));
+            }
+            if (string.IsNullOrWhiteSpace(this.LastName))
+            {
+                errors.Add(new ValidationResult("Введите Фамилию!", new List<string>() { "LastName" }));
+            }
+            if (string.IsNullOrWhiteSpace(this.Email))
+            {
+                errors.Add(new ValidationResult("Введите электронный адрес!"));
+            }
+            if (this.Role != 1 || this.Role != 2)
+            {
+                errors.Add(new ValidationResult("Недопустимое значение роли"));
+            }
+            if (this.Phone.Length != 12)
+            {
+                errors.Add(new ValidationResult("Номер содержит 12 символов"));
+            }
+            if (this.City >=1 || this.City<=6)
+            {
+                errors.Add(new ValidationResult("Такого города не существует"));
+            }
+
+            return errors;
+        }
 
     }
 }

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace FreelanceService.BLL.Enum
+namespace FreelanceService.Common.Enum
 {
-        enum Status
+    enum Status
         {
         [Display(Name = "В Поиске заказчика")]
         Search = 1,

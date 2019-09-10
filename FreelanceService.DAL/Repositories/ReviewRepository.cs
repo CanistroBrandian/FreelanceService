@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Task = System.Threading.Tasks.Task;
+
 
 namespace FreelanceService.DAL.Repositories
 {
@@ -28,7 +28,7 @@ namespace FreelanceService.DAL.Repositories
                 throw new ArgumentNullException("entity");
 
 
-           await _context.Execute(
+           await _context.ExecuteAsync(
                 query, param: entity
             );
 
@@ -58,14 +58,14 @@ namespace FreelanceService.DAL.Repositories
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-           await _context.Execute(query);
+           await _context.ExecuteAsync(query);
 
         }
 
         public async Task Update(Review entity)
         {
             string query = "UPDATE Reviews SET Id=@Id, UserId=@UserId, Name=@Name, Description=@Description, DateOfWriting=@DateOfWriting, Feedback=@Feedback, Rating=@Rating WHERE Id = @Id";
-           await _context.Execute(query, param: entity);
+           await _context.ExecuteAsync(query, param: entity);
         }
     }
 }

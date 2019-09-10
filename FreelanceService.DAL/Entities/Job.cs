@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FreelanceService.DAL.Entities
 {
-    public class Task
+    public class Job
     {
         public int Id { get; set; }
         public int UserId_Executor { get; set; }
@@ -12,7 +12,7 @@ namespace FreelanceService.DAL.Entities
         public string Description { get; set; }
         public int City { get; set; }
         public int Status { get; set; }
-        public DateTime RegistrationTaskDateTime { get; set; }
+        public DateTime RegistrationJobDateTime { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime FinishedDate { get; set; }
         public decimal? Price { get; set; }

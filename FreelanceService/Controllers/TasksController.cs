@@ -19,34 +19,34 @@ namespace FreelanceService.Web.Controllers
 
         }
 
-        // GET: Task
+        // GET: Job
         public ActionResult Index()
         {
-            var tasks = _unitOfWork.TaskRepos.GetAll();
+            var tasks = _unitOfWork.JobRepos.GetAll();
             return View(tasks);
         }
 
-        // GET: Task/Details/5
+        // GET: Job/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Task/Create
+        // GET: Job/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Task/Create
+        // POST: Job/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Task model)
+        public ActionResult Create(Job model)
         {
             try
             {
-                _unitOfWork.TaskRepos.AddTask(model);
-                _unitOfWork.Commit();
+                _unitOfWork.JobRepos.AddJob(model);
+                _unitOfWork.CommitAsync();
 
                 return RedirectToAction();
             }
@@ -79,13 +79,13 @@ namespace FreelanceService.Web.Controllers
             }
         }
 
-        // GET: Task/Delete/5
+        // GET: Job/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Task/Delete/5
+        // POST: Job/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

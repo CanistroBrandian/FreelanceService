@@ -1,7 +1,7 @@
 ﻿using FreelanceService.DAL.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Task = System.Threading.Tasks.Task;
+
 
 namespace FreelanceService.DAL.Interfaces
 {

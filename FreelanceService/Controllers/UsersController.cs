@@ -47,7 +47,7 @@ namespace FreelanceService.Web.Controllers
             {
 
                 await _unitOfWork.UserRepos.AddUser(model);
-                _unitOfWork.Commit();
+                _unitOfWork.CommitAsync();
 
                 return RedirectToAction();
             }

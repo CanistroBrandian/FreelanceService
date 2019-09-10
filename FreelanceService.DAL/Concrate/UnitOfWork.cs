@@ -1,6 +1,7 @@
 ﻿using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace FreelanceService.DAL.Concrate
 {
@@ -9,9 +10,7 @@ namespace FreelanceService.DAL.Concrate
         protected IDbContext _dbContext;
         private readonly string _connectionString;
 
-        public UnitOfWork(
-            string connectionString, 
-            IDbContext dbContext)
+        public UnitOfWork(string connectionString, IDbContext dbContext)
         {
             _dbContext = dbContext;
             _connectionString = connectionString;
@@ -19,15 +18,15 @@ namespace FreelanceService.DAL.Concrate
 
         private IUserRepository user;
         private IProjectRepository project;
-        private ITaskRepository task;
+        private IJobRepository job;
         private ICategoryRepository category;
         private IReviewRepository review;
         private IResponseRepository response;
 
         public IProjectRepository ProjectRepos =>
             project ?? (project = new ProjectRepository(_dbContext));
-        public ITaskRepository TaskRepos =>
-          task ?? (task = new TaskRepository(_dbContext));
+        public IJobRepository JobRepos =>
+          job ?? (job = new JobRepository(_dbContext));
         public ICategoryRepository CategoryRepos =>
            category ?? (category = new CategoryRepository(_dbContext));
         public IReviewRepository ReviewRepos =>
@@ -37,7 +36,7 @@ namespace FreelanceService.DAL.Concrate
         public IUserRepository UserRepos =>
            user ?? (user = new UserRepository(_dbContext));
       
-        public void Commit()
+        public async Task CommitAsync()
         {
             using (var _connection = new SqlConnection(_connectionString))
             {
@@ -47,7 +46,7 @@ namespace FreelanceService.DAL.Concrate
                 {
                     foreach (var command in _dbContext.GetQueue())
                     {
-                        command.Execute(_transaction);
+                       await command.ExecuteAsync(_transaction);
 
                     }
                     _transaction.Commit();
@@ -60,6 +59,7 @@ namespace FreelanceService.DAL.Concrate
                 }
                 finally
                 {
+                    _connection.Close();
                     _transaction?.Dispose();
                 }
             }           

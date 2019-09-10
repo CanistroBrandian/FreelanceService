@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.5\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -67,14 +70,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Automapper\AutomapperProfile.cs" />
     <Compile Include="DTO\UserDTO.cs" />
-    <Compile Include="Enum\CityEnum.cs" />
-    <Compile Include="Enum\RoleEnum.cs" />
-    <Compile Include="Enum\StatusEnum.cs" />
-    <Compile Include="Helpers\GetConfigString.cs" />
     <Compile Include="Interfaces\IEmailService.cs" />
-    <Compile Include="Interfaces\IGetConfigString.cs" />
+    <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Models\EmailViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
@@ -82,8 +81,13 @@
     <Compile Include="Helpers\ServerInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EmailService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FreelanceService.Common\FreelanceService.Common.csproj">
+      <Project>{0D2CE257-18A0-4BBE-AC78-731611138926}</Project>
+      <Name>FreelanceService.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FreelanceService.DAL\FreelanceService.DAL.csproj">
       <Project>{1fa62251-7db6-4525-8430-161baa1e3cd7}</Project>
       <Name>FreelanceService.DAL</Name>
@@ -103,5 +107,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

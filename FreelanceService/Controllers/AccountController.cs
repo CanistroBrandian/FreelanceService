@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using FreelanceService.BLL.Models;
-using Task = System.Threading.Tasks.Task;
+
 using System;
 using FreelanceService.BLL.Interfaces;
+using FreelanceService.BLL.DTO;
 
 namespace FreelanceService.Web.Controllers
 {
@@ -17,12 +18,13 @@ namespace FreelanceService.Web.Controllers
     {
         IUnitOfWork _unitOfWork;
         IEmailService _emailService;
+        IUserService _userService;
 
-        public AccountController(IUnitOfWork uow, IEmailService emailService)
+        public AccountController(IUnitOfWork uow, IEmailService emailService, IUserService userService)
         {
             _unitOfWork = uow;
             _emailService = emailService;
-
+            _userService = userService;
         }
 
         [HttpGet]
@@ -36,10 +38,11 @@ namespace FreelanceService.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _unitOfWork.UserRepos.FindByEmail(model.Email);
+               // var user = await _unitOfWork.UserRepos.FindByEmail(model.Email);
+                var user = await _userService.FindUserByEmail(model.Email);
                 if (user != null)
                 {
-                    await Authenticate(model.Email); 
+                    await Authenticate(model.Email);
 
                     return RedirectToAction("Index", "Profile");
                 }
@@ -59,23 +62,27 @@ namespace FreelanceService.Web.Controllers
             var registrationDateTime = DateTime.Now;
             if (ModelState.IsValid)
             {
-                var user = await _unitOfWork.UserRepos.FindByEmail(model.Email);
+               // var user = await _unitOfWork.UserRepos.FindByEmail(model.Email);
+                var user = await _userService.FindUserByEmail(model.Email);
                 if (user == null)
                 {
-                   await _unitOfWork.UserRepos.AddUser(new User
+                    var newUser = new UserDTO
                     {
                         Email = model.Email,
-                        PassHash = model.Password,
-                        DynamicSalt = model.Password,
                         FirstName = model.FirstName,
-                        LastName = model.FirstName,
+                        LastName = model.LastName,
+                        City = model.City,
+                        PassHash = model.Password,
                         Phone = model.Phone,
                         Role = model.Role,
                         RegistrationDateTime = registrationDateTime,
-                    });
-                    _unitOfWork.Commit();
-                    await _emailService.SendEmailAsync(model.Email, "Succses registration", "You Login:" + model.Email + " You Pass:" + model.Password);
-                    await Authenticate(model.Email); 
+                        DynamicSalt = model.Password
+                    };
+
+                    await _userService.AddUser(newUser);
+                    await _userService.CommitAsync();
+                    await _emailService.SendEmailAsync(newUser.Email, "Succses registration", "You Login:" + newUser.Email + " You Pass:" + newUser.Password);
+                    await Authenticate(model.Email);
 
                     return RedirectToAction("Index", "Home");
                 }

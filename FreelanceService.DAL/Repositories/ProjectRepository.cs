@@ -3,7 +3,7 @@ using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Task = System.Threading.Tasks.Task;
+
 
 namespace FreelanceService.DAL.Repositories
 {
@@ -23,7 +23,7 @@ namespace FreelanceService.DAL.Repositories
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-           await _context.Execute(query, param: entity );
+           await _context.ExecuteAsync(query, param: entity );
 
         }
 
@@ -51,7 +51,7 @@ namespace FreelanceService.DAL.Repositories
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-           await _context.Execute(query);
+           await _context.ExecuteAsync(query);
 
         }
 
@@ -59,7 +59,7 @@ namespace FreelanceService.DAL.Repositories
         {
             string query = "UPDATE Projects SET Id=@Id, Name=@Name, Description=@Description, Image=@Image WHERE Id = @Id";
 
-            await _context.Execute(query,
+            await _context.ExecuteAsync(query,
                     param: entity);
         }
     }

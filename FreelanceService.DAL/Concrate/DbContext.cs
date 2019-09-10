@@ -17,7 +17,7 @@ namespace FreelanceService.DAL.Concrate
             _connectionString = connectionString;
         }
 
-        public async Task Execute(string sql, object param = null)
+        public async Task ExecuteAsync(string sql, object param = null)
         {
             Queue.Add(new ExecuteCommand(sql, param));
 

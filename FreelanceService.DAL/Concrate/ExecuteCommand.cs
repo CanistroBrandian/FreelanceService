@@ -10,9 +10,9 @@ namespace FreelanceService.DAL.Concrate
         {
         }
 
-        public override void Execute(IDbTransaction transaction)
+        public override async Task ExecuteAsync(IDbTransaction transaction)
         {
-            transaction.Connection.Execute(Sql, Params, transaction);
+           await transaction.Connection.ExecuteAsync(Sql, Params, transaction);
         }
     }
 }

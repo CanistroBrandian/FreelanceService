@@ -1,6 +1,11 @@
-﻿using FreelanceService.DAL.Interfaces;
+﻿using AutoMapper;
+using FreelanceService.BLL.DTO;
+using FreelanceService.BLL.Interfaces;
+using FreelanceService.BLL.Services;
+using FreelanceService.DAL.Interfaces;
 using FreelanceService.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -10,20 +15,24 @@ namespace FreelanceService.Web.Controllers
     {
 
         IUnitOfWork _unitOfWork;
+        IMapper _mapper;
+        IUserService _userService;
 
-        public HomeController(IUnitOfWork uow)
+        public HomeController(IUnitOfWork uow, IMapper mapper, IUserService userService)
         {
             _unitOfWork = uow;
-
+            _mapper = mapper;
+            _userService = userService;
         }
 
         public async Task<IActionResult> Index()
         {
             try
-            {
-                var users = await _unitOfWork.UserRepos.GetAll();
-                
-                return View(users);
+            {  
+                var users = _unitOfWork.UserRepos.GetAll();
+                var serviceUsers = await _userService.GetAll();
+             
+                return View(serviceUsers);
             }
             catch
             {

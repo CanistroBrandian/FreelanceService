@@ -1,7 +1,10 @@
-﻿using FreelanceService.BLL.Helpers;
+﻿using AutoMapper;
+using FreelanceService.BLL.Automapper;
+using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
 using FreelanceService.BLL.Services;
 using FreelanceService.DAL.Concrate;
+using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -43,15 +46,29 @@ namespace FreelanceService
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            
 
+            
 
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AutomapperProfile());
+                cfg.CreateMap<User, UserDTO>();
+            });
+
+            services.AddSingleton(config.CreateMapper());
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IUserService, UserService>();
            // services.AddScoped<IGetConfigString, GetConfigString>();
             services.AddScoped<IDbContext, DbContext>(provider => new DbContext(connectionStr));
             services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connectionStr, (IDbContext)provider.GetService(typeof(IDbContext))));
+
            
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
         }
@@ -70,6 +87,7 @@ namespace FreelanceService
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
 
             app.UseAuthentication();
 

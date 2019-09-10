@@ -26,3 +26,8 @@ C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\Mail
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\MimeKit.xml
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\Interop.MIMEDIRLib.dll
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\FreelanceService.BLL.csproj.ResolveComReference.cache
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\AutoMapper.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\FreelanceService.Common.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\FreelanceService.Common.pdb
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\AutoMapper.pdb
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService.BLL\bin\Debug\AutoMapper.xml

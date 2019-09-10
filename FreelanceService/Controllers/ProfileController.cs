@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Task = System.Threading.Tasks.Task;
+
 
 namespace FreelanceService.Web.Controllers
 {
@@ -70,7 +70,7 @@ namespace FreelanceService.Web.Controllers
                     Role = model.Role,
                     Phone = model.Phone,
                 });
-                _unitOfWork.Commit();
+              await  _unitOfWork.CommitAsync();
                 await Authenticate(model.Email);
                 return RedirectToAction(nameof(Index));
             }

@@ -42,3 +42,5 @@ C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcorea
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Profile\Index.g.cshtml.cs
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Profile\Edit.g.cshtml.cs
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService\bin\Debug\netcoreapp2.2\FreelanceService.Common.dll
+C:\Users\brovk\source\repos\FreelanceService\FreelanceService\bin\Debug\netcoreapp2.2\FreelanceService.Common.pdb

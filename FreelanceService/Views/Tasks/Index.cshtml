@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FreelanceService.DAL.Entities.Task>
+﻿@model IEnumerable<FreelanceService.DAL.Entities.Job>
 
 @{
     ViewData["Title"] = "Index";
@@ -34,7 +34,7 @@
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RegistrationTaskDateTime)
+                @Html.DisplayNameFor(model => model.RegistrationJobDateTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StartDate)
@@ -73,7 +73,7 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RegistrationTaskDateTime)
+                @Html.DisplayFor(modelItem => item.RegistrationJobDateTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
