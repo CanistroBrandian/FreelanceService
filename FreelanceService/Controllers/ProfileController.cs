@@ -1,6 +1,9 @@
 ﻿using FreelanceService.BLL.Models;
+using FreelanceService.Common.Enum;
 using FreelanceService.DAL.Entities;
+
 using FreelanceService.DAL.Interfaces;
+using FreelanceService.Web.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -24,8 +27,26 @@ namespace FreelanceService.Web.Controllers
         }
 
         // GET: Profile
-        [Authorize]
-        public async Task<ActionResult> Index()
+        [Authorize(Roles = "2")]
+        public async Task<ActionResult> IndexCustomer()
+        {
+
+            var user = await _unitOfWork.UserRepos.FindByEmail(User.Identity.Name);
+
+            var viewProfile = new ProfileViewModel
+            {
+                City = user.City,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Phone = user.Phone,
+                Role = user.Role
+            };
+
+            return View(viewProfile);
+        }
+        [Authorize(Roles = "1")]
+        public async Task<ActionResult> IndexExecutor()
         {
 
             var user = await _unitOfWork.UserRepos.FindByEmail(User.Identity.Name);
@@ -48,7 +69,7 @@ namespace FreelanceService.Web.Controllers
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "1,2")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(ProfileViewModel model)
@@ -72,7 +93,7 @@ namespace FreelanceService.Web.Controllers
                 });
               await  _unitOfWork.CommitAsync();
                 await Authenticate(model.Email);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexCustomer));
             }
             catch
             {

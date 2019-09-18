@@ -7,3 +7,12 @@ C:\Users\brovk\source\repos\FreelanceService\FreelanceService.DAL\obj\Debug\Free
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.DAL\obj\Debug\FreelanceService.DAL.csproj.CopyComplete
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.DAL\obj\Debug\FreelanceService.DAL.dll
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.DAL\obj\Debug\FreelanceService.DAL.pdb
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.DAL\bin\Debug\FreelanceService.DAL.dll
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.DAL\bin\Debug\FreelanceService.DAL.pdb
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.DAL\bin\Debug\Dapper.dll
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.DAL\bin\Debug\Dapper.xml
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.DAL\obj\Debug\FreelanceService.DAL.csprojAssemblyReference.cache
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.DAL\obj\Debug\FreelanceService.DAL.csproj.CoreCompileInputs.cache
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.DAL\obj\Debug\FreelanceService.DAL.csproj.CopyComplete
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.DAL\obj\Debug\FreelanceService.DAL.dll
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.DAL\obj\Debug\FreelanceService.DAL.pdb

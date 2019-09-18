@@ -7,6 +7,8 @@ namespace FreelanceService.Common.Enum
         [Display(Name = "Исполнитель")]
         Executor = 1,
         [Display(Name = "Заказчик")]
-        Customer = 2
-        }
+        Customer = 2,
+        [Display(Name = "Админ")]
+        Admin = 3
+    }
 }

@@ -1,28 +1,25 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+﻿using FreelanceService.BLL.DTO;
+using FreelanceService.BLL.Interfaces;
+using FreelanceService.BLL.Models;
+using FreelanceService.Common.Encrypt;
+using FreelanceService.Common.Salt;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using FreelanceService.DAL.Entities;
-using FreelanceService.DAL.Interfaces;
-using FreelanceService.BLL.Models;
-
+using Microsoft.AspNetCore.Mvc;
 using System;
-using FreelanceService.BLL.Interfaces;
-using FreelanceService.BLL.DTO;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace FreelanceService.Web.Controllers
 {
     public class AccountController : Controller
     {
-        IUnitOfWork _unitOfWork;
         IEmailService _emailService;
         IUserService _userService;
 
-        public AccountController(IUnitOfWork uow, IEmailService emailService, IUserService userService)
+        public AccountController(IEmailService emailService, IUserService userService)
         {
-            _unitOfWork = uow;
             _emailService = emailService;
             _userService = userService;
         }
@@ -38,15 +35,14 @@ namespace FreelanceService.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-               // var user = await _unitOfWork.UserRepos.FindByEmail(model.Email);
                 var user = await _userService.FindUserByEmail(model.Email);
-                if (user != null)
+                if (user != null && SHA256Encrypt.checkHashSha256(model.Password,user.PassHash, user.DynamicSalt))
                 {
-                    await Authenticate(model.Email);
-
+                    
+                    await Authenticate(user);
                     return RedirectToAction("Index", "Profile");
                 }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+               ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
             return View(model);
         }
@@ -59,47 +55,50 @@ namespace FreelanceService.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var registrationDateTime = DateTime.Now;
-            if (ModelState.IsValid)
+
+            var dynamicSalt = GenerateSalt.GetDinamicSalt();
+            // if (ModelState.IsValid)
+            //  {
+            // var user = await _unitOfWork.UserRepos.FindByEmail(model.Email);
+            var user = await _userService.FindUserByEmail(model.Email);
+            if (user == null)
             {
-               // var user = await _unitOfWork.UserRepos.FindByEmail(model.Email);
-                var user = await _userService.FindUserByEmail(model.Email);
-                if (user == null)
+                var newUser = new UserDTO
                 {
-                    var newUser = new UserDTO
-                    {
-                        Email = model.Email,
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        City = model.City,
-                        PassHash = model.Password,
-                        Phone = model.Phone,
-                        Role = model.Role,
-                        RegistrationDateTime = registrationDateTime,
-                        DynamicSalt = model.Password
-                    };
+                    Email = model.Email,
+                    DynamicSalt = dynamicSalt,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    City = model.City,
+                    PassHash = SHA256Encrypt.getHashSha256(model.Password, dynamicSalt),
+                    Phone = model.Phone,
+                    Role = model.Role,
+                    RegistrationDateTime = DateTime.Now,
+                };
 
-                    await _userService.AddUser(newUser);
-                    await _userService.CommitAsync();
-                    await _emailService.SendEmailAsync(newUser.Email, "Succses registration", "You Login:" + newUser.Email + " You Pass:" + newUser.Password);
-                    await Authenticate(model.Email);
+                await _userService.AddUser(newUser);
+                await _userService.CommitAsync();
+                await _emailService.SendEmailAsync(newUser.Email, "Succses registration", "You Login:" + newUser.Email + " You Pass:" + model.Password);
+                await Authenticate(newUser);
 
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                return RedirectToAction("Index", "Profile");
             }
+            else
+                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            // }
             return View(model);
         }
 
-        private async Task Authenticate(string userName)
+        private async Task Authenticate(UserDTO user)
         {
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.ToString())
             };
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            ClaimsIdentity id = new ClaimsIdentity(claims, "AuthCookie", ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 

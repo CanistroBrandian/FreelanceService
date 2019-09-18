@@ -1,11 +1,9 @@
-﻿using FreelanceService.DAL.Enum;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 
 namespace FreelanceService.DAL.Entities
 {
-   public class User
+    public class User
     {
         public int Id { get; set; }
         public string Email { get; set; }

@@ -53,9 +53,6 @@
     <Compile Include="Entities\Review.cs" />
     <Compile Include="Entities\Job.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Enum\CityEnum.cs" />
-    <Compile Include="Enum\RoleEnum.cs" />
-    <Compile Include="Enum\StatusEnum.cs" />
     <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Interfaces\IDbContext.cs" />
     <Compile Include="Interfaces\ICategoryRepository.cs" />

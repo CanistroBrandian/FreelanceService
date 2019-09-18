@@ -9,3 +9,14 @@ C:\Users\brovk\source\repos\FreelanceService\FreelanceService.Common\bin\Debug\M
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.Common\obj\Debug\FreelanceService.Common.csproj.CopyComplete
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.Common\bin\Debug\System.ComponentModel.Annotations.dll
 C:\Users\brovk\source\repos\FreelanceService\FreelanceService.Common\bin\Debug\System.ComponentModel.Annotations.xml
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\bin\Debug\FreelanceService.Common.dll
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\bin\Debug\FreelanceService.Common.pdb
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\bin\Debug\Microsoft.AspNetCore.Mvc.Abstractions.dll
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\bin\Debug\System.ComponentModel.Annotations.dll
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\bin\Debug\Microsoft.AspNetCore.Mvc.Abstractions.xml
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\bin\Debug\System.ComponentModel.Annotations.xml
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\obj\Debug\FreelanceService.Common.csprojAssemblyReference.cache
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\obj\Debug\FreelanceService.Common.csproj.CoreCompileInputs.cache
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\obj\Debug\FreelanceService.Common.csproj.CopyComplete
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\obj\Debug\FreelanceService.Common.dll
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\obj\Debug\FreelanceService.Common.pdb

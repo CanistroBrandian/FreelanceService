@@ -31,7 +31,9 @@ namespace FreelanceService.BLL.DTO
         [Required]
         [Display(Name = "Роль")]
         public int Role { get; set; }
+        [Required]
         public string DynamicSalt { get; set; }
+
 
 
 

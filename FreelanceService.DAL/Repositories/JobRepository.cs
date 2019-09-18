@@ -19,7 +19,7 @@ namespace FreelanceService.DAL.Repositories
 
         public async Task AddJob(Job entity)
         {
-            string query = "INSERT INTO Jobs VALUES(@Id,@UserId_Executor,@CategoryId,@Name,@Description,@City,@Status,@RegistrationJobDateTime,@StartDate,@FinishedDate,@Price);SELECT CAST(SCOPE_IDENTITY() as int)";
+            string query = "INSERT INTO Jobs VALUES(@Id,@UserId_Executor,@CategoryId,@Name,@Description,@City,@Status,@RegistrationJobDateTime,@StartDateTime,@FinishedDateTime,@Price);SELECT CAST(SCOPE_IDENTITY() as int)";
 
             if (entity == null)
                 throw new ArgumentNullException("entity");
@@ -62,7 +62,7 @@ namespace FreelanceService.DAL.Repositories
 
         public async Task Update(Job entity)
         {
-            string query = "UPDATE Jobs SET Id=@Id,UserId_Executor=@UserId_Executor,CategoryId=@CategoryId,Name=@Name,Description=@Description,City=@City,Status=@Status,StartDate=@StartDate,FinishedDate=@FinishedDate,Price=@Price WHERE Id = @Id";
+            string query = "UPDATE Jobs SET Id=@Id,UserId_Executor=@UserId_Executor,CategoryId=@CategoryId,Name=@Name,Description=@Description,City=@City,Status=@Status,StartDateTime=@StartDateTime,FinishedDateTime=@FinishedDateTime,Price=@Price WHERE Id = @Id";
            await _context.ExecuteAsync(query,
                     param: entity);
         }

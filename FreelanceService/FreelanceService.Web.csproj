@@ -6,6 +6,13 @@
     <AssemblyName>FreelanceService.Web</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="HtmlHelpers\**" />
+    <Content Remove="HtmlHelpers\**" />
+    <EmbeddedResource Remove="HtmlHelpers\**" />
+    <None Remove="HtmlHelpers\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
@@ -19,12 +26,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FreelanceService.BLL\FreelanceService.BLL.csproj" />
+    <ProjectReference Include="..\FreelanceService.Common\FreelanceService.Common.csproj" />
     <ProjectReference Include="..\FreelanceService.DAL\FreelanceService.DAL.csproj" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="HtmlHelpers\" />
   </ItemGroup>
 
 </Project>

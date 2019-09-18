@@ -31,8 +31,8 @@ namespace FreelanceService.BLL.Services
             if (email == null)
                 throw new Exception("Поле Email не введено");
             var entity = await _uow.UserRepos.FindByEmail(email);
-            if (entity == null)
-                throw new Exception("Пользователь с таким Email не найден");
+           // if (entity == null)
+            //    throw new Exception("Пользователь с таким Email не найден");
             return _mapper.Map<User, UserDTO>(entity);
         }
 
