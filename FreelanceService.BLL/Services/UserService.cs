@@ -31,8 +31,7 @@ namespace FreelanceService.BLL.Services
             if (email == null)
                 throw new Exception("Поле Email не введено");
             var entity = await _uow.UserRepos.FindByEmail(email);
-           // if (entity == null)
-            //    throw new Exception("Пользователь с таким Email не найден");
+
             return _mapper.Map<User, UserDTO>(entity);
         }
 
@@ -42,8 +41,6 @@ namespace FreelanceService.BLL.Services
             if (id == 0)
                 throw new Exception("Поле Id не введено");
             var entity = await _uow.UserRepos.FindById(id);
-            if (entity == null)
-                throw new Exception("Пользователь с таким Id не найден");
             return _mapper.Map<User, UserDTO>(entity);
         }
 
@@ -53,9 +50,17 @@ namespace FreelanceService.BLL.Services
             return result;
         }
 
+        public async Task Update(UserDTO entity)
+        {
+
+            var user = _mapper.Map<UserDTO, User>(entity);
+            await _uow.UserRepos.Update(user);
+        }
+
+
         public async Task CommitAsync()
         {
-           await _uow.CommitAsync();
+            await _uow.CommitAsync();
         }
 
     }

@@ -18,7 +18,6 @@ namespace FreelanceService.DAL.Repositories
             _context = context;
         }
 
-
         public async Task AddUser(User entity)
         {
             string query = "INSERT INTO Users(Email,PassHash,FirstName,LastName,Phone,DynamicSalt,RegistrationDateTime,City,Rating,Role) VALUES(@Email,@PassHash,@FirstName,@LastName,@Phone,@DynamicSalt,@RegistrationDateTime,@City,@Rating,@Role);SELECT CAST(SCOPE_IDENTITY() as int)";
@@ -92,16 +91,11 @@ namespace FreelanceService.DAL.Repositories
             await _context.ExecuteAsync(query,
                     param: new
                     {
-                        Id = entity.Id,
                         Email = entity.Email,
-                        PassHash = entity.PassHash,
                         FirstName = entity.FirstName,
                         LastName = entity.LastName,
                         Phone = entity.Phone,
-                        DynamicSalt = entity.DynamicSalt,
-                        RegistrationDateTime = entity.RegistrationDateTime,
                         City = entity.City,
-                        Rating = entity.Rating,
                         Role = entity.Role
                     }
                 );

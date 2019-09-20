@@ -1,14 +1,13 @@
-﻿using FreelanceService.BLL.Models;
-using FreelanceService.Common.Enum;
-using FreelanceService.DAL.Entities;
-
-using FreelanceService.DAL.Interfaces;
+﻿using FreelanceService.BLL.DTO;
+using FreelanceService.BLL.Interfaces;
+using FreelanceService.BLL.Models;
 using FreelanceService.Web.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -18,47 +17,56 @@ namespace FreelanceService.Web.Controllers
 {
     public class ProfileController : Controller
     {
-        IUnitOfWork _unitOfWork;
+        IUserService _userService;
+        IJobService _jobService;
 
-        public ProfileController(IUnitOfWork uow)
+        public ProfileController(IJobService jobService, IUserService userService)
         {
-            _unitOfWork = uow;
+            _jobService = jobService;
+            _userService = userService;
+        }
 
+        [Authorize(Roles = "Исполнитель,Заказчик")]
+        public async Task<ActionResult> Profile()
+        {
+
+            if (User.IsInRole("Исполнитель"))
+                return RedirectToAction(nameof(ProfileExecutor));
+            else  return RedirectToAction(nameof(ProfileCustomer));
         }
 
         // GET: Profile
-        [Authorize(Roles = "2")]
-        public async Task<ActionResult> IndexCustomer()
+        [Authorize(Roles = "Заказчик")]
+        public async Task<ActionResult> ProfileCustomer()
         {
 
-            var user = await _unitOfWork.UserRepos.FindByEmail(User.Identity.Name);
-
+            var user = await _userService.FindUserByEmail(User.Identity.Name);
             var viewProfile = new ProfileViewModel
             {
-                City = user.City,
+                City = CityNameFromInt.GetName(user.City),
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Phone = user.Phone,
-                Role = user.Role
+                Role = RoleNameFromInt.GetName(user.Role)
             };
 
             return View(viewProfile);
         }
-        [Authorize(Roles = "1")]
-        public async Task<ActionResult> IndexExecutor()
+        [Authorize(Roles = "Исполнитель")]
+        public async Task<ActionResult> ProfileExecutor()
         {
 
-            var user = await _unitOfWork.UserRepos.FindByEmail(User.Identity.Name);
+            var user = await _userService.FindUserByEmail(User.Identity.Name);
 
             var viewProfile = new ProfileViewModel
             {
-                City = user.City,
+                City = CityNameFromInt.GetName(user.City),
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Phone = user.Phone,
-                Role = user.Role
+                Role = RoleNameFromInt.GetName(user.Role)
             };
 
             return View(viewProfile);
@@ -69,31 +77,26 @@ namespace FreelanceService.Web.Controllers
             return View();
         }
 
-        [Authorize(Roles = "1,2")]
+        [Authorize(Roles = "Исполнитель,Заказчик")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(ProfileViewModel model)
+        public async Task<ActionResult> Edit(ProfileEditViewModel model)
         {
             try
             {
-                var user = await _unitOfWork.UserRepos.FindByEmail(User.Identity.Name);
-                await _unitOfWork.UserRepos.Update(new User
+                var user = await _userService.FindUserByEmail(User.Identity.Name);
+                await _userService.Update(new UserDTO
                 {
-                    Id = user.Id,
-                    DynamicSalt = user.DynamicSalt,
-                    PassHash = user.PassHash,
-                    Rating = user.Rating,
-                    RegistrationDateTime = user.RegistrationDateTime,
                     Email = model.Email,
                     FirstName = model.FirstName,
                     LastName = model.FirstName,
                     City = model.City,
-                    Role = model.Role,
                     Phone = model.Phone,
+                    Role = model.Role
                 });
-              await  _unitOfWork.CommitAsync();
+                await _userService.CommitAsync();
                 await Authenticate(model.Email);
-                return RedirectToAction(nameof(IndexCustomer));
+                return RedirectToAction(nameof(Profile));
             }
             catch
             {
@@ -101,7 +104,41 @@ namespace FreelanceService.Web.Controllers
             }
         }
 
-        private async Task Authenticate(string userName)
+        [HttpGet]
+        public IActionResult CreateJob()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Заказчик")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateJob(CreateJobViewModel model)
+        {
+            try
+            {
+        
+                await _jobService.AddJob(new JobDTO
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    CategoryId = model.CategoryId,
+                    City = model.City,
+                    FinishedDateTime = model.FinishedDateTime,
+                    Price = model.Price,
+                    RegistrationJobDateTime = DateTime.Now,
+                    StartDateTime = DateTime.Now
+                });
+                await _jobService.CommitAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+            private async Task Authenticate(string userName)
         {
             var claims = new List<Claim>
             {

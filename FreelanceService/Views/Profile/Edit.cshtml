@@ -1,5 +1,5 @@
 ﻿@model FreelanceService.BLL.Models.ProfileViewModel
-
+@using FreelanceService.Common.Enum
 @{
     ViewData["Title"] = "Edit";
 }
@@ -32,15 +32,15 @@
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" />
-                <span asp-validation-for="City" class="text-danger"></span>
+            <div>
+                <label asp-for="City">Выберете город проживания</label><br />
+                @Html.DropDownList("City", Html.GetEnumSelectList(typeof(City)))
+                <span asp-validation-for="City" />
             </div>
-            <div class="form-group">
-                <label asp-for="Role" class="control-label"></label>
-                <input asp-for="Role" class="form-control" />
-                <span asp-validation-for="Role" class="text-danger"></span>
+            <div>
+                <label asp-for="Role"></label><br />
+                @Html.DropDownList("Role", Html.GetEnumSelectList(typeof(Role)))
+                <span asp-validation-for="Role"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

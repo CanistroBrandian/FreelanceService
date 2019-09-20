@@ -17,7 +17,6 @@ namespace FreelanceService.DAL.Repositories
             _context = context;
         }
 
-
         public async Task AddResponse(Response entity)
         {
             string query = "INSERT INTO Responses VALUES(@Id,@UserId_Executor,@TaskId,@Status,@Description,@DateTimeOfResponse);SELECT CAST(SCOPE_IDENTITY() as int)";

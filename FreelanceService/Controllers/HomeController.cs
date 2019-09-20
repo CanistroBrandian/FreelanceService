@@ -14,25 +14,23 @@ namespace FreelanceService.Web.Controllers
     public class HomeController : Controller
     {
 
-        IUnitOfWork _unitOfWork;
-        IMapper _mapper;
         IUserService _userService;
+        IJobService _jobService;
 
-        public HomeController(IUnitOfWork uow, IMapper mapper, IUserService userService)
+        public HomeController(IJobService jobService, IUserService userService)
         {
-            _unitOfWork = uow;
-            _mapper = mapper;
+            _jobService = jobService;
             _userService = userService;
         }
 
         public async Task<IActionResult> Index()
         {
             try
-            {  
-                var users = _unitOfWork.UserRepos.GetAll();
-                var serviceUsers = await _userService.GetAll();
-             
-                return View(serviceUsers);
+            {
+
+                var job = await _jobService.GetAll();
+                
+                return View(job);
             }
             catch
             {

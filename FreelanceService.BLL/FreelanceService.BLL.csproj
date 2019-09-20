@@ -71,16 +71,34 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Automapper\AutomapperProfile.cs" />
+    <Compile Include="DTO\CategoryDTO.cs" />
+    <Compile Include="DTO\JobDTO.cs" />
+    <Compile Include="DTO\ProjectDTO.cs" />
+    <Compile Include="DTO\ResponseDTO.cs" />
+    <Compile Include="DTO\ReviewDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="Interfaces\ICategoryService.cs" />
     <Compile Include="Interfaces\IEmailService.cs" />
+    <Compile Include="Interfaces\IJobService.cs" />
+    <Compile Include="Interfaces\IProjectService.cs" />
+    <Compile Include="Interfaces\IResponseService.cs" />
+    <Compile Include="Interfaces\IReviewService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="Models\CreateJobViewModel.cs" />
     <Compile Include="Models\EmailViewModel.cs" />
+    <Compile Include="Models\JobViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\ProfileEditViewModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Helpers\ServerInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\EmailService.cs" />
+    <Compile Include="Services\JobService.cs" />
+    <Compile Include="Services\ProjectService.cs" />
+    <Compile Include="Services\ResponseService.cs" />
+    <Compile Include="Services\ReviewService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -55,6 +55,11 @@ namespace FreelanceService
             {
                 cfg.AddProfile(new AutomapperProfile());
                 cfg.CreateMap<User, UserDTO>();
+                cfg.CreateMap<Job, JobDTO>();
+                cfg.CreateMap<Review, ReviewDTO>();
+                cfg.CreateMap<Response, ResponseDTO>();
+                cfg.CreateMap<Project, ProjectDTO>();
+                cfg.CreateMap<Category, CategoryDTO>();
             });
 
             services.AddSingleton(config.CreateMapper());
@@ -64,6 +69,11 @@ namespace FreelanceService
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IJobService, JobService>();
+            services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IReviewService, ReviewService>();
+            services.AddScoped<IResponseService, ResponseService>();
             services.AddScoped<IDbContext, DbContext>(provider => new DbContext(connectionStr));
             services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connectionStr, (IDbContext)provider.GetService(typeof(IDbContext))));
 

@@ -6,7 +6,7 @@
     [LastName]             VARCHAR (50)    NOT NULL,
     [Phone]                VARCHAR (16)    NOT NULL,
     [City]                 INT             NOT NULL,
-    [DinamicSalt]          VARCHAR (256)   NOT NULL,
+    [DynamicSalt]          VARCHAR (256)   NOT NULL,
     [RegistrationDateTime] DATETIME        NOT NULL,
     [Rating]               DECIMAL (18, 2) NULL,
     [Role]                 INT             NOT NULL,

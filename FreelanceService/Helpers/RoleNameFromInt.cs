@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FreelanceService.Web.Helpers
 {
@@ -19,8 +16,9 @@ namespace FreelanceService.Web.Helpers
                     return "Админ";
                 default:
                     throw new Exception("Такй роли не существует");
-                    
+
             }
+           
         }
     }
 }

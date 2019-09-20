@@ -3,6 +3,7 @@ using FreelanceService.BLL.Interfaces;
 using FreelanceService.BLL.Models;
 using FreelanceService.Common.Encrypt;
 using FreelanceService.Common.Salt;
+using FreelanceService.Web.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +41,7 @@ namespace FreelanceService.Web.Controllers
                 {
                     
                     await Authenticate(user);
-                    return RedirectToAction("Index", "Profile");
+                    return RedirectToAction("Profile", "Profile");
                 }
                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
@@ -81,7 +82,7 @@ namespace FreelanceService.Web.Controllers
                 await _emailService.SendEmailAsync(newUser.Email, "Succses registration", "You Login:" + newUser.Email + " You Pass:" + model.Password);
                 await Authenticate(newUser);
 
-                return RedirectToAction("Index", "Profile");
+                return RedirectToAction("Profile", "Profile");
             }
             else
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
@@ -95,7 +96,7 @@ namespace FreelanceService.Web.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.ToString())
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, RoleNameFromInt.GetName(user.Role))
             };
             ClaimsIdentity id = new ClaimsIdentity(claims, "AuthCookie", ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);

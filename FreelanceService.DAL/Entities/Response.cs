@@ -11,6 +11,6 @@ namespace FreelanceService.DAL.Entities
         public int TaskId { get; set; }
         public int Status { get; set; }
         public string Description { get; set; }
-        public DateTime DateTimeOfResponse { get; set; } //
+        public DateTime DateTimeOfResponse { get; set; } 
     }
 }
