@@ -1,32 +1,18 @@
-﻿using MimeKit;
+﻿using FreelanceService.BLL.Interfaces;
 using MailKit.Net.Smtp;
+using MimeKit;
 using System.Threading.Tasks;
-using FreelanceService.BLL.Helpers;
-using FreelanceService.BLL.Interfaces;
 
-//заюзать mailKit
 
 namespace FreelanceService.BLL.Services
 {
-    public class EmailService :IEmailService
+    public class EmailService : IEmailService
     {
-        //private GetConfigString _conf;
-        //private string login;
-        //private string pass;
-        //public EmailService(GetConfigString configString)
-        //{
-        //    _conf = configString;
-        //    pass = _conf.GetEmailOrPass("Pass");
-        //    login = _conf.GetEmailOrPass("Email");
-        //}
-
         public async Task SendEmailAsync(string email, string subject, string message)
         {
-       
             var emailMessage = new MimeMessage();
-
-            emailMessage.From.Add(new MailboxAddress("FreelanceService", "brovkokosty148@yandex.ru"));
-            emailMessage.To.Add(new MailboxAddress("", email));
+            emailMessage.From.Add(new MailboxAddress("FreelanceService", "brovkokosty@mail.ru"));
+            emailMessage.To.Add(new MailboxAddress(email, email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {
@@ -35,10 +21,9 @@ namespace FreelanceService.BLL.Services
 
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync("smtp.yandex.ru", 465, true);
-                await client.AuthenticateAsync("brovkokosty148@yandex.ru", "Looser1488923as");
+                await client.ConnectAsync("smtp.mail.ru", 465, true);
+                await client.AuthenticateAsync("brovkokosty@mail.ru", "Looser14889235876");
                 await client.SendAsync(emailMessage);
-
                 await client.DisconnectAsync(true);
             }
         }

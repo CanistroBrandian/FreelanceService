@@ -3,7 +3,7 @@
 namespace FreelanceService.Common.Enum
 {
 
-    public enum City
+    public enum CityEnum
     {
         [Display(Name = "Минск")]
         Minsk = 1,

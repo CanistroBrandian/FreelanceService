@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
+using FreelanceService.BLL.Models;
+using FreelanceService.Common.Enum;
 using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FreelanceService.BLL.Services
 {
-   public class JobService:IJobService
+    public class JobService:IJobService
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
@@ -21,13 +21,15 @@ namespace FreelanceService.BLL.Services
             _mapper = mapper;
         }
 
-        public async Task AddJob(JobDTO entity)
+        public async Task AddJob(CreateJobViewModel createModel, UserDTO user)
         {
-            var job = _mapper.Map<JobDTO, Job>(entity);
+     
+            var model = _mapper.Map<CreateJobViewModel, JobDTO>(createModel);
+            var job = _mapper.Map<JobDTO, Job>(model);
+            job.UserId_Customer = user.Id;
             await _uow.JobRepos.AddJob(job);
 
         }
-
 
         public async Task<JobDTO> FindJobById(int id)
         {
@@ -37,9 +39,21 @@ namespace FreelanceService.BLL.Services
             return _mapper.Map<Job, JobDTO>(entity);
         }
 
-        public async Task<IEnumerable<JobDTO>> GetAll()
+        public async Task<IEnumerable<JobViewDTO>> GetAllJobsOfCustomer(UserDTO userDTO)
         {
-            var result = _mapper.Map<IEnumerable<Job>, IEnumerable<JobDTO>>(await _uow.JobRepos.GetAll());
+            if (userDTO.Role == (int)RoleEnum.Customer && userDTO.Id != 0)
+            {
+                var user = _mapper.Map<UserDTO, User>(userDTO);
+                var result = _mapper.Map<IEnumerable<Job>, IEnumerable<JobViewDTO>>(await _uow.JobRepos.GetAllJobsOfCustomer(user));
+                return result;      
+            }
+            else throw new Exception("Роль или Такого пользователя не существует");
+           
+        }
+
+        public async Task<IEnumerable<JobViewDTO>> GetAll()
+        {
+            var result = _mapper.Map<IEnumerable<Job>, IEnumerable<JobViewDTO>>(await _uow.JobRepos.GetAll());
             return result;
         }
 

@@ -1,11 +1,7 @@
-﻿using Dapper;
-using FreelanceService.DAL.Concrate;
-using FreelanceService.DAL.Entities;
+﻿using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -18,16 +14,13 @@ namespace FreelanceService.DAL.Repositories
         {
             _context = context;
         }
-
-
+        
         public async Task AddCategory(Category entity)
         {
             string query = "INSERT INTO Categories VALUES(@Id,@Name);SELECT CAST(SCOPE_IDENTITY() as int)";
 
             if (entity == null)
                 throw new ArgumentNullException("entity");
-
-
             await _context.ExecuteAsync(query, param: entity);
 
         }

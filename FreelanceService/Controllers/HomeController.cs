@@ -1,11 +1,7 @@
-﻿using AutoMapper;
-using FreelanceService.BLL.DTO;
-using FreelanceService.BLL.Interfaces;
-using FreelanceService.BLL.Services;
-using FreelanceService.DAL.Interfaces;
+﻿using FreelanceService.BLL.Interfaces;
 using FreelanceService.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -16,28 +12,25 @@ namespace FreelanceService.Web.Controllers
 
         IUserService _userService;
         IJobService _jobService;
-
         public HomeController(IJobService jobService, IUserService userService)
         {
             _jobService = jobService;
             _userService = userService;
         }
 
+        [Authorize(Roles = "Заказчик")]
         public async Task<IActionResult> Index()
         {
             try
             {
-
-                var job = await _jobService.GetAll();
                 
+                var job = await _jobService.GetAllJobsOfCustomer(await _userService.FindUserByEmail(User.Identity.Name));
                 return View(job);
             }
             catch
             {
                 throw;
             }
-
-
         }
 
         public IActionResult Privacy()

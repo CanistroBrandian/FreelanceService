@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
+using FreelanceService.BLL.Models;
+using FreelanceService.Common.Encrypt;
+using FreelanceService.Common.Salt;
 using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
@@ -19,9 +22,12 @@ namespace FreelanceService.BLL.Services
             _mapper = mapper;
         }
 
-        public async Task AddUser(UserDTO entity)
+        public async Task AddUser(RegisterViewModel registrationModel)
         {
-            var user = _mapper.Map<UserDTO, User>(entity);
+            var model = _mapper.Map<RegisterViewModel, UserRegistrationDTO>(registrationModel);
+            model.DynamicSalt = GenerateSalt.GetDinamicSalt();
+            model.PassHash = SHA256Encrypt.getHashSha256(registrationModel.ConfirmPassword, model.DynamicSalt);
+            var user = _mapper.Map<UserRegistrationDTO, User>(model);
             await _uow.UserRepos.AddUser(user);
 
         }
@@ -50,18 +56,16 @@ namespace FreelanceService.BLL.Services
             return result;
         }
 
-        public async Task Update(UserDTO entity)
+        public async Task Update(ProfileEditViewModel editModel)
         {
-
-            var user = _mapper.Map<UserDTO, User>(entity);
+            var model = _mapper.Map<ProfileEditViewModel, UserProfileEditDTO>(editModel);
+            var user = _mapper.Map<UserProfileEditDTO, User>(model);
             await _uow.UserRepos.Update(user);
         }
-
 
         public async Task CommitAsync()
         {
             await _uow.CommitAsync();
         }
-
     }
 }

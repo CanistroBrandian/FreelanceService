@@ -73,10 +73,14 @@
     <Compile Include="Automapper\AutomapperProfile.cs" />
     <Compile Include="DTO\CategoryDTO.cs" />
     <Compile Include="DTO\JobDTO.cs" />
+    <Compile Include="DTO\JobViewDTO.cs" />
     <Compile Include="DTO\ProjectDTO.cs" />
     <Compile Include="DTO\ResponseDTO.cs" />
     <Compile Include="DTO\ReviewDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="DTO\UserProfileEditDTO.cs" />
+    <Compile Include="DTO\UserRegistrationDTO.cs" />
+    <Compile Include="Helpers\ValidationException.cs" />
     <Compile Include="Interfaces\ICategoryService.cs" />
     <Compile Include="Interfaces\IEmailService.cs" />
     <Compile Include="Interfaces\IJobService.cs" />
@@ -88,6 +92,7 @@
     <Compile Include="Models\EmailViewModel.cs" />
     <Compile Include="Models\JobViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\PageViewModel.cs" />
     <Compile Include="Models\ProfileEditViewModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />

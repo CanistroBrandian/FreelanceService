@@ -2,7 +2,7 @@
 
 namespace FreelanceService.Common.Enum
 {
-    public enum Role
+    public enum RoleEnum
         {
         [Display(Name = "Исполнитель")]
         Executor = 1,

@@ -9,9 +9,7 @@ namespace FreelanceService.DAL.Concrate
     public class DbContext : IDbContext
     {
         private List<ICommand> Queue { get; set; } = new List<ICommand>();
-
         private readonly string _connectionString;
-
         public DbContext(string connectionString)
         {
             _connectionString = connectionString;
@@ -20,7 +18,6 @@ namespace FreelanceService.DAL.Concrate
         public async Task ExecuteAsync(string sql, object param = null)
         {
             Queue.Add(new ExecuteCommand(sql, param));
-
         }
 
         public async Task<IEnumerable<T>> Query<T>(string sql, object param = null) where T : class

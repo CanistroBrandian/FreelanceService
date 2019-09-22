@@ -5,13 +5,11 @@ using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FreelanceService.BLL.Services
 {
-  public  class ResponseService:IResponseService
+    public  class ResponseService:IResponseService
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
@@ -27,7 +25,6 @@ namespace FreelanceService.BLL.Services
             await _uow.ResponseRepos.AddResponse(response);
 
         }
-
 
         public async Task<ResponseDTO> FindResponseById(int id)
         {
@@ -55,7 +52,6 @@ namespace FreelanceService.BLL.Services
 
             await _uow.ResponseRepos.Remove(entity.Id);
         }
-
 
         public async Task CommitAsync()
         {

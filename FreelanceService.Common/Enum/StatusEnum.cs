@@ -2,7 +2,7 @@
 
 namespace FreelanceService.Common.Enum
 {
-    enum Status
+    enum StatusEnum
         {
         [Display(Name = "В Поиске заказчика")]
         Search = 1,

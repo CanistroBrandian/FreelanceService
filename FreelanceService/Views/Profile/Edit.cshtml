@@ -34,12 +34,12 @@
             </div>
             <div>
                 <label asp-for="City">Выберете город проживания</label><br />
-                @Html.DropDownList("City", Html.GetEnumSelectList(typeof(City)))
+                @Html.DropDownList("City", Html.GetEnumSelectList(typeof(CityEnum)))
                 <span asp-validation-for="City" />
             </div>
             <div>
                 <label asp-for="Role"></label><br />
-                @Html.DropDownList("Role", Html.GetEnumSelectList(typeof(Role)))
+                @Html.DropDownList("Role", Html.GetEnumSelectList(typeof(RoleEnum)))
                 <span asp-validation-for="Role"></span>
             </div>
             <div class="form-group">

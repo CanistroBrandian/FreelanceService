@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using FreelanceService.BLL.Automapper;
-using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
 using FreelanceService.BLL.Services;
 using FreelanceService.DAL.Concrate;
-using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -14,7 +12,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data.SqlClient;
 
 namespace FreelanceService
 {
@@ -48,22 +45,12 @@ namespace FreelanceService
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             
-
-            
-
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new AutomapperProfile());
-                cfg.CreateMap<User, UserDTO>();
-                cfg.CreateMap<Job, JobDTO>();
-                cfg.CreateMap<Review, ReviewDTO>();
-                cfg.CreateMap<Response, ResponseDTO>();
-                cfg.CreateMap<Project, ProjectDTO>();
-                cfg.CreateMap<Category, CategoryDTO>();
             });
 
             services.AddSingleton(config.CreateMapper());
-
             services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<IUserRepository, UserRepository>();
@@ -105,7 +92,7 @@ namespace FreelanceService
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Users}/{action=Index}/{id?}");
+                    template: "{controller=Profile}/{action=Profile}/{id?}");
             });
         }
     }

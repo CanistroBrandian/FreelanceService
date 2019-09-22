@@ -9,13 +9,11 @@ namespace FreelanceService.DAL.Concrate
     {
         protected IDbContext _dbContext;
         private readonly string _connectionString;
-
         public UnitOfWork(string connectionString, IDbContext dbContext)
         {
             _dbContext = dbContext;
             _connectionString = connectionString;
         }
-
         private IUserRepository user;
         private IProjectRepository project;
         private IJobRepository job;

@@ -19,18 +19,15 @@ namespace FreelanceService.DAL.Repositories
 
         public async Task AddJob(Job entity)
         {
-            string query = "INSERT INTO Jobs VALUES(@Id,@UserId_Executor,@CategoryId,@Name,@Description,@City,@Status,@RegistrationJobDateTime,@StartDateTime,@FinishedDateTime,@Price);SELECT CAST(SCOPE_IDENTITY() as int)";
+            string query = "INSERT INTO Jobs(UserId_Customer,UserId_Executor,CategoryId,Name,Description,City,Status,FinishedDateTime,Price) VALUES(@UserId_Customer,@UserId_Executor,@CategoryId,@Name,@Description,@City,@Status,@FinishedDateTime,@Price)";
 
             if (entity == null)
                 throw new ArgumentNullException("entity");
-
 
            await _context.ExecuteAsync(
                 query, param: entity);
 
         }
-
- 
 
         public async Task<Job> FindById(int id)
         {
@@ -48,6 +45,12 @@ namespace FreelanceService.DAL.Repositories
         {
             string query = "SELECT * FROM Jobs";
             return await _context.Query<Job>(query);
+        }
+
+        public async Task<IEnumerable<Job>> GetAllJobsOfCustomer(User user)
+        {
+            string query = "SELECT * FROM Jobs WHERE Id=@Id";
+            return await _context.Query<Job>(query, param: new {Id= user.Id});
         }
 
         public async Task Remove(int id)

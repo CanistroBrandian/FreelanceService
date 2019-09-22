@@ -31,7 +31,6 @@ namespace FreelanceService.Common.Encrypt
             {
                 hash += String.Format("{0:x2}", x);
             }
-
             if (Equals(hash, passHash))
                 return true;
             else return false;

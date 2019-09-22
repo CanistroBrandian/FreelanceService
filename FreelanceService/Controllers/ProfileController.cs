@@ -1,6 +1,6 @@
-﻿using FreelanceService.BLL.DTO;
-using FreelanceService.BLL.Interfaces;
+﻿using FreelanceService.BLL.Interfaces;
 using FreelanceService.BLL.Models;
+using FreelanceService.Common.Enum;
 using FreelanceService.Web.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -19,7 +19,6 @@ namespace FreelanceService.Web.Controllers
     {
         IUserService _userService;
         IJobService _jobService;
-
         public ProfileController(IJobService jobService, IUserService userService)
         {
             _jobService = jobService;
@@ -27,19 +26,19 @@ namespace FreelanceService.Web.Controllers
         }
 
         [Authorize(Roles = "Исполнитель,Заказчик")]
-        public async Task<ActionResult> Profile()
+        public ActionResult Profile()
         {
-
             if (User.IsInRole("Исполнитель"))
                 return RedirectToAction(nameof(ProfileExecutor));
-            else  return RedirectToAction(nameof(ProfileCustomer));
+            else return RedirectToAction(nameof(ProfileCustomer));
         }
 
         // GET: Profile
         [Authorize(Roles = "Заказчик")]
         public async Task<ActionResult> ProfileCustomer()
         {
-
+           
+            Enum.GetName(typeof(RoleEnum), RoleEnum.Executor);
             var user = await _userService.FindUserByEmail(User.Identity.Name);
             var viewProfile = new ProfileViewModel
             {
@@ -48,17 +47,14 @@ namespace FreelanceService.Web.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Phone = user.Phone,
-                Role = RoleNameFromInt.GetName(user.Role)
-            };
-
+                Role = Enum.GetName(typeof(RoleEnum), RoleEnum.Executor)
+        };
             return View(viewProfile);
         }
         [Authorize(Roles = "Исполнитель")]
         public async Task<ActionResult> ProfileExecutor()
         {
-
             var user = await _userService.FindUserByEmail(User.Identity.Name);
-
             var viewProfile = new ProfileViewModel
             {
                 City = CityNameFromInt.GetName(user.City),
@@ -66,9 +62,8 @@ namespace FreelanceService.Web.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Phone = user.Phone,
-                Role = RoleNameFromInt.GetName(user.Role)
+                Role = RoleEnum.Admin.ToString()
             };
-
             return View(viewProfile);
         }
 
@@ -85,15 +80,7 @@ namespace FreelanceService.Web.Controllers
             try
             {
                 var user = await _userService.FindUserByEmail(User.Identity.Name);
-                await _userService.Update(new UserDTO
-                {
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.FirstName,
-                    City = model.City,
-                    Phone = model.Phone,
-                    Role = model.Role
-                });
+                await _userService.Update(model);
                 await _userService.CommitAsync();
                 await Authenticate(model.Email);
                 return RedirectToAction(nameof(Profile));
@@ -117,18 +104,8 @@ namespace FreelanceService.Web.Controllers
         {
             try
             {
-        
-                await _jobService.AddJob(new JobDTO
-                {
-                    Name = model.Name,
-                    Description = model.Description,
-                    CategoryId = model.CategoryId,
-                    City = model.City,
-                    FinishedDateTime = model.FinishedDateTime,
-                    Price = model.Price,
-                    RegistrationJobDateTime = DateTime.Now,
-                    StartDateTime = DateTime.Now
-                });
+
+                await _jobService.AddJob(model, await _userService.FindUserByEmail(User.Identity.Name));
                 await _jobService.CommitAsync();
                 return RedirectToAction("Index", "Home");
             }
@@ -138,7 +115,7 @@ namespace FreelanceService.Web.Controllers
             }
         }
 
-            private async Task Authenticate(string userName)
+        private async Task Authenticate(string userName)
         {
             var claims = new List<Claim>
             {
@@ -148,5 +125,10 @@ namespace FreelanceService.Web.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
+        }
     }
 }

@@ -5,13 +5,11 @@ using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FreelanceService.BLL.Services
 {
-   public class ProjectService:IProjectService
+    public class ProjectService:IProjectService
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
@@ -27,7 +25,6 @@ namespace FreelanceService.BLL.Services
             await _uow.ProjectRepos.AddProject(project);
 
         }
-
 
         public async Task<ProjectDTO> FindProjectById(int id)
         {

@@ -2,12 +2,10 @@
 using FreelanceService.BLL.Interfaces;
 using FreelanceService.BLL.Models;
 using FreelanceService.Common.Encrypt;
-using FreelanceService.Common.Salt;
 using FreelanceService.Web.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -28,8 +26,11 @@ namespace FreelanceService.Web.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Profile", "Profile");
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -37,62 +38,46 @@ namespace FreelanceService.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userService.FindUserByEmail(model.Email);
-                if (user != null && SHA256Encrypt.checkHashSha256(model.Password,user.PassHash, user.DynamicSalt))
+                if (user != null && SHA256Encrypt.checkHashSha256(model.Password, user.PassHash, user.DynamicSalt))
                 {
-                    
                     await Authenticate(user);
                     return RedirectToAction("Profile", "Profile");
                 }
-               ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
             return View(model);
         }
+
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            if (ModelState.IsValid)
+            {
 
-            var dynamicSalt = GenerateSalt.GetDinamicSalt();
-            // if (ModelState.IsValid)
-            //  {
-            // var user = await _unitOfWork.UserRepos.FindByEmail(model.Email);
-            var user = await _userService.FindUserByEmail(model.Email);
+                var user = await _userService.FindUserByEmail(model.Email);
             if (user == null)
             {
-                var newUser = new UserDTO
-                {
-                    Email = model.Email,
-                    DynamicSalt = dynamicSalt,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    City = model.City,
-                    PassHash = SHA256Encrypt.getHashSha256(model.Password, dynamicSalt),
-                    Phone = model.Phone,
-                    Role = model.Role,
-                    RegistrationDateTime = DateTime.Now,
-                };
-
-                await _userService.AddUser(newUser);
+                await _userService.AddUser(model);
                 await _userService.CommitAsync();
-                await _emailService.SendEmailAsync(newUser.Email, "Succses registration", "You Login:" + newUser.Email + " You Pass:" + model.Password);
-                await Authenticate(newUser);
-
+                await _emailService.SendEmailAsync(model.Email, "Succses registration", "You Login:" + model.Email + " You Pass:" + model.Password);
+                await Authenticate(await _userService.FindUserByEmail(model.Email));
                 return RedirectToAction("Profile", "Profile");
             }
             else
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
-            // }
+              return  ModelState.AddModelError("", "Пользователь с таким Email существует");
+            }
             return View(model);
         }
 
         private async Task Authenticate(UserDTO user)
         {
-
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
@@ -103,10 +88,6 @@ namespace FreelanceService.Web.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Account");
-        }
+
     }
 }

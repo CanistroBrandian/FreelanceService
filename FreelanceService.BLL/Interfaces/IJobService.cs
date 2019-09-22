@@ -1,17 +1,16 @@
 ﻿using FreelanceService.BLL.DTO;
-using System;
+using FreelanceService.BLL.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FreelanceService.BLL.Interfaces
 {
-   public interface IJobService
+    public interface IJobService
     {
-        Task AddJob(JobDTO entity);
+        Task AddJob(CreateJobViewModel entity, UserDTO user);
         Task<JobDTO> FindJobById(int id);
-        Task<IEnumerable<JobDTO>> GetAll();
+        Task<IEnumerable<JobViewDTO>> GetAll();
+        Task<IEnumerable<JobViewDTO>> GetAllJobsOfCustomer(UserDTO user);
         Task Update(JobDTO entity);
         Task CommitAsync();
     }

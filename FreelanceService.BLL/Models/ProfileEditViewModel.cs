@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FreelanceService.BLL.Models
 {
-   public class ProfileEditViewModel
+    public class ProfileEditViewModel
     {
         [Display(Name = "Почтовый ящик")]
         public string Email { get; set; }

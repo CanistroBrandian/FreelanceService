@@ -12,9 +12,7 @@ namespace FreelanceService.DAL.Concrate
             Params = parameters;
         }
         public string Sql { get; private set; }
-
         public object Params { get; private set; }
-
         public abstract Task ExecuteAsync(IDbTransaction transaction);
     }
 }

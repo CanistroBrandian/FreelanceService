@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace FreelanceService.BLL.Interfaces
 {
-   public interface IEmailService
+    public interface IEmailService
     {
         Task SendEmailAsync(string email, string subject, string message);
     }

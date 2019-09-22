@@ -20,28 +20,26 @@ namespace FreelanceService.DAL.Repositories
 
         public async Task AddUser(User entity)
         {
-            string query = "INSERT INTO Users(Email,PassHash,FirstName,LastName,Phone,DynamicSalt,RegistrationDateTime,City,Rating,Role) VALUES(@Email,@PassHash,@FirstName,@LastName,@Phone,@DynamicSalt,@RegistrationDateTime,@City,@Rating,@Role);SELECT CAST(SCOPE_IDENTITY() as int)";
+            string query = "INSERT INTO Users(Email,PassHash,FirstName,LastName,Phone,DynamicSalt,City,Rating,Role) VALUES(@Email,@PassHash,@FirstName,@LastName,@Phone,@DynamicSalt,@City,@Rating,@Role);SELECT CAST(SCOPE_IDENTITY() as int)";
+        
+                if (entity == null)
+                    throw new ArgumentNullException("Entity is empty");
 
-            if (entity == null)
-                throw new ArgumentNullException("entity");
-
-
-            await _context.ExecuteAsync(
-                query, param: new
-                {
-                    Email = entity.Email,
-                    PassHash = entity.PassHash,
-                    FirstName = entity.FirstName,
-                    LastName = entity.LastName,
-                    Phone = entity.Phone,
-                    DynamicSalt = entity.DynamicSalt,
-                    RegistrationDateTime = entity.RegistrationDateTime,
-                    City = entity.City,
-                    Rating = entity.Rating,
-                    Role = entity.Role
-
-                }
-            );
+                await _context.ExecuteAsync(
+                    query, param: new
+                    {
+                        Email = entity.Email,
+                        PassHash = entity.PassHash,
+                        FirstName = entity.FirstName,
+                        LastName = entity.LastName,
+                        Phone = entity.Phone,
+                        DynamicSalt = entity.DynamicSalt,
+                        City = entity.City,
+                        Rating = entity.Rating,
+                        Role = entity.Role
+                    }
+                );
+         
 
         }
 
@@ -87,7 +85,7 @@ namespace FreelanceService.DAL.Repositories
 
         public async Task Update(User entity)
         {
-            string query = "UPDATE Users SET Email=@Email, PassHash=@PassHash, FirstName=@FirstName, LastName=@LastName, Phone=@Phone, DynamicSalt=@DynamicSalt, RegistrationDateTime=@RegistrationDateTime, City=@City, Rating=@Rating, Role=@Role WHERE Id=@Id";
+            string query = "UPDATE Users SET Email=@Email, FirstName=@FirstName, LastName=@LastName, City=@City,Role=@Role WHERE Email=@Email";
             await _context.ExecuteAsync(query,
                     param: new
                     {

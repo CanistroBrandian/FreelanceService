@@ -5,13 +5,11 @@ using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FreelanceService.BLL.Services
 {
-   public class ReviewService:IReviewService
+    public class ReviewService:IReviewService
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
@@ -25,9 +23,7 @@ namespace FreelanceService.BLL.Services
         {
             var review = _mapper.Map<ReviewDTO, Review>(entity);
             await _uow.ReviewRepos.AddReview(review);
-
         }
-
 
         public async Task<ReviewDTO> FindReviewById(int id)
         {

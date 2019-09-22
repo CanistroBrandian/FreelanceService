@@ -9,10 +9,9 @@ namespace FreelanceService.DAL.Concrate
         public ExecuteCommand(string sql, object parameters) : base(sql, parameters)
         {
         }
-
         public override async Task ExecuteAsync(IDbTransaction transaction)
         {
-           await transaction.Connection.ExecuteAsync(Sql, Params, transaction);
+            await transaction.Connection.ExecuteAsync(Sql, Params, transaction);
         }
     }
 }
