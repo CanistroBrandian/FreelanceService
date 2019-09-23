@@ -17,10 +17,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Documentation\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Documentation\FreelanceService.Common.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,7 +54,9 @@
   <ItemGroup>
     <Compile Include="Encrypt\SHA256Encrypt.cs" />
     <Compile Include="Enum\CityEnum.cs" />
+    <Compile Include="Enum\CityNameFromInt.cs" />
     <Compile Include="Enum\RoleEnum.cs" />
+    <Compile Include="Enum\RoleNameFromInt.cs" />
     <Compile Include="Enum\StatusEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Salt\GenerateSalt.cs" />

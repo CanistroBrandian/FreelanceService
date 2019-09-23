@@ -93,3 +93,11 @@ C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\net
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Profile\ProfileExecutor.g.cshtml.cs
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Profile\CreateJob.g.cshtml.cs
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
+C:\Users\Павел\source\repos\FreelanceService\Documentation\netcoreapp2.2\FreelanceService.Web.deps.json
+C:\Users\Павел\source\repos\FreelanceService\Documentation\netcoreapp2.2\FreelanceService.Web.runtimeconfig.json
+C:\Users\Павел\source\repos\FreelanceService\Documentation\netcoreapp2.2\FreelanceService.Web.runtimeconfig.dev.json
+C:\Users\Павел\source\repos\FreelanceService\Documentation\netcoreapp2.2\FreelanceService.Web.dll
+C:\Users\Павел\source\repos\FreelanceService\Documentation\netcoreapp2.2\FreelanceService.Web.pdb
+C:\Users\Павел\source\repos\FreelanceService\Documentation\netcoreapp2.2\FreelanceService.Web.xml
+C:\Users\Павел\source\repos\FreelanceService\Documentation\netcoreapp2.2\FreelanceService.Web.Views.dll
+C:\Users\Павел\source\repos\FreelanceService\Documentation\netcoreapp2.2\FreelanceService.Web.Views.pdb

@@ -16,3 +16,6 @@ C:\Users\Павел\source\repos\FreelanceService\FreelanceService.DAL\obj\Debug
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService.DAL\obj\Debug\FreelanceService.DAL.csproj.CopyComplete
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService.DAL\obj\Debug\FreelanceService.DAL.dll
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService.DAL\obj\Debug\FreelanceService.DAL.pdb
+C:\Users\Павел\source\repos\FreelanceService\Documentation\FreelanceService.DAL.xml
+C:\Users\Павел\source\repos\FreelanceService\Documentation\FreelanceService.DAL.dll
+C:\Users\Павел\source\repos\FreelanceService\Documentation\FreelanceService.DAL.pdb

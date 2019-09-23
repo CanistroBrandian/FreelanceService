@@ -22,6 +22,8 @@ namespace FreelanceService.BLL.Automapper
             CreateMap<Review, ReviewDTO>().ReverseMap();
             CreateMap<Project, ProjectDTO>().ReverseMap();
             CreateMap<Response, ResponseDTO>().ReverseMap();
+
+            CreateMap<UserDTO, ProfileViewModel>().ReverseMap();
         }
     }
 }

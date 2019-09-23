@@ -22,3 +22,6 @@ C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\obj\De
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\obj\Debug\FreelanceService.Common.pdb
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\bin\Debug\Microsoft.AspNetCore.Mvc.DataAnnotations.dll
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService.Common\bin\Debug\Microsoft.AspNetCore.Mvc.DataAnnotations.xml
+C:\Users\Павел\source\repos\FreelanceService\Documentation\FreelanceService.Common.xml
+C:\Users\Павел\source\repos\FreelanceService\Documentation\FreelanceService.Common.dll
+C:\Users\Павел\source\repos\FreelanceService\Documentation\FreelanceService.Common.pdb

@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FreelanceService.DAL</name>
+    </assembly>
+    <members>
+        <member name="T:FreelanceService.DAL.Repositories.JobRepository">
+            <summary>
+            Job Repository. Implemented CRUD operations in the Users table
+            </summary>
+        </member>
+        <member name="M:FreelanceService.DAL.Repositories.JobRepository.#ctor(FreelanceService.DAL.Interfaces.IDbContext)">
+            <summary>
+            Dependency Injection
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:FreelanceService.DAL.Repositories.JobRepository.AddJob(FreelanceService.DAL.Entities.Job)">
+            <summary>
+            Send query for adding a new entry to the table Jobs
+            </summary>
+            <param name="entity"></param>
+            <returns>void</returns>
+        </member>
+        <member name="M:FreelanceService.DAL.Repositories.JobRepository.FindById(System.Int32)">
+            <summary>
+            Send query to serch fields in table Jobs equal to id and returns value
+            </summary>
+            <param name="id"> id is of type int</param>
+            <returns>Returns a job  with type Job</returns>
+        </member>
+        <member name="M:FreelanceService.DAL.Repositories.JobRepository.GetAll">
+            <summary>
+            Send query to search all entries in the Jobs table
+            </summary>
+            <returns> Returns all entries ​​in IEnumerable Jobs type </returns>
+        </member>
+        <member name="M:FreelanceService.DAL.Repositories.JobRepository.GetAllJobsOfCustomer(FreelanceService.DAL.Entities.User)">
+            <summary>
+            Send query to search all entries in the Jobs table
+            </summary>
+            <returns> Returns all entries of user ​​in IEnumerable Jobs type </returns>
+        </member>
+        <member name="M:FreelanceService.DAL.Repositories.JobRepository.Remove(System.Int32)">
+             <summary>
+            Send query to delete the Jobs table field equal to Id
+             </summary>
+             <param name="id">id is of type int</param>
+             <returns>void</returns>
+        </member>
+        <member name="M:FreelanceService.DAL.Repositories.JobRepository.Update(FreelanceService.DAL.Entities.Job)">
+            <summary>
+            Send quey to update the values ​​of the fields of the Jobs table from the entity parameters
+            </summary>
+            <param name="entity">Accepts an entity of type Job</param>
+            <returns>void</returns>
+        </member>
+        <member name="T:FreelanceService.DAL.Repositories.UserRepository">
+            <summary>
+            User Repository. Implemented CRUD operations in the Users table
+            </summary>
+        </member>
+        <member name="M:FreelanceService.DAL.Repositories.UserRepository.AddUser(FreelanceService.DAL.Entities.User)">
+            <summary>
+            Send query for adding a new entry to the table Users
+            </summary>
+            <param name="entity">Accepts an entity of type User</param>
+            <returns>Void</returns>   
+        </member>
+        <member name="M:FreelanceService.DAL.Repositories.UserRepository.FindById(System.Int32)">
+            <summary>
+            Send query to serch fields in table Users equal to id and returns value
+            </summary>
+            <param name="id"> id is of type int</param>
+            <returns>Returns a user with type User</returns>
+        </member>
+        <member name="M:FreelanceService.DAL.Repositories.UserRepository.FindByEmail(System.String)">
+            <summary>
+            Search value fields in table Users equal to email and returns value
+            </summary>
+            <param name="email"> email is of type string</param>
+            <returns>Returns a user with type User</returns>
+        </member>
+        <member name="M:FreelanceService.DAL.Repositories.UserRepository.GetAll">
+            <summary>
+            Send query to search all entries in the Users table
+            </summary>
+            <returns> Returns all entries ​​in an IEnumerable User </returns>
+        </member>
+        <member name="M:FreelanceService.DAL.Repositories.UserRepository.Remove(System.Int32)">
+             <summary>
+            Send query to delete the Users table field equal to Id
+             </summary>
+             <param name="id">id is of type int</param>
+             <returns>void</returns>
+        </member>
+        <member name="M:FreelanceService.DAL.Repositories.UserRepository.Update(FreelanceService.DAL.Entities.User)">
+            <summary>
+            Send quey to update the values ​​of the fields of the Users table from the entity parameters
+            </summary>
+            <param name="entity">Accepts an entity of type User</param>
+            <returns>void</returns>
+        </member>
+    </members>
+</doc>

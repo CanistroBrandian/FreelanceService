@@ -1,12 +1,12 @@
 ﻿using FreelanceService.BLL.Interfaces;
-using FreelanceService.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace FreelanceService.Web.Controllers
 {
+    /// <summary>
+    /// Display all jobs in system
+    /// </summary>
     public class HomeController : Controller
     {
 
@@ -18,14 +18,16 @@ namespace FreelanceService.Web.Controllers
             _userService = userService;
         }
 
-        [Authorize(Roles = "Заказчик")]
+
+        /// <summary>
+        /// View all jobs
+        /// </summary>
+        /// <returns>View Home/Index</returns>
         public async Task<IActionResult> Index()
         {
             try
             {
-                
-                var job = await _jobService.GetAllJobsOfCustomer(await _userService.FindUserByEmail(User.Identity.Name));
-                return View(job);
+                return View(await _jobService.GetAll());
             }
             catch
             {
@@ -33,15 +35,5 @@ namespace FreelanceService.Web.Controllers
             }
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

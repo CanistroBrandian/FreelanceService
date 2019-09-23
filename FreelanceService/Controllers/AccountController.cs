@@ -12,17 +12,28 @@ using System.Threading.Tasks;
 
 namespace FreelanceService.Web.Controllers
 {
+    /// <summary>
+    /// The controller is responsible for user registration, login and authentication
+    /// </summary>
     public class AccountController : Controller
     {
         IEmailService _emailService;
         IUserService _userService;
 
+        /// <summary>
+        /// Dependency Injection User and Email service
+        /// </summary>
+        /// <param name="emailService"></param>
+        /// <param name="userService"></param>
         public AccountController(IEmailService emailService, IUserService userService)
         {
             _emailService = emailService;
             _userService = userService;
         }
-
+        /// <summary>
+        /// User authorization page. If the user is authorized, then he will be redirected to his profile
+        /// </summary>
+        /// <returns>View Account/Login</returns>
         [HttpGet]
         public IActionResult Login()
         {
@@ -30,7 +41,11 @@ namespace FreelanceService.Web.Controllers
                 return RedirectToAction("Profile", "Profile");
             return View();
         }
-
+        /// <summary>
+        /// The client side sends the LoginViewModel to the server to authorize the user. With successful authorization redirects to user profile and added authorization cookies
+        /// </summary>
+        /// <param name="model">model of type LoginVewModel</param>
+        /// <returns>View Profile/Profile</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -48,12 +63,21 @@ namespace FreelanceService.Web.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// User registration page.
+        /// </summary>
+        /// <returns>View Account/Register</returns>
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
+        /// <summary>
+        /// The client side sends the RegistrationViewModel to add a new user. If the registration is successful, the user is authenticate
+        /// </summary>
+        /// <param name="model">model of type RegisterViewModel</param>
+        /// <returns>View Profile/Profile</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
@@ -71,11 +95,16 @@ namespace FreelanceService.Web.Controllers
                 return RedirectToAction("Profile", "Profile");
             }
             else
-              return  ModelState.AddModelError("", "Пользователь с таким Email существует");
+               ModelState.AddModelError("", "Пользователь с таким Email существует");
             }
             return View(model);
         }
 
+        /// <summary>
+        /// User authentication method
+        /// </summary>
+        /// <param name="user">model type of UserDTO</param>
+        /// <returns></returns>
         private async Task Authenticate(UserDTO user)
         {
             var claims = new List<Claim>

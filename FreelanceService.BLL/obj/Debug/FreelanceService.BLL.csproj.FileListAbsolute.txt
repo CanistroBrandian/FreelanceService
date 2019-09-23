@@ -62,3 +62,6 @@ C:\Users\Павел\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\FreelanceService.BLL.csproj.CopyComplete
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\FreelanceService.BLL.dll
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService.BLL\obj\Debug\FreelanceService.BLL.pdb
+C:\Users\Павел\source\repos\FreelanceService\Documentation\FreelanceService.BLL.xml
+C:\Users\Павел\source\repos\FreelanceService\Documentation\FreelanceService.BLL.dll
+C:\Users\Павел\source\repos\FreelanceService\Documentation\FreelanceService.BLL.pdb

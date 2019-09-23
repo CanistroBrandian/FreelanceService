@@ -8,23 +8,35 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 
 namespace FreelanceService.Web.Controllers
 {
+    /// <summary>
+    /// Сontroller is responsible for displaying profile information, profile edit, adding new jobs by the customer
+    /// </summary>
     public class ProfileController : Controller
     {
         IUserService _userService;
         IJobService _jobService;
-        public ProfileController(IJobService jobService, IUserService userService)
+        IProfileService _profileService;
+
+        /// <summary>
+        /// Dependency Injection for jobService and userService
+        /// </summary>
+        /// <param name="jobService"></param>
+        /// <param name="userService"></param>
+        public ProfileController(IJobService jobService, IUserService userService, IProfileService profileService)
         {
             _jobService = jobService;
             _userService = userService;
+            _profileService = profileService;
         }
 
+        /// <summary>
+        /// Redirection to the profile of the executor or customer
+        /// </summary>
         [Authorize(Roles = "Исполнитель,Заказчик")]
         public ActionResult Profile()
         {
@@ -33,45 +45,42 @@ namespace FreelanceService.Web.Controllers
             else return RedirectToAction(nameof(ProfileCustomer));
         }
 
-        // GET: Profile
+        /// <summary>
+        /// View ProfileCustomer
+        /// </summary>
+        /// <returns>View Profile/ProfileCusomer</returns>
         [Authorize(Roles = "Заказчик")]
         public async Task<ActionResult> ProfileCustomer()
         {
-           
-            Enum.GetName(typeof(RoleEnum), RoleEnum.Executor);
-            var user = await _userService.FindUserByEmail(User.Identity.Name);
-            var viewProfile = new ProfileViewModel
-            {
-                City = CityNameFromInt.GetName(user.City),
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Phone = user.Phone,
-                Role = Enum.GetName(typeof(RoleEnum), RoleEnum.Executor)
-        };
-            return View(viewProfile);
+            var viewProfile = _profileService.GetProfile(await _userService.FindUserByEmail(User.Identity.Name));
+            return View(await viewProfile);
         }
+
+        /// <summary>
+        /// View Profile Executor
+        /// </summary>
+        /// <returns>View Profile/ProfileExecutorr</returns>
         [Authorize(Roles = "Исполнитель")]
         public async Task<ActionResult> ProfileExecutor()
         {
-            var user = await _userService.FindUserByEmail(User.Identity.Name);
-            var viewProfile = new ProfileViewModel
-            {
-                City = CityNameFromInt.GetName(user.City),
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Phone = user.Phone,
-                Role = RoleEnum.Admin.ToString()
-            };
+            var viewProfile = _profileService.GetProfile(await _userService.FindUserByEmail(User.Identity.Name));
             return View(viewProfile);
         }
 
+        /// <summary>
+        /// View edit profile
+        /// </summary>
+        /// <returns>View Profile/Edit</returns>
         public ActionResult Edit()
         {
             return View();
         }
 
+        /// <summary>
+        /// Request to edit user data
+        /// </summary>
+        /// <param name="model">model type of ProfileEditViewModel</param>
+        /// <returns>View Profile/Profike</returns>
         [Authorize(Roles = "Исполнитель,Заказчик")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -82,7 +91,6 @@ namespace FreelanceService.Web.Controllers
                 var user = await _userService.FindUserByEmail(User.Identity.Name);
                 await _userService.Update(model);
                 await _userService.CommitAsync();
-                await Authenticate(model.Email);
                 return RedirectToAction(nameof(Profile));
             }
             catch
@@ -91,12 +99,21 @@ namespace FreelanceService.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// View create new job of customer
+        /// </summary>
+        /// <returns>View Profile/CreateJob</returns>
         [HttpGet]
         public IActionResult CreateJob()
         {
             return View();
         }
 
+        /// <summary>
+        /// Request to create a new job for the customer
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>View Home/Index</returns>
         [Authorize(Roles = "Заказчик")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -107,7 +124,7 @@ namespace FreelanceService.Web.Controllers
 
                 await _jobService.AddJob(model, await _userService.FindUserByEmail(User.Identity.Name));
                 await _jobService.CommitAsync();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("MyJobs");
             }
             catch
             {
@@ -115,16 +132,25 @@ namespace FreelanceService.Web.Controllers
             }
         }
 
-        private async Task Authenticate(string userName)
+        [Authorize(Roles = "Заказчик")]
+        public async Task<IActionResult> MyJobs()
         {
-            var claims = new List<Claim>
+            try
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
-            };
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+
+                var job = await _jobService.GetAllJobsOfCustomer(await _userService.FindUserByEmail(User.Identity.Name));
+                return View(job);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
+        /// <summary>
+        /// Logout user
+        /// </summary>
+        /// <returns>View Account/User</returns>
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

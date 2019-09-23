@@ -61,6 +61,7 @@ namespace FreelanceService
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<IResponseService, ResponseService>();
+            services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IDbContext, DbContext>(provider => new DbContext(connectionStr));
             services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connectionStr, (IDbContext)provider.GetService(typeof(IDbContext))));
 

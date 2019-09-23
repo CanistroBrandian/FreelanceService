@@ -6,6 +6,11 @@
     <AssemblyName>FreelanceService.Web</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>..\Documentation\FreelanceService.Web.xml</DocumentationFile>
+    <OutputPath>..\Documentation</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="HtmlHelpers\**" />
     <Content Remove="HtmlHelpers\**" />

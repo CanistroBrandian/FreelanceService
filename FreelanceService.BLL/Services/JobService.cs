@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FreelanceService.BLL.Services
 {
-    public class JobService:IJobService
+    public class JobService : IJobService
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
@@ -23,11 +23,12 @@ namespace FreelanceService.BLL.Services
 
         public async Task AddJob(CreateJobViewModel createModel, UserDTO user)
         {
-     
             var model = _mapper.Map<CreateJobViewModel, JobDTO>(createModel);
             var job = _mapper.Map<JobDTO, Job>(model);
             job.UserId_Customer = user.Id;
-            await _uow.JobRepos.AddJob(job);
+            if (user.Role == (int)RoleEnum.Customer)
+                await _uow.JobRepos.AddJob(job);
+            else throw new ArgumentException("Невозможно добавить новую задачу т.к. пользователь не является заказчиком");
 
         }
 
@@ -45,10 +46,10 @@ namespace FreelanceService.BLL.Services
             {
                 var user = _mapper.Map<UserDTO, User>(userDTO);
                 var result = _mapper.Map<IEnumerable<Job>, IEnumerable<JobViewDTO>>(await _uow.JobRepos.GetAllJobsOfCustomer(user));
-                return result;      
+                return result;
             }
             else throw new Exception("Роль или Такого пользователя не существует");
-           
+
         }
 
         public async Task<IEnumerable<JobViewDTO>> GetAll()

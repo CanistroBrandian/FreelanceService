@@ -17,10 +17,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Documentation\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Documentation\FreelanceService.BLL.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -84,6 +85,7 @@
     <Compile Include="Interfaces\ICategoryService.cs" />
     <Compile Include="Interfaces\IEmailService.cs" />
     <Compile Include="Interfaces\IJobService.cs" />
+    <Compile Include="Interfaces\IProfileService.cs" />
     <Compile Include="Interfaces\IProjectService.cs" />
     <Compile Include="Interfaces\IResponseService.cs" />
     <Compile Include="Interfaces\IReviewService.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\JobService.cs" />
+    <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\ResponseService.cs" />
     <Compile Include="Services\ReviewService.cs" />
