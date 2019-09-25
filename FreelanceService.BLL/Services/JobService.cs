@@ -54,7 +54,8 @@ namespace FreelanceService.BLL.Services
 
         public async Task<IEnumerable<JobViewDTO>> GetAll()
         {
-            var result = _mapper.Map<IEnumerable<Job>, IEnumerable<JobViewDTO>>(await _uow.JobRepos.GetAll());
+            var users = await _uow.JobRepos.GetAll();
+            var result = _mapper.Map<IEnumerable<Job>, IEnumerable<JobViewDTO>>(users);
             return result;
         }
 
@@ -67,6 +68,31 @@ namespace FreelanceService.BLL.Services
         public async Task Remove(ResponseDTO entity)
         {
             await _uow.JobRepos.Remove(entity.Id);
+        }
+
+        public async Task<IEnumerable<JobViewDTO>> GetAllSorting(string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "Name_desc":
+                    var jobNamesOrderDes = await _uow.JobRepos.OrderByDescending(sortOrder);
+                    await CommitAsync();
+                    return _mapper.Map<IEnumerable<Job>, IEnumerable<JobViewDTO>>(jobNamesOrderDes);
+                case "Price":
+                    var jobPricesOrderAsc = await _uow.JobRepos.OrderByAscending(sortOrder);
+                    await CommitAsync();
+                    return _mapper.Map<IEnumerable<Job>, IEnumerable<JobViewDTO>>(jobPricesOrderAsc);
+                case "Price_desc":
+                    var jobPricesOrderDes = await _uow.JobRepos.OrderByDescending(sortOrder);
+                    await CommitAsync();
+                    return _mapper.Map<IEnumerable<Job>, IEnumerable<JobViewDTO>>(jobPricesOrderDes);
+                default:
+                    var jobNameOrderAsc = await _uow.JobRepos.OrderByAscending(sortOrder);
+                    await CommitAsync();
+                    return _mapper.Map<IEnumerable<Job>, IEnumerable<JobViewDTO>>(jobNameOrderAsc);
+
+            }
+
         }
 
         public async Task CommitAsync()

@@ -33,8 +33,8 @@ namespace FreelanceService.DAL.Repositories
             string query = "INSERT INTO Jobs(UserId_Customer,UserId_Executor,CategoryId,Name,Description,City,Status,FinishedDateTime,Price) VALUES(@UserId_Customer,@UserId_Executor,@CategoryId,@Name,@Description,@City,@Status,@FinishedDateTime,@Price)";
             if (entity == null)
                 throw new ArgumentNullException("entity");
-           await _context.ExecuteAsync(
-                query, param: entity);
+            await _context.ExecuteAsync(
+                 query, param: entity);
 
         }
         /// <summary>
@@ -71,7 +71,7 @@ namespace FreelanceService.DAL.Repositories
         public async Task<IEnumerable<Job>> GetAllJobsOfCustomer(User user)
         {
             string query = "SELECT * FROM Jobs WHERE Id=@Id";
-            return await _context.Query<Job>(query, param: new {Id= user.Id});
+            return await _context.Query<Job>(query, param: new { Id = user.Id });
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace FreelanceService.DAL.Repositories
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-           await _context.ExecuteAsync(query);
+            await _context.ExecuteAsync(query);
 
         }
         /// <summary>
@@ -96,8 +96,33 @@ namespace FreelanceService.DAL.Repositories
         public async Task Update(Job entity)
         {
             string query = "UPDATE Jobs SET CategoryId=@CategoryId,Name=@Name,Description=@Description,City=@City,FinishedDateTime=@FinishedDateTime,Price=@Price WHERE Id = @Id";
-           await _context.ExecuteAsync(query,
-                    param: entity);
+            await _context.ExecuteAsync(query,
+                     param: entity);
+        }
+
+        public async Task<IEnumerable<Job>> OrderByAscending(string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "Price":
+                    string queryPrice = "SELECT * FROM Jobs ORDER BY Price ";
+                    return await _context.Query<Job>(queryPrice);
+                default:
+                    string queryName = "SELECT * FROM Jobs ORDER BY Name ";
+                    return await _context.Query<Job>(queryName);
+            }
+        }
+        public async Task<IEnumerable<Job>> OrderByDescending(string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "Price_desc":
+                    string query = "SELECT * FROM Jobs ORDER BY Price DESC ";
+                    return await _context.Query<Job>(query);
+                default:
+                    string queryName = "SELECT * FROM Jobs ORDER BY Price DESC ";
+                    return await _context.Query<Job>(queryName);
+            }
         }
 
     }

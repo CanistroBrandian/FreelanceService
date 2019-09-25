@@ -1,5 +1,6 @@
 ﻿using FreelanceService.BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace FreelanceService.Web.Controllers
@@ -23,11 +24,14 @@ namespace FreelanceService.Web.Controllers
         /// View all jobs
         /// </summary>
         /// <returns>View Home/Index</returns>
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
             try
             {
-                return View(await _jobService.GetAll());
+                ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+                ViewData["PriceSortParm"] = sortOrder == "Price" ? "Price_desc" : "Price";
+                var list = await _jobService.GetAllSorting(sortOrder);
+                return View(list);
             }
             catch
             {

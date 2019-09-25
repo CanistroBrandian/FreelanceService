@@ -12,5 +12,7 @@ namespace FreelanceService.DAL.Interfaces
         Task<Job> FindById(int id);
         Task Remove(int id);
         Task Update(Job entity);
+        Task<IEnumerable<Job>> OrderByDescending(string sortOrder);
+        Task<IEnumerable<Job>> OrderByAscending(string sortOrder);
     }
 }

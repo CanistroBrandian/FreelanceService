@@ -12,6 +12,7 @@ namespace FreelanceService.BLL.Interfaces
         Task<IEnumerable<JobViewDTO>> GetAll();
         Task<IEnumerable<JobViewDTO>> GetAllJobsOfCustomer(UserDTO user);
         Task Update(JobDTO entity);
+        Task<IEnumerable<JobViewDTO>> GetAllSorting(string orderSort);
         Task CommitAsync();
     }
 }
