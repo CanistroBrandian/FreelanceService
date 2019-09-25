@@ -137,8 +137,8 @@ namespace FreelanceService.Web.Controllers
         {
             try
             {
-
-                var job = await _jobService.GetAllJobsOfCustomer(await _userService.FindUserByEmail(User.Identity.Name));
+                var user = User.Identity.Name;
+                var job = await _jobService.GetAllJobsOfCustomer(await _userService.FindUserByEmail(user));
                 return View(job);
             }
             catch

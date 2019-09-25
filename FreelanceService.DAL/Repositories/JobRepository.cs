@@ -70,7 +70,7 @@ namespace FreelanceService.DAL.Repositories
         /// <returns> Returns all entries of user ​​in IEnumerable Jobs type </returns>
         public async Task<IEnumerable<Job>> GetAllJobsOfCustomer(User user)
         {
-            string query = "SELECT * FROM Jobs WHERE Id=@Id";
+            string query = "SELECT * FROM Jobs WHERE UserId_Customer=@Id";
             return await _context.Query<Job>(query, param: new { Id = user.Id });
         }
 
