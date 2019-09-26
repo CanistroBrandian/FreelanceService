@@ -54,7 +54,7 @@
             Display all jobs in system
             </summary>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.HomeController.Index(System.String)">
+        <member name="M:FreelanceService.Web.Controllers.HomeController.Index(System.String,System.String,System.String,System.Nullable{System.Int32})">
             <summary>
             View all jobs
             </summary>

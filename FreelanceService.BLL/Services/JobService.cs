@@ -6,6 +6,7 @@ using FreelanceService.Common.Enum;
 using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -76,6 +77,7 @@ namespace FreelanceService.BLL.Services
             {
                 case "Name_desc":
                     var jobNamesOrderDes = await _uow.JobRepos.OrderByDescending(sortOrder);
+                    ;
                     await CommitAsync();
                     return _mapper.Map<IEnumerable<Job>, IEnumerable<JobViewDTO>>(jobNamesOrderDes);
                 case "Price":
@@ -92,8 +94,17 @@ namespace FreelanceService.BLL.Services
                     return _mapper.Map<IEnumerable<Job>, IEnumerable<JobViewDTO>>(jobNameOrderAsc);
 
             }
-
         }
+
+        public  IEnumerable<JobViewDTO> Search(string searchString, IEnumerable<JobViewDTO> list)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                return list.Where(s => s.Name.Contains(searchString));
+            }
+            else return list;
+        }
+
 
         public async Task CommitAsync()
         {

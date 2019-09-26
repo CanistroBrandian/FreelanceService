@@ -94,7 +94,7 @@
     <Compile Include="Models\EmailViewModel.cs" />
     <Compile Include="Models\JobViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
-    <Compile Include="Models\PageViewModel.cs" />
+    <Compile Include="Models\PaginatedListModel.cs" />
     <Compile Include="Models\ProfileEditViewModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
