@@ -10,5 +10,6 @@ namespace FreelanceService.DAL.Interfaces
         Task<IEnumerable<T>> Query<T>(string sql, object param = null) where T : class;
         Task<T> QueryFirst<T>(string sql, object param = null) where T : class;
         IReadOnlyList<ICommand> GetQueue();
+        void ClearQueue();
     }
 }

@@ -116,11 +116,11 @@ namespace FreelanceService.DAL.Repositories
         /// <returns>void</returns>
         public async Task Update(User entity)
         {
-            string query = "UPDATE Users SET Email=@Email, FirstName=@FirstName, LastName=@LastName, City=@City,Role=@Role WHERE Email=@Email";
+            string query = "UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Phone=@Phone, City=@City,Role=@Role WHERE Id=@Id";
             await _context.ExecuteAsync(query,
                     param: new
                     {
-                        Email = entity.Email,
+                        Id = entity.Id,
                         FirstName = entity.FirstName,
                         LastName = entity.LastName,
                         Phone = entity.Phone,

@@ -40,6 +40,11 @@ namespace FreelanceService.DAL.Concrate
             return Queue.AsReadOnly();
         }
 
+        public void ClearQueue()
+        {
+            Queue.Clear();
+        }
+
     }
 
 }

@@ -5,6 +5,7 @@ using FreelanceService.Common.Encrypt;
 using FreelanceService.Web.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -89,8 +90,7 @@ namespace FreelanceService.Web.Controllers
             if (user == null)
             {
                 await _userService.AddUser(model);
-                await _userService.CommitAsync();
-                await _emailService.SendEmailAsync(model.Email, "Succses registration", "You Login:" + model.Email + " You Pass:" + model.Password);
+           //     await _emailService.SendEmailAsync(model.Email, "Succses registration", "You Login:" + model.Email + " You Pass:" + model.Password);
                 await Authenticate(await _userService.FindUserByEmail(model.Email));
                 return RedirectToAction("Profile", "Profile");
             }
@@ -99,6 +99,72 @@ namespace FreelanceService.Web.Controllers
             }
             return View(model);
         }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userService.FindUserByEmail(model.Email);
+                if (user == null || user !=null)
+                {
+                    // пользователь с данным email может отсутствовать в бд
+                    // тем не менее мы выводим стандартное сообщение, чтобы скрыть 
+                    // наличие или отсутствие пользователя в бд
+                    return View("ForgotPasswordConfirmation");
+                }
+
+                var code = SHA256Encrypt.getHashSha256(user.Email);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                await _emailService.SendEmailAsync(model.Email, "Reset Password",
+                    $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
+                return View("ForgotPasswordConfirmation");
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPassword(string code = null)
+        {
+            return code == null ? View("Error") : View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await _userService.FindUserByEmail(model.Email);
+            if (user == null)
+            {
+                return View("ResetPasswordConfirmation");
+            }
+            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+            if (result.Succeeded)
+            {
+                return View("ResetPasswordConfirmation");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+            return View(model);
+        }
+
 
         /// <summary>
         /// User authentication method

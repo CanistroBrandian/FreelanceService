@@ -12,7 +12,7 @@ namespace FreelanceService.BLL.Interfaces
         Task<UserDTO> FindUserByEmail(string email);
         Task<UserDTO> FindUserById(int id);
         Task<IEnumerable<UserDTO>> GetAll();
-        Task Update(ProfileEditViewModel entity);
+        Task Update(ProfileEditViewModel entity,UserDTO userDTO);
         Task CommitAsync();
 
     }

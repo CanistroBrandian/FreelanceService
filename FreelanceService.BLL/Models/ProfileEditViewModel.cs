@@ -4,8 +4,6 @@ namespace FreelanceService.BLL.Models
 {
     public class ProfileEditViewModel
     {
-        [Display(Name = "Почтовый ящик")]
-        public string Email { get; set; }
         [Display(Name = "Имя")]
         public string FirstName { get; set; }
         [Display(Name = "Фамилия")]

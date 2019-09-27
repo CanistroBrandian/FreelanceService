@@ -26,10 +26,10 @@ namespace FreelanceService.BLL.Services
         {
             var model = _mapper.Map<RegisterViewModel, UserRegistrationDTO>(registrationModel);
             model.DynamicSalt = GenerateSalt.GetDinamicSalt();
-            model.PassHash = SHA256Encrypt.getHashSha256(registrationModel.ConfirmPassword, model.DynamicSalt);
+            model.PassHash = SHA256Encrypt.getHashSha256WithSalt(registrationModel.ConfirmPassword, model.DynamicSalt);
             var user = _mapper.Map<UserRegistrationDTO, User>(model);
             await _uow.UserRepos.AddUser(user);
-
+            await CommitAsync();
         }
 
         public async Task<UserDTO> FindUserByEmail(string email)
@@ -37,7 +37,7 @@ namespace FreelanceService.BLL.Services
             if (email == null)
                 throw new Exception("Поле Email не введено");
             var entity = await _uow.UserRepos.FindByEmail(email);
-
+            await CommitAsync();
             return _mapper.Map<User, UserDTO>(entity);
         }
 
@@ -56,12 +56,17 @@ namespace FreelanceService.BLL.Services
             return result;
         }
 
-        public async Task Update(ProfileEditViewModel editModel)
+        public async Task Update(ProfileEditViewModel editModel, UserDTO userDTO)
         {
+            
             var model = _mapper.Map<ProfileEditViewModel, UserProfileEditDTO>(editModel);
-            var user = _mapper.Map<UserProfileEditDTO, User>(model);
-            await _uow.UserRepos.Update(user);
+            var map = _mapper.Map<UserProfileEditDTO, User>(model);
+            map.Id = userDTO.Id;
+            map.Email = userDTO.Email;
+            await _uow.UserRepos.Update(map);
+            await CommitAsync();
         }
+
 
         public async Task CommitAsync()
         {

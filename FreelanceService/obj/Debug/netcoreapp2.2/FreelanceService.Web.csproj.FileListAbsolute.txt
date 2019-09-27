@@ -102,3 +102,4 @@ C:\Users\Павел\source\repos\FreelanceService\Documentation\netcoreapp2.2\Fr
 C:\Users\Павел\source\repos\FreelanceService\Documentation\netcoreapp2.2\FreelanceService.Web.Views.dll
 C:\Users\Павел\source\repos\FreelanceService\Documentation\netcoreapp2.2\FreelanceService.Web.Views.pdb
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Profile\MyJobs.g.cshtml.cs
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Account\ForgotPassword.g.cshtml.cs

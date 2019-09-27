@@ -1,4 +1,5 @@
-﻿using FreelanceService.BLL.Interfaces;
+﻿using FreelanceService.BLL.DTO;
+using FreelanceService.BLL.Interfaces;
 using FreelanceService.BLL.Models;
 using FreelanceService.Common.Enum;
 using FreelanceService.Web.Helpers;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 
@@ -64,7 +67,7 @@ namespace FreelanceService.Web.Controllers
         public async Task<ActionResult> ProfileExecutor()
         {
             var viewProfile = _profileService.GetProfile(await _userService.FindUserByEmail(User.Identity.Name));
-            return View(viewProfile);
+            return View(await viewProfile);
         }
 
         /// <summary>
@@ -89,8 +92,9 @@ namespace FreelanceService.Web.Controllers
             try
             {
                 var user = await _userService.FindUserByEmail(User.Identity.Name);
-                await _userService.Update(model);
-                await _userService.CommitAsync();
+                await _userService.Update(model,user);
+                var newuser = await _userService.FindUserByEmail(User.Identity.Name);
+                await Authenticate(newuser);
                 return RedirectToAction(nameof(Profile));
             }
             catch
@@ -155,6 +159,18 @@ namespace FreelanceService.Web.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
+        }
+
+        private async Task Authenticate(UserDTO user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, Common.Enum.RoleNameFromInt.GetName(user.Role))
+            };
+            ClaimsIdentity id = new ClaimsIdentity(claims, "AuthCookie", ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
     }
 }

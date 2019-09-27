@@ -48,6 +48,7 @@ namespace FreelanceService.DAL.Concrate
 
                     }
                     _transaction.Commit();
+                    _dbContext.ClearQueue();
                     _connection.Close();
                 }
                 catch
@@ -57,6 +58,7 @@ namespace FreelanceService.DAL.Concrate
                 }
                 finally
                 {
+                    _dbContext.ClearQueue();
                     _connection.Close();
                     _transaction?.Dispose();
                 }

@@ -92,6 +92,7 @@
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Models\CreateJobViewModel.cs" />
     <Compile Include="Models\EmailViewModel.cs" />
+    <Compile Include="Models\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\JobViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\PaginatedListModel.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Helpers\ServerInfo.cs" />
+    <Compile Include="Models\ResetPasswordViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\EmailService.cs" />
