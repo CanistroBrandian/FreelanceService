@@ -60,8 +60,9 @@ namespace FreelanceService.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                var user = await _userService.FindUserByEmail(model.Email);
+                return View(model);
+            }
+            var user = await _userService.FindUserByEmail(model.Email);
             if (user == null)
             {
                 await _userService.AddUser(model);
@@ -70,9 +71,7 @@ namespace FreelanceService.Web.Controllers
                 await Authenticate(await _userService.FindUserByEmail(model.Email));
                 return RedirectToAction("Profile", "Profile");
             }
-            else
-              return  ModelState.AddModelError("", "Пользователь с таким Email существует");
-            }
+            ModelState.AddModelError("", "Пользователь с таким Email существует");
             return View(model);
         }
 
