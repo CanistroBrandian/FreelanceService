@@ -2,6 +2,7 @@
 using FreelanceService.BLL.Models;
 using FreelanceService.Common.Enum;
 using FreelanceService.Web.Helpers;
+using FreelanceService.Web.Validation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -19,10 +20,15 @@ namespace FreelanceService.Web.Controllers
     {
         IUserService _userService;
         IJobService _jobService;
-        public ProfileController(IJobService jobService, IUserService userService)
+        IViewModelValidationService _validationService;
+        public ProfileController(
+            IJobService jobService, 
+            IUserService userService,
+            IViewModelValidationService validationService)
         {
             _jobService = jobService;
             _userService = userService;
+            _validationService = validationService;
         }
 
         [Authorize(Roles = "Исполнитель,Заказчик")]
@@ -77,6 +83,12 @@ namespace FreelanceService.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(ProfileEditViewModel model)
         {
+            var validationResult = _validationService.Validate(model);
+            if (!validationResult.IsValid)
+            {
+                ModelState.Merge(validationResult.ModelState);
+                return View();
+            }
             try
             {
                 var user = await _userService.FindUserByEmail(User.Identity.Name);

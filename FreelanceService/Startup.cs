@@ -1,10 +1,17 @@
 ﻿using AutoMapper;
 using FreelanceService.BLL.Automapper;
+using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
+using FreelanceService.BLL.Models;
 using FreelanceService.BLL.Services;
+using FreelanceService.BLL.Validation;
+using FreelanceService.BLL.Validation.Validator;
+using FreelanceService.Common.Validation;
 using FreelanceService.DAL.Concrate;
 using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
+using FreelanceService.Web.Validation;
+using FreelanceService.Web.Validation.Validators;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -64,10 +71,20 @@ namespace FreelanceService
             services.AddScoped<IDbContext, DbContext>(provider => new DbContext(connectionStr));
             services.AddScoped<IUnitOfWork, UnitOfWork>(provider => new UnitOfWork(connectionStr, (IDbContext)provider.GetService(typeof(IDbContext))));
 
-           
+            RegisterValidationServices(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+        }
+
+
+        private void RegisterValidationServices(IServiceCollection services)
+        {
+            services.AddSingleton<IDTOValidationService, DTOValidationService>();
+            services.AddSingleton<IValidator<UserProfileEditDTO>, UserProfileEditDTOValidator>();
+
+            services.AddSingleton<IViewModelValidationService, ViewModelValidationService>();
+            services.AddSingleton<IValidator<ProfileEditViewModel>, ProfileEditViewModelValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
