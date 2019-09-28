@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FreelanceService.Web.Validation
+namespace FreelanceService.Common.Validation
 {
     public interface IValidator<T> where T : class
     {
-        ValidatorValidationResult Validate(T model);
+        IValidationResult Validate(T model);
     }
 }

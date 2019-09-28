@@ -1,17 +1,15 @@
 ﻿using FreelanceService.BLL.Models;
-using System;
+using FreelanceService.Common.Validation;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FreelanceService.Web.Validation
 {
     public class ProfileEditViewModelValidator : IValidator<ProfileEditViewModel>
     {
-        public ValidatorValidationResult Validate(ProfileEditViewModel model)
+        public IValidationResult Validate(ProfileEditViewModel model)
         {
-            var result = new ValidatorValidationResult
+            var result = new ViewModelValidatorValidationResult
             {
                 ValidationResults = new List<ValidationResult>()
             };
@@ -28,10 +26,6 @@ namespace FreelanceService.Web.Validation
             {
                 result.ValidationResults.Add(new ValidationResult("Введите электронный адрес!", new List<string>() { nameof(model.Email) }));
             }
-            //if (this.Age < 0 || this.Age > 120)
-            //{
-            //    result.ValidationResults.Add(new ValidationResult("Недопустимый возраст!"));
-            //}
 
             return result;
         }

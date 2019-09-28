@@ -3,6 +3,7 @@ using FreelanceService.BLL.Automapper;
 using FreelanceService.BLL.Interfaces;
 using FreelanceService.BLL.Models;
 using FreelanceService.BLL.Services;
+using FreelanceService.Common.Validation;
 using FreelanceService.DAL.Concrate;
 using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
@@ -75,7 +76,7 @@ namespace FreelanceService
 
         private void RegisterValidationServices(IServiceCollection services)
         {
-            services.AddSingleton<IValidationService, ViewModelValidationService>();
+            services.AddSingleton<IViewModelValidationService, ViewModelValidationService>();
             services.AddSingleton<IValidator<ProfileEditViewModel>, ProfileEditViewModelValidator>();
         }
 

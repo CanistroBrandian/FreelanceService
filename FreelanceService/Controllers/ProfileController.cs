@@ -20,11 +20,11 @@ namespace FreelanceService.Web.Controllers
     {
         IUserService _userService;
         IJobService _jobService;
-        IValidationService _validationService;
+        IViewModelValidationService _validationService;
         public ProfileController(
             IJobService jobService, 
             IUserService userService,
-            IValidationService validationService)
+            IViewModelValidationService validationService)
         {
             _jobService = jobService;
             _userService = userService;
