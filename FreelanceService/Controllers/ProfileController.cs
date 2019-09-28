@@ -3,6 +3,7 @@ using FreelanceService.BLL.Interfaces;
 using FreelanceService.BLL.Models;
 using FreelanceService.Common.Enum;
 using FreelanceService.Web.Helpers;
+using FreelanceService.Web.Validation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -23,18 +24,26 @@ namespace FreelanceService.Web.Controllers
     {
         IUserService _userService;
         IJobService _jobService;
-        IProfileService _profileService;
+		IProfileService _profileService;
 
-        /// <summary>
+
+        IViewModelValidationService _validationService;
+      
+  		 /// <summary>
         /// Dependency Injection for jobService and userService
         /// </summary>
         /// <param name="jobService"></param>
         /// <param name="userService"></param>
-        public ProfileController(IJobService jobService, IUserService userService, IProfileService profileService)
+		public ProfileController(
+            IJobService jobService, 
+            IUserService userService,
+            IViewModelValidationService validationService,
+			IProfileService profileService)
         {
             _jobService = jobService;
             _userService = userService;
-            _profileService = profileService;
+			_profileService = profileService;
+            _validationService = validationService;
         }
 
         /// <summary>
@@ -89,6 +98,12 @@ namespace FreelanceService.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(ProfileEditViewModel model)
         {
+            var validationResult = _validationService.Validate(model);
+            if (!validationResult.IsValid)
+            {
+                ModelState.Merge(validationResult.ModelState);
+                return View();
+            }
             try
             {
                 var user = await _userService.FindUserByEmail(User.Identity.Name);
