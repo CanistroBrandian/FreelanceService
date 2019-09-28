@@ -105,6 +105,9 @@
     <Compile Include="Services\ResponseService.cs" />
     <Compile Include="Services\ReviewService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Validation\IDTOValidationService.cs" />
+    <Compile Include="Validation\Validators\UserProfileEditDTOValidator.cs" />
+    <Compile Include="Validation\DTOValidationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FreelanceService.Common\FreelanceService.Common.csproj">

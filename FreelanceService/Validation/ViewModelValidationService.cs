@@ -3,21 +3,10 @@ using System;
 
 namespace FreelanceService.Web.Validation
 {
-    public class ViewModelValidationService : IViewModelValidationService
+    public class ViewModelValidationService : ValidationService, IViewModelValidationService
     {
-        private readonly IServiceProvider _serviceProvider;
-        public ViewModelValidationService(IServiceProvider serviceProvider)
+        public ViewModelValidationService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            _serviceProvider = serviceProvider;
-        }
-        public IValidationResult Validate<T>(T model) where T : class
-        {
-            var modelValidator = ((IValidator<T>)_serviceProvider.GetService(typeof(IValidator<T>)));
-            if(modelValidator == null)
-            {
-                throw new NullReferenceException($"No validator found for model of type {nameof(T)}");
-            }
-            return modelValidator.Validate(model);
         }
 
         ViewModelValidatorValidationResult IViewModelValidationService.Validate<T>(T model)

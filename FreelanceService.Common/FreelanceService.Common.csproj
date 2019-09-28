@@ -60,6 +60,8 @@
     <Compile Include="Validation\IValidationResult.cs" />
     <Compile Include="Validation\IValidationService.cs" />
     <Compile Include="Validation\IValidator.cs" />
+    <Compile Include="Validation\ValidationService.cs" />
+    <Compile Include="Validation\ValidatorValidationResult.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

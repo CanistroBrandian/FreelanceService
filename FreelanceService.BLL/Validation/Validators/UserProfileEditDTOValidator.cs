@@ -1,15 +1,15 @@
-﻿using FreelanceService.BLL.Models;
+﻿using FreelanceService.BLL.DTO;
 using FreelanceService.Common.Validation;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace FreelanceService.Web.Validation
+namespace FreelanceService.BLL.Validation.Validator
 {
-    public class ProfileEditViewModelValidator : IValidator<ProfileEditViewModel>
+    public class UserProfileEditDTOValidator : IValidator<UserProfileEditDTO>
     {
-        public IValidationResult Validate(ProfileEditViewModel model)
+        public IValidationResult Validate(UserProfileEditDTO model)
         {
-            var result = new ViewModelValidatorValidationResult
+            var result = new ValidatorValidationResult
             {
                 ValidationResults = new List<ValidationResult>()
             };

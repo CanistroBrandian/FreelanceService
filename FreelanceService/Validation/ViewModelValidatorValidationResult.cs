@@ -6,12 +6,8 @@ using System.Linq;
 
 namespace FreelanceService.Web.Validation
 {
-    public class ViewModelValidatorValidationResult : IValidationResult
+    public class ViewModelValidatorValidationResult : ValidatorValidationResult
     {
-        public List<ValidationResult> ValidationResults { get; set; } = new List<ValidationResult>();
-
-        public bool IsValid => !ValidationResults.Any(f => !string.IsNullOrEmpty(f.ErrorMessage));
-
         public ModelStateDictionary ModelState
         {
             get
@@ -24,7 +20,5 @@ namespace FreelanceService.Web.Validation
                 return modelState;
             }
         }
-        public string ErrorMessage =>
-             ValidationResults.Where(f => !string.IsNullOrEmpty(f.ErrorMessage)).FirstOrDefault()?.ErrorMessage;
     }
 }
