@@ -20,6 +20,6 @@ Microsoft Visual Studio 2019, Microsoft SQL Manager Studio, Postman.
 
 В корневой папке лежит файл FreelanceService.mdj, где хранится актуальная версия UML-диаграммы Use-Case и Class
 
-![alt text](https://bitbucket.org/CanistroBrandian/freelanceservice/src/Documentation/Documentation/UML.png)
+![Scheme](Documentation/UML.png)
 
  
