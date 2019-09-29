@@ -74,7 +74,7 @@
     <Compile Include="Automapper\AutomapperProfile.cs" />
     <Compile Include="DTO\CategoryDTO.cs" />
     <Compile Include="DTO\JobDTO.cs" />
-    <Compile Include="DTO\JobViewDTO.cs" />
+    <Compile Include="DTO\JobEditDTO.cs" />
     <Compile Include="DTO\ProjectDTO.cs" />
     <Compile Include="DTO\ResponseDTO.cs" />
     <Compile Include="DTO\ReviewDTO.cs" />
@@ -90,17 +90,7 @@
     <Compile Include="Interfaces\IResponseService.cs" />
     <Compile Include="Interfaces\IReviewService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
-    <Compile Include="Models\CreateJobViewModel.cs" />
-    <Compile Include="Models\EmailViewModel.cs" />
-    <Compile Include="Models\ForgotPasswordViewModel.cs" />
-    <Compile Include="Models\JobViewModel.cs" />
-    <Compile Include="Models\LoginViewModel.cs" />
-    <Compile Include="Models\PaginatedListModel.cs" />
-    <Compile Include="Models\ProfileEditViewModel.cs" />
-    <Compile Include="Models\ProfileViewModel.cs" />
-    <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Helpers\ServerInfo.cs" />
-    <Compile Include="Models\ResetPasswordViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\EmailService.cs" />

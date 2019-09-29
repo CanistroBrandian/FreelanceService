@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FreelanceService.BLL.Models
+namespace FreelanceService.Models
 {
-    public class ProfileEditViewModel
+    public  class ProfileViewModel
     {
+        [Display(Name = "Почтовый ящик")]
+        public string Email { get; set; }
         [Display(Name = "Имя")]
         public string FirstName { get; set; }
         [Display(Name = "Фамилия")]
@@ -11,8 +13,8 @@ namespace FreelanceService.BLL.Models
         [Display(Name = "Телефон")]
         public string Phone { get; set; }
         [Display(Name = "Город")]
-        public int City { get; set; }
+        public string City { get; set; }
         [Display(Name = "Роль")]
-        public int Role { get; set; }
+        public string Role { get; set; }
     }
 }

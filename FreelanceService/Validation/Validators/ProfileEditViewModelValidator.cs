@@ -1,5 +1,6 @@
-﻿using FreelanceService.BLL.Models;
+﻿
 using FreelanceService.Common.Validation;
+using FreelanceService.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,10 +22,6 @@ namespace FreelanceService.Web.Validation.Validators
             if (string.IsNullOrWhiteSpace(model.LastName))
             {
                 result.ValidationResults.Add(new ValidationResult("Введите фамилию!", new List<string>() { nameof(model.LastName) }));
-            }
-            if (string.IsNullOrWhiteSpace(model.Email))
-            {
-                result.ValidationResults.Add(new ValidationResult("Введите электронный адрес!", new List<string>() { nameof(model.Email) }));
             }
 
             return result;

@@ -1,10 +1,10 @@
 ﻿using FreelanceService.BLL.DTO;
-using FreelanceService.BLL.Models;
 using FreelanceService.BLL.Interfaces;
+using FreelanceService.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FreelanceService.Web.Controllers
 {
@@ -45,7 +45,7 @@ namespace FreelanceService.Web.Controllers
 
                 var list = await _jobService.GetAllSorting(sortOrder);
                 var search = _jobService.Search(searchString, list);
-                return View(await PaginatedListModel<JobViewDTO>.Create(search.AsQueryable(), pageNumber ?? 1, pageSize));
+                return View(await PaginatedListModel<JobDTO>.Create(search.AsQueryable(), pageNumber ?? 1, pageSize));
             
             }
             catch

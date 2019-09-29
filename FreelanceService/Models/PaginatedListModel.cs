@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace FreelanceService.BLL.Models
+namespace FreelanceService.Models
 {
     public class PaginatedListModel<T> : List<T>
     {

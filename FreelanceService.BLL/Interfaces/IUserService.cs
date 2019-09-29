@@ -8,11 +8,11 @@ namespace FreelanceService.BLL.Interfaces
 {
     public interface IUserService
     {
-        Task AddUser(RegisterViewModel model);
+        Task AddUser(UserRegistrationDTO model);
         Task<UserDTO> FindUserByEmail(string email);
         Task<UserDTO> FindUserById(int id);
         Task<IEnumerable<UserDTO>> GetAll();
-        Task Update(ProfileEditViewModel entity,UserDTO userDTO);
+        Task Update(UserProfileEditDTO entity,UserDTO userDTO);
         Task CommitAsync();
 
     }

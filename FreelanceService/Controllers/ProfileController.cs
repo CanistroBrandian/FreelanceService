@@ -1,15 +1,14 @@
-﻿using FreelanceService.BLL.DTO;
+﻿using AutoMapper;
+using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
-using FreelanceService.BLL.Models;
 using FreelanceService.Common.Enum;
-using FreelanceService.Web.Helpers;
+using FreelanceService.Models;
 using FreelanceService.Web.Validation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -24,26 +23,29 @@ namespace FreelanceService.Web.Controllers
     {
         IUserService _userService;
         IJobService _jobService;
-		IProfileService _profileService;
+        IProfileService _profileService;
+        IMapper _mapper;
 
 
         IViewModelValidationService _validationService;
-      
-  		 /// <summary>
+
+        /// <summary>
         /// Dependency Injection for jobService and userService
         /// </summary>
         /// <param name="jobService"></param>
         /// <param name="userService"></param>
-		public ProfileController(
-            IJobService jobService, 
+        public ProfileController(
+            IJobService jobService,
             IUserService userService,
             IViewModelValidationService validationService,
-			IProfileService profileService)
+            IProfileService profileService,
+            IMapper mapper)
         {
             _jobService = jobService;
             _userService = userService;
-			_profileService = profileService;
+            _profileService = profileService;
             _validationService = validationService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -64,8 +66,8 @@ namespace FreelanceService.Web.Controllers
         [Authorize(Roles = "Заказчик")]
         public async Task<ActionResult> ProfileCustomer()
         {
-            var viewProfile = _profileService.GetProfile(await _userService.FindUserByEmail(User.Identity.Name));
-            return View(await viewProfile);
+            var profile = await GetProfile();
+            return View(profile);
         }
 
         /// <summary>
@@ -75,8 +77,8 @@ namespace FreelanceService.Web.Controllers
         [Authorize(Roles = "Исполнитель")]
         public async Task<ActionResult> ProfileExecutor()
         {
-            var viewProfile = _profileService.GetProfile(await _userService.FindUserByEmail(User.Identity.Name));
-            return View(await viewProfile);
+            var profile = await GetProfile();
+            return View(profile);
         }
 
         /// <summary>
@@ -106,8 +108,9 @@ namespace FreelanceService.Web.Controllers
             }
             try
             {
+                var modelDTO = _mapper.Map<ProfileEditViewModel, UserProfileEditDTO>(model);
                 var user = await _userService.FindUserByEmail(User.Identity.Name);
-                await _userService.Update(model,user);
+                await _userService.Update(modelDTO, user);
                 var newuser = await _userService.FindUserByEmail(User.Identity.Name);
                 await Authenticate(newuser);
                 return RedirectToAction(nameof(Profile));
@@ -140,8 +143,9 @@ namespace FreelanceService.Web.Controllers
         {
             try
             {
-
-                await _jobService.AddJob(model, await _userService.FindUserByEmail(User.Identity.Name));
+                var modelDTO = _mapper.Map<CreateJobViewModel, JobDTO>(model);
+                var user = await _userService.FindUserByEmail(User.Identity.Name);
+                await _jobService.AddJob(modelDTO, user);
                 await _jobService.CommitAsync();
                 return RedirectToAction("MyJobs");
             }
@@ -156,9 +160,10 @@ namespace FreelanceService.Web.Controllers
         {
             try
             {
-                var user = User.Identity.Name;
-                var job = await _jobService.GetAllJobsOfCustomer(await _userService.FindUserByEmail(user));
-                return View(job);
+                var user = await _userService.FindUserByEmail(User.Identity.Name);
+                var jobs = await _jobService.GetAllJobsOfCustomer(user);
+                var map = _mapper.Map<IEnumerable<JobDTO>, IEnumerable<JobViewModel>>(jobs);
+                return View(map);
             }
             catch
             {
@@ -186,6 +191,15 @@ namespace FreelanceService.Web.Controllers
             ClaimsIdentity id = new ClaimsIdentity(claims, "AuthCookie", ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+        }
+
+        private async Task<ProfileViewModel> GetProfile()
+        {
+            var userDTO = await _userService.FindUserByEmail(User.Identity.Name);
+            var map = _mapper.Map<UserDTO, ProfileViewModel>(userDTO);
+            map.Role = RoleNameFromInt.GetName(userDTO.Role);
+            map.City = CityNameFromInt.GetName(userDTO.City);
+            return map;
         }
     }
 }

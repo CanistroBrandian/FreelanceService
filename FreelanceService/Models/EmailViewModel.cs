@@ -1,4 +1,4 @@
-﻿namespace FreelanceService.BLL.Models
+﻿namespace FreelanceService.Models
 {
     public class EmailViewModel
     {

@@ -2,7 +2,7 @@
 
 namespace FreelanceService.BLL.DTO
 {
-    public class JobViewDTO
+    public class JobEditDTO
     {
         public int CategoryId { get; set; }
         public string Name { get; set; }

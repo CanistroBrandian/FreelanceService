@@ -22,11 +22,10 @@ namespace FreelanceService.BLL.Services
             _mapper = mapper;
         }
 
-        public async Task AddUser(RegisterViewModel registrationModel)
+        public async Task AddUser(UserRegistrationDTO model)
         {
-            var model = _mapper.Map<RegisterViewModel, UserRegistrationDTO>(registrationModel);
             model.DynamicSalt = GenerateSalt.GetDinamicSalt();
-            model.PassHash = SHA256Encrypt.getHashSha256WithSalt(registrationModel.ConfirmPassword, model.DynamicSalt);
+            model.PassHash = SHA256Encrypt.getHashSha256WithSalt(model.Password, model.DynamicSalt);
             var user = _mapper.Map<UserRegistrationDTO, User>(model);
             await _uow.UserRepos.AddUser(user);
             await CommitAsync();
@@ -56,16 +55,16 @@ namespace FreelanceService.BLL.Services
             return result;
         }
 
-        public async Task Update(ProfileEditViewModel editModel, UserDTO userDTO)
+        public async Task Update(UserProfileEditDTO editModel, UserDTO userDTO)
         {
-            
-            var model = _mapper.Map<ProfileEditViewModel, UserProfileEditDTO>(editModel);
-            var map = _mapper.Map<UserProfileEditDTO, User>(model);
+            var map = _mapper.Map<UserProfileEditDTO, User>(editModel);
             map.Id = userDTO.Id;
             map.Email = userDTO.Email;
             await _uow.UserRepos.Update(map);
             await CommitAsync();
         }
+
+
 
 
         public async Task CommitAsync()

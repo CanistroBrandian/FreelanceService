@@ -1,7 +1,8 @@
-﻿using FreelanceService.BLL.DTO;
+﻿using AutoMapper;
+using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
-using FreelanceService.BLL.Models;
 using FreelanceService.Common.Encrypt;
+using FreelanceService.Models;
 using FreelanceService.Web.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -20,16 +21,18 @@ namespace FreelanceService.Web.Controllers
     {
         IEmailService _emailService;
         IUserService _userService;
+        IMapper _mapper;
 
         /// <summary>
         /// Dependency Injection User and Email service
         /// </summary>
         /// <param name="emailService"></param>
         /// <param name="userService"></param>
-        public AccountController(IEmailService emailService, IUserService userService)
+        public AccountController(IEmailService emailService, IUserService userService, IMapper mapper)
         {
             _emailService = emailService;
             _userService = userService;
+            _mapper = mapper;
         }
         /// <summary>
         /// User authorization page. If the user is authorized, then he will be redirected to his profile
@@ -90,9 +93,10 @@ namespace FreelanceService.Web.Controllers
             var user = await _userService.FindUserByEmail(model.Email);
             if (user == null)
             {
-                await _userService.AddUser(model);
+                var modelDTO = _mapper.Map<RegisterViewModel, UserRegistrationDTO>(model);
+                await _userService.AddUser(modelDTO);
            //     await _emailService.SendEmailAsync(model.Email, "Succses registration", "You Login:" + model.Email + " You Pass:" + model.Password);
-                await Authenticate(await _userService.FindUserByEmail(model.Email));
+                await Authenticate(await _userService.FindUserByEmail(modelDTO.Email));
                 return RedirectToAction("Profile", "Profile");
             }
             ModelState.AddModelError("", "Пользователь с таким Email существует");

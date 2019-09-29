@@ -10,6 +10,7 @@ CREATE TABLE Users (
     [RegistrationDateTime] DATETIME        NOT NULL,
     [Rating]               DECIMAL (18, 2) NULL,
     [Role]                 INT             NOT NULL,
+	[VerifyCodeForResetPass]   VARCHAR(256)             NULL,
     UNIQUE(Email,Phone)
 )
 GO
