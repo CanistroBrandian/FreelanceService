@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
-using FreelanceService.BLL.Models;
 using FreelanceService.Common.Encrypt;
 using FreelanceService.Common.Salt;
 using FreelanceService.DAL.Entities;
@@ -65,9 +64,30 @@ namespace FreelanceService.BLL.Services
         }
 
 
+        public async Task<bool> ResetPasswordAsync(UserDTO user, string token, string newPassword)
+        {
+            if (token == user.VerifyCodeForResetPass)
+            {
+                var map = _mapper.Map<UserDTO, User>(user);
+                map.PassHash = SHA256Encrypt.getHashSha256WithSalt(newPassword, user.DynamicSalt);
+                await _uow.UserRepos.ResetPassword(map);
+                await CommitAsync();
+                return true;
+            }
+            else return false;
 
+        }
 
-        public async Task CommitAsync()
+        public async Task<string> GeneratePasswordResetTokenAsync(UserDTO model)
+        {
+            model.VerifyCodeForResetPass = SHA256Encrypt.getHashSha256(model.Email);
+            var user = _mapper.Map<UserDTO, User>(model);
+            await _uow.UserRepos.Update(user);
+            await CommitAsync();
+            return model.VerifyCodeForResetPass;
+        }
+
+        private async Task CommitAsync()
         {
             await _uow.CommitAsync();
         }

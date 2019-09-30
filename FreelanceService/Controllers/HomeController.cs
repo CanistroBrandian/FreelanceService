@@ -1,4 +1,5 @@
-﻿using FreelanceService.BLL.DTO;
+﻿using AutoMapper;
+using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
 using FreelanceService.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,10 +17,12 @@ namespace FreelanceService.Web.Controllers
 
         IUserService _userService;
         IJobService _jobService;
-        public HomeController(IJobService jobService, IUserService userService)
+        IMapper _mapper;
+        public HomeController(IJobService jobService, IUserService userService, IMapper mapper)
         {
             _jobService = jobService;
             _userService = userService;
+            _mapper = mapper;
         }
 
 
@@ -45,7 +48,7 @@ namespace FreelanceService.Web.Controllers
 
                 var list = await _jobService.GetAllSorting(sortOrder);
                 var search = _jobService.Search(searchString, list);
-                return View(await PaginatedListModel<JobDTO>.Create(search.AsQueryable(), pageNumber ?? 1, pageSize));
+                return View(await PaginatedListModel<JobViewModel>.Create(search.AsQueryable(), pageNumber ?? 1, pageSize));
             
             }
             catch

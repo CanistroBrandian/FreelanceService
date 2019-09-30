@@ -15,6 +15,7 @@ namespace FreelanceService.BLL.DTO
         public decimal? Rating { get; set; }
         public int Role { get; set; }
         public string DynamicSalt { get; set; }
+        public string VerifyCodeForResetPass { get; set; }
     }
 }
 

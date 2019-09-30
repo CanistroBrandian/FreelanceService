@@ -16,6 +16,7 @@ namespace FreelanceService.DAL.Entities
         public DateTime RegistrationDateTime { get; set; }
         public decimal? Rating { get; set; }
         public int Role { get; set; }
+        public string VerifyCodeForResetPass { get; set; }
 
     }
 }

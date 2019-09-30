@@ -23,7 +23,6 @@ namespace FreelanceService.Web.Controllers
     {
         IUserService _userService;
         IJobService _jobService;
-        IProfileService _profileService;
         IMapper _mapper;
 
 
@@ -38,12 +37,10 @@ namespace FreelanceService.Web.Controllers
             IJobService jobService,
             IUserService userService,
             IViewModelValidationService validationService,
-            IProfileService profileService,
             IMapper mapper)
         {
             _jobService = jobService;
             _userService = userService;
-            _profileService = profileService;
             _validationService = validationService;
             _mapper = mapper;
         }

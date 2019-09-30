@@ -13,5 +13,6 @@ namespace FreelanceService.DAL.Interfaces
         Task<User> FindByEmail(string email);
         Task Remove(int id);
         Task Update(User entity);
+        Task ResetPassword(User etity);
     }
 }

@@ -9,7 +9,7 @@
             The controller is responsible for user registration, login and authentication
             </summary>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.AccountController.#ctor(FreelanceService.BLL.Interfaces.IEmailService,FreelanceService.BLL.Interfaces.IUserService)">
+        <member name="M:FreelanceService.Web.Controllers.AccountController.#ctor(FreelanceService.BLL.Interfaces.IEmailService,FreelanceService.BLL.Interfaces.IUserService,AutoMapper.IMapper)">
             <summary>
             Dependency Injection User and Email service
             </summary>
@@ -22,7 +22,7 @@
             </summary>
             <returns>View Account/Login</returns>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.AccountController.Login(FreelanceService.BLL.Models.LoginViewModel)">
+        <member name="M:FreelanceService.Web.Controllers.AccountController.Login(FreelanceService.Models.LoginViewModel)">
             <summary>
             The client side sends the LoginViewModel to the server to authorize the user. With successful authorization redirects to user profile and added authorization cookies
             </summary>
@@ -35,7 +35,7 @@
             </summary>
             <returns>View Account/Register</returns>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.AccountController.Register(FreelanceService.BLL.Models.RegisterViewModel)">
+        <member name="M:FreelanceService.Web.Controllers.AccountController.Register(FreelanceService.Models.RegisterViewModel)">
             <summary>
             The client side sends the RegistrationViewModel to add a new user. If the registration is successful, the user is authenticate
             </summary>
@@ -65,7 +65,7 @@
             Сontroller is responsible for displaying profile information, profile edit, adding new jobs by the customer
             </summary>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.ProfileController.#ctor(FreelanceService.BLL.Interfaces.IJobService,FreelanceService.BLL.Interfaces.IUserService,FreelanceService.BLL.Interfaces.IProfileService)">
+        <member name="M:FreelanceService.Web.Controllers.ProfileController.#ctor(FreelanceService.BLL.Interfaces.IJobService,FreelanceService.BLL.Interfaces.IUserService,FreelanceService.Web.Validation.IViewModelValidationService,AutoMapper.IMapper)">
             <summary>
             Dependency Injection for jobService and userService
             </summary>
@@ -95,7 +95,7 @@
             </summary>
             <returns>View Profile/Edit</returns>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.ProfileController.Edit(FreelanceService.BLL.Models.ProfileEditViewModel)">
+        <member name="M:FreelanceService.Web.Controllers.ProfileController.Edit(FreelanceService.Models.ProfileEditViewModel)">
             <summary>
             Request to edit user data
             </summary>
@@ -108,7 +108,7 @@
             </summary>
             <returns>View Profile/CreateJob</returns>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.ProfileController.CreateJob(FreelanceService.BLL.Models.CreateJobViewModel)">
+        <member name="M:FreelanceService.Web.Controllers.ProfileController.CreateJob(FreelanceService.Models.CreateJobViewModel)">
             <summary>
             Request to create a new job for the customer
             </summary>

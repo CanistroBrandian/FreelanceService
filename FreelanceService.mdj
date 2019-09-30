@@ -10981,7 +10981,7 @@
 											"top": 236,
 											"width": 199.05615234375,
 											"height": 13,
-											"text": "+VerifyCodeForRessetPass: string",
+											"text": "+VerifyCodeForResetPass: string",
 											"horizontalAlignment": 0
 										}
 									],
@@ -14867,7 +14867,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFsr2/9ljB8eg4="
 							},
-							"name": "VerifyCodeForRessetPass",
+							"name": "VerifyCodeForResetPass",
 							"type": "string"
 						}
 					]

@@ -120,17 +120,12 @@ namespace FreelanceService.Web.Controllers
                 var user = await _userService.FindUserByEmail(model.Email);
                 if (user == null || user !=null)
                 {
-                    // пользователь с данным email может отсутствовать в бд
-                    // тем не менее мы выводим стандартное сообщение, чтобы скрыть 
-                    // наличие или отсутствие пользователя в бд
+                    var code = await _userService.GeneratePasswordResetTokenAsync(user);
+                    var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                    await _emailService.SendEmailAsync(model.Email, "Reset Password",
+                        $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
                     return View("ForgotPasswordConfirmation");
                 }
-
-                var code = SHA256Encrypt.getHashSha256(user.Email);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                await _emailService.SendEmailAsync(model.Email, "Reset Password",
-                    $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
-                return View("ForgotPasswordConfirmation");
             }
             return View(model);
         }
@@ -156,15 +151,12 @@ namespace FreelanceService.Web.Controllers
             {
                 return View("ResetPasswordConfirmation");
             }
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
-            if (result.Succeeded)
+            var result = await _userService.ResetPasswordAsync(user, model.Code, model.Password);
+            if (result)
             {
                 return View("ResetPasswordConfirmation");
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
+
             return View(model);
         }
 
