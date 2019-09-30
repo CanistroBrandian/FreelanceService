@@ -1,14 +1,16 @@
 ﻿using FreelanceService.DAL.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 
 namespace FreelanceService.DAL.Interfaces
 {
     public interface IReviewRepository
     {
-        void AddReview(Review entity);
-        IEnumerable<Review> GetAll();
-        Review Find(int id);
-        void Remove(int id);
-        void Update(Review entity);
+        Task AddReview(Review entity);
+        Task<IEnumerable<Review>> GetAll();
+        Task<Review> FindById(int id);
+        Task Remove(int id);
+        Task Update(Review entity);
     }
 }

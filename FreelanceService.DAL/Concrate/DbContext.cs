@@ -1,73 +1,50 @@
-﻿using FreelanceService.DAL.Interfaces;
-using FreelanceService.DAL.Repositories;
+﻿using Dapper;
+using FreelanceService.DAL.Interfaces;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace FreelanceService.DAL.Concrate
 {
     public class DbContext : IDbContext
     {
-        private IUnitOfWorkFactory unitOfWorkFactory;
-
-        private UnitOfWork unitOfWork;
-
-        private UserRepository user;
-        private ProjectRepository project;
-        private TaskRepository task;
-        private CategoryRepository category;
-        private ReviewRepository review;
-        private ResponseRepository response;
-
-        public DbContext(IUnitOfWorkFactory unitOfWorkFactory)
+        private List<ICommand> Queue { get; set; } = new List<ICommand>();
+        private readonly string _connectionString;
+        public DbContext(string connectionString)
         {
-            this.unitOfWorkFactory = unitOfWorkFactory;
+            _connectionString = connectionString;
         }
 
-        public ProjectRepository ProjectRepos =>
-            project ?? (project = new ProjectRepository(UnitOfWork));
-        public TaskRepository TaskRepos =>
-          task ?? (task = new TaskRepository(UnitOfWork));
-        public CategoryRepository CategoryRepos =>
-           category ?? (category = new CategoryRepository(UnitOfWork));
-        public ReviewRepository ReviewRepos =>
-           review ?? (review = new ReviewRepository(UnitOfWork));
-        public ResponseRepository ResponseRepos =>
-           response ?? (response = new ResponseRepository(UnitOfWork));
-        public UserRepository UserRepos =>
-           user ?? (user = new UserRepository(UnitOfWork));
-
-  
-
-        protected UnitOfWork UnitOfWork =>
-            unitOfWork ?? (unitOfWork = unitOfWorkFactory.Create());
-
-
-        public void Commit()
+        public async Task ExecuteAsync(string sql, object param = null)
         {
-            try
+            Queue.Add(new ExecuteCommand(sql, param));
+        }
+
+        public async Task<IEnumerable<T>> Query<T>(string sql, object param = null) where T : class
+        {
+            using (var _connection = new SqlConnection(_connectionString))
             {
-                UnitOfWork.Commit();
+                return await _connection.QueryAsync<T>(sql, param);
             }
-            finally
+        }
+        public async Task<T> QueryFirst<T>(string sql, object param = null) where T : class
+        {
+            using (var _connection = new SqlConnection(_connectionString))
             {
-                Reset();
+                return await _connection.QueryFirstOrDefaultAsync<T>(sql, param);
             }
         }
 
-        public void Rollback()
+        public IReadOnlyList<ICommand> GetQueue()
         {
-            try
-            {
-                UnitOfWork.Rollback();
-            }
-            finally
-            {
-                Reset();
-            }
+            return Queue.AsReadOnly();
         }
 
-        private void Reset()
+        public void ClearQueue()
         {
-            unitOfWork = null;
-            user = null;
+            Queue.Clear();
         }
+
     }
+
 }

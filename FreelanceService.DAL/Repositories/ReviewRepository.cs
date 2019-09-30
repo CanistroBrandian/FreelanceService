@@ -6,21 +6,21 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
+
 
 namespace FreelanceService.DAL.Repositories
 {
     public class ReviewRepository : IReviewRepository
     {
-        protected readonly IDbConnection _connection;
-        protected readonly IDbTransaction _transaction;
-        public ReviewRepository(UnitOfWork unitOfWork)
+        protected readonly IDbContext _context;
+        public ReviewRepository(IDbContext context)
         {
-            _connection = unitOfWork.Transaction.Connection;
-            _transaction = unitOfWork.Transaction;
+            _context = context;
         }
 
 
-        public void AddReview(Review entity)
+        public async Task AddReview(Review entity)
         {
             string query = "INSERT INTO Reviews VALUES(@Id, @UserId, @Name, @Description, @DateOfWriting, @Feedback, @Rating); SELECT CAST(SCOPE_IDENTITY() as int)";
 
@@ -28,49 +28,44 @@ namespace FreelanceService.DAL.Repositories
                 throw new ArgumentNullException("entity");
 
 
-            _connection.Execute(
-                query, param: entity, transaction: _transaction
+           await _context.ExecuteAsync(
+                query, param: entity
             );
 
         }
 
-        public Review Find(int id)
+        public async Task<Review> FindById(int id)
         {
             string query = "SELECT * FROM Reviews WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("id");
 
-            return _connection.Query<Review>(
+            return await _context.QueryFirst<Review>(
                 query,
-                param: new { Id = id },
-                    transaction: _transaction
-            ).FirstOrDefault();
+                param: new { Id = id });
         }
 
-        public IEnumerable<Review> GetAll()
+        public async Task<IEnumerable<Review>> GetAll()
         {
             string query = "SELECT * FROM Reviews";
-            return _connection.Query<Review>(query, transaction: _transaction);
+            return await _context.Query<Review>(query);
         }
 
-        public void Remove(int id)
+        public async Task Remove(int id)
         {
             string query = "DELETE FROM Reviews WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            _connection.Execute(query, transaction: _transaction);
+           await _context.ExecuteAsync(query);
 
         }
 
-        public void Update(Review entity)
+        public async Task Update(Review entity)
         {
             string query = "UPDATE Reviews SET Id=@Id, UserId=@UserId, Name=@Name, Description=@Description, DateOfWriting=@DateOfWriting, Feedback=@Feedback, Rating=@Rating WHERE Id = @Id";
-            _connection.Execute(query,
-                    param: entity,
-                    transaction: _transaction
-                );
+           await _context.ExecuteAsync(query, param: entity);
         }
     }
 }

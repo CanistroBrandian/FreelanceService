@@ -1,49 +1,64 @@
-﻿using FreelanceService.DAL.Interfaces;
+﻿using AutoMapper;
+using FreelanceService.BLL.DTO;
+using FreelanceService.BLL.Interfaces;
 using FreelanceService.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace FreelanceService.Controllers
+namespace FreelanceService.Web.Controllers
 {
+    /// <summary>
+    /// Display all jobs in system
+    /// </summary>
     public class HomeController : Controller
     {
 
-        IDbContext _db;
-       
-
-        public HomeController(IDbContext db)
+        IUserService _userService;
+        IJobService _jobService;
+        IMapper _mapper;
+        public HomeController(IJobService jobService, IUserService userService, IMapper mapper)
         {
-            _db = db;
-
+            _jobService = jobService;
+            _userService = userService;
+            _mapper = mapper;
         }
 
-        public IActionResult Index()
+
+        /// <summary>
+        /// View all jobs
+        /// </summary>
+        /// <returns>View Home/Index</returns>
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             try
             {
+                int pageSize = 5;
 
-               var query = _db.UserRepos.GetAll();
-                _db.Commit();
-                return View(query);
+                ViewData["CurrentSort"] = sortOrder;
+                ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+                ViewData["PriceSortParm"] = sortOrder == "Price" ? "Price_desc" : "Price";
+
+                if (searchString != null)
+                    pageNumber = 1;
+                else
+                    searchString = currentFilter;
+                ViewData["CurrentFilter"] = searchString;
+
+                var list = await _jobService.GetAllSorting(sortOrder);
+                var search = _jobService.Search(searchString, list);
+                var map = _mapper.Map <IEnumerable<JobDTO>, IEnumerable<JobViewModel>> (search);
+                var view = await PaginatedListModel<JobViewModel>.Create(map.AsQueryable(), pageNumber ?? 1, pageSize);
+                return View(view);
+            
             }
             catch
             {
-                _db.Rollback();
                 throw;
             }
-
-
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

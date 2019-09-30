@@ -17,10 +17,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Documentation\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Documentation\FreelanceService.BLL.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,8 +32,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.5\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit, Version=2.3.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
+      <HintPath>..\packages\MailKit.2.3.0\lib\net45\MailKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authentication.Cookies">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.authentication.cookies\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.http.abstractions\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.mvc.abstractions\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.configuration.abstractions\2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeKit, Version=2.3.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
+      <HintPath>..\packages\MimeKit.2.3.0\lib\net45\MimeKit.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.2.0\ref\netcoreapp2.2\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,20 +71,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\CategoryDTO.cs" />
+    <Compile Include="DTO\JobDTO.cs" />
+    <Compile Include="DTO\JobEditDTO.cs" />
+    <Compile Include="DTO\ProjectDTO.cs" />
+    <Compile Include="DTO\ResponseDTO.cs" />
+    <Compile Include="DTO\ReviewDTO.cs" />
+    <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="DTO\UserProfileEditDTO.cs" />
+    <Compile Include="DTO\UserRegistrationDTO.cs" />
+    <Compile Include="Helpers\ValidationException.cs" />
+    <Compile Include="Interfaces\ICategoryService.cs" />
+    <Compile Include="Interfaces\IEmailService.cs" />
+    <Compile Include="Interfaces\IJobService.cs" />
+    <Compile Include="Interfaces\IProjectService.cs" />
+    <Compile Include="Interfaces\IResponseService.cs" />
+    <Compile Include="Interfaces\IReviewService.cs" />
+    <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="Helpers\ServerInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CategoryService.cs" />
+    <Compile Include="Services\EmailService.cs" />
+    <Compile Include="Services\JobService.cs" />
+    <Compile Include="Services\ProjectService.cs" />
+    <Compile Include="Services\ResponseService.cs" />
+    <Compile Include="Services\ReviewService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Validation\IDTOValidationService.cs" />
+    <Compile Include="Validation\Validators\UserProfileEditDTOValidator.cs" />
+    <Compile Include="Validation\DTOValidationService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FreelanceService.Common\FreelanceService.Common.csproj">
+      <Project>{0D2CE257-18A0-4BBE-AC78-731611138926}</Project>
+      <Name>FreelanceService.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FreelanceService.DAL\FreelanceService.DAL.csproj">
       <Project>{1fa62251-7db6-4525-8430-161baa1e3cd7}</Project>
       <Name>FreelanceService.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="DTO\" />
-    <Folder Include="Helpers\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
+    <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

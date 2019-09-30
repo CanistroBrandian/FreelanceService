@@ -1,60 +1,89 @@
 ﻿using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
-using System.Data;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace FreelanceService.DAL.Concrate
 {
     public class UnitOfWork : IUnitOfWork
     {
-        protected IDbTransaction _transaction;
-
-        public UnitOfWork(IDbConnection connection)
+        protected IDbContext _dbContext;
+        private readonly string _connectionString;
+        public UnitOfWork(string connectionString, IDbContext dbContext)
         {
-            _transaction = connection.BeginTransaction(IsolationLevel.ReadUncommitted);
-            
+            _dbContext = dbContext;
+            _connectionString = connectionString;
         }
+        private IUserRepository user;
+        private IProjectRepository project;
+        private IJobRepository job;
+        private ICategoryRepository category;
+        private IReviewRepository review;
+        private IResponseRepository response;
 
-        public IDbTransaction Transaction =>
-            _transaction;
-
+        public IProjectRepository ProjectRepos =>
+            project ?? (project = new ProjectRepository(_dbContext));
+        public IJobRepository JobRepos =>
+          job ?? (job = new JobRepository(_dbContext));
+        public ICategoryRepository CategoryRepos =>
+           category ?? (category = new CategoryRepository(_dbContext));
+        public IReviewRepository ReviewRepos =>
+           review ?? (review = new ReviewRepository(_dbContext));
+        public IResponseRepository ResponseRepos =>
+           response ?? (response = new ResponseRepository(_dbContext));
+        public IUserRepository UserRepos =>
+           user ?? (user = new UserRepository(_dbContext));
       
-        public void Commit()
+        public async Task CommitAsync()
         {
-            try
+            using (var _connection = new SqlConnection(_connectionString))
             {
-                _transaction.Commit();
-                _transaction.Connection?.Close();
-            }
-            catch
-            {
-                _transaction.Rollback();
-                throw;
-            }
-            finally
-            {
-                _transaction?.Dispose();
-                _transaction.Connection?.Dispose();
-                _transaction = null;
-            }
+                _connection.Open();
+                var _transaction = _connection.BeginTransaction();
+                try
+                {
+                    foreach (var command in _dbContext.GetQueue())
+                    {
+                       await command.ExecuteAsync(_transaction);
+
+                    }
+                    _transaction.Commit();
+                    _dbContext.ClearQueue();
+                    _connection.Close();
+                }
+                catch
+                {
+                    _transaction.Rollback();
+                    throw;
+                }
+                finally
+                {
+                    _dbContext.ClearQueue();
+                    _connection.Close();
+                    _transaction?.Dispose();
+                }
+            }           
         }
 
         public void Rollback()
         {
-            try
-            {
-                _transaction.Rollback();
-                _transaction.Connection?.Close();
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                _transaction?.Dispose();
-                _transaction.Connection?.Dispose();
-                _transaction = null;
-            }
+            //    var _transaction = _connection.BeginTransaction(IsolationLevel.ReadUncommitted);
+            //    try
+            //    {
+            //        _transaction.Rollback();
+            //        _transaction.Connection?.Close();
+            //    }
+            //    catch
+            //    {
+            //        throw;
+            //    }
+            //    finally
+            //    {
+            //        _transaction?.Dispose();
+            //        _transaction.Connection?.Dispose();
+            //        _transaction = null;
+            //    }
+            //}
         }
     }
 }

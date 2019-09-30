@@ -1,14 +1,16 @@
 ﻿using FreelanceService.DAL.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+
 
 namespace FreelanceService.DAL.Interfaces
 {
     public interface ICategoryRepository
     {
-        void AddCategory(Category entity);
-        IEnumerable<Category> GetAll();
-        Category Find(int id);
-        void Remove(int id);
-        void Update(Category entity);
+        Task AddCategory(Category entity);
+        Task <IEnumerable<Category>> GetAll();
+        Task<Category> FindById(int id);
+        Task Remove(int id);
+        Task Update(Category entity);
     }
 }

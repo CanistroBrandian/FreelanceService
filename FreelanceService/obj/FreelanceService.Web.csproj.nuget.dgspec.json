@@ -1,34 +1,68 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService\\FreelanceService.Web.csproj": {}
+    "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService\\FreelanceService.Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj": {
+    "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.BLL\\FreelanceService.BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj",
-        "projectName": "FreelanceService.DAL",
-        "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj"
+        "projectUniqueName": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.BLL\\FreelanceService.BLL.csproj",
+        "projectName": "FreelanceService.BLL",
+        "projectPath": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.BLL\\FreelanceService.BLL.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj": {
+                "projectPath": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj"
+              },
+              "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj": {
+                "projectPath": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj"
+              }
+            }
+          }
+        }
       },
       "frameworks": {
         "net472": {}
       }
     },
-    "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService\\FreelanceService.Web.csproj": {
+    "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService\\FreelanceService.Web.csproj",
+        "projectUniqueName": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj",
+        "projectName": "FreelanceService.Common",
+        "projectPath": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj"
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj",
+        "projectName": "FreelanceService.DAL",
+        "projectPath": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj"
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService\\FreelanceService.Web.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService\\FreelanceService.Web.csproj",
         "projectName": "FreelanceService.Web",
-        "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService\\FreelanceService.Web.csproj",
-        "packagesPath": "C:\\Users\\brovk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService\\obj\\",
+        "projectPath": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService\\FreelanceService.Web.csproj",
+        "packagesPath": "C:\\Users\\Павел\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\brovk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Павел\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -41,8 +75,14 @@
         "frameworks": {
           "netcoreapp2.2": {
             "projectReferences": {
-              "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj": {
-                "projectPath": "C:\\Users\\brovk\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj"
+              "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.BLL\\FreelanceService.BLL.csproj": {
+                "projectPath": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.BLL\\FreelanceService.BLL.csproj"
+              },
+              "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj": {
+                "projectPath": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj"
+              },
+              "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj": {
+                "projectPath": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj"
               }
             }
           }
@@ -56,6 +96,18 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
               "target": "Package",

@@ -1,105 +1,145 @@
-﻿using Dapper;
-using FreelanceService.DAL.Concrate;
+﻿
 using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
+using System.Threading.Tasks;
+
 
 namespace FreelanceService.DAL.Repositories
 {
+    /// <summary>
+    /// User Repository. Implemented CRUD operations in the Users table
+    /// </summary>
     public class UserRepository : IUserRepository
     {
-        protected readonly IDbConnection _connection;
-        protected readonly IDbTransaction _transaction;
-        public UserRepository(UnitOfWork unitOfWork)
-        {
-            _connection = unitOfWork.Transaction.Connection;
-            _transaction = unitOfWork.Transaction;
-        }
-     
 
-        public void AddUser(User entity)
+        protected readonly IDbContext _context;
+
+        public UserRepository(IDbContext context)
         {
-            string query = "INSERT INTO Users(Id,Email,PassHash,FirstName,LastName,Phone,DynamicSalt,DateRegistration,Image,Rating,Role)" +
-                "VALUES(@Id,@Email,@PassHash,@FirstName,@LastName,@Phone,@DynamicSalt,@DateRegistration,@Image,@Rating,@Role);SELECT CAST(SCOPE_IDENTITY() as int)";
+            _context = context;
+        }
+
+        /// <summary>
+        /// Send query for adding a new entry to the table Users
+        /// </summary>
+        /// <param name="entity">Accepts an entity of type User</param>
+        /// <returns>Void</returns>   
+        public async Task AddUser(User entity)
+        {
+            string query = "INSERT INTO Users(Email,PassHash,FirstName,LastName,Phone,DynamicSalt,City,Rating,Role) VALUES(@Email,@PassHash,@FirstName,@LastName,@Phone,@DynamicSalt,@City,@Rating,@Role);SELECT CAST(SCOPE_IDENTITY() as int)";
 
             if (entity == null)
-                throw new ArgumentNullException("entity");
+                throw new ArgumentNullException("Entity is empty");
 
-
-            _connection.Execute(
-                query, param:new
+            await _context.ExecuteAsync(
+                query, param: new
                 {
-                    Id = entity.Id,
                     Email = entity.Email,
-                    PassHash= entity.PassHash,
-                    FirstName= entity.FirstName,
-                    LastName= entity.LastName,
-                    Phone= entity.Phone,
-                    DynamicSalt= entity.DynamicSalt,
-                    DateRegistration = entity.DateRegistration,
-                    Image = entity.Image,
+                    PassHash = entity.PassHash,
+                    FirstName = entity.FirstName,
+                    LastName = entity.LastName,
+                    Phone = entity.Phone,
+                    DynamicSalt = entity.DynamicSalt,
+                    City = entity.City,
                     Rating = entity.Rating,
                     Role = entity.Role
-
                 }
-                , transaction: _transaction
             );
+
 
         }
 
-        public User Find(int id)
+        /// <summary>
+        /// Send query to serch fields in table Users equal to id and returns value
+        /// </summary>
+        /// <param name="id"> id is of type int</param>
+        /// <returns>Returns a user with type User</returns>
+        public async Task<User> FindById(int id)
         {
             string query = "SELECT * FROM Users WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("id");
 
-            return _connection.Query<User>(
+            return await _context.QueryFirst<User>(
                 query,
-                param: new { Id = id },
-                    transaction: _transaction
-            ).FirstOrDefault();
+                param: new { Id = id });
         }
 
-        public IEnumerable<User> GetAll()
+        /// <summary>
+        /// Search value fields in table Users equal to email and returns value
+        /// </summary>
+        /// <param name="email"> email is of type string</param>
+        /// <returns>Returns a user with type User</returns>
+        public async Task<User> FindByEmail(string email)
+        {
+            string query = "Select * From Users Where Email = @email";
+
+            if (email == null)
+                throw new ArgumentNullException("email");
+
+            return await _context.QueryFirst<User>(
+                query,
+                param: new { Email = email });
+        }
+
+        /// <summary>
+        /// Send query to search all entries in the Users table
+        /// </summary>
+        /// <returns> Returns all entries ​​in an IEnumerable User </returns>
+        public async Task<IEnumerable<User>> GetAll()
         {
             string query = "SELECT * FROM Users";
-            return _connection.Query<User>(query, transaction: _transaction);
+            return await _context.Query<User>(query);
         }
 
-        public void Remove(int id)
+        /// <summary>
+        ///Send query to delete the Users table field equal to Id
+        /// </summary>
+        /// <param name="id">id is of type int</param>
+        /// <returns>void</returns>
+        public async Task Remove(int id)
         {
             string query = "DELETE FROM Users WHERE Id = @id";
 
             if (id == 0)
                 throw new ArgumentNullException("entity");
-            _connection.Execute(query, transaction: _transaction);
-
+            await _context.ExecuteAsync(query);
         }
 
-        public void Update(User entity)
+        /// <summary>
+        /// Send quey to update the values ​​of the fields of the Users table from the entity parameters
+        /// </summary>
+        /// <param name="entity">Accepts an entity of type User</param>
+        /// <returns>void</returns>
+        public async Task Update(User entity)
         {
-            string query = "UPDATE Users SET {0}=@{0},{1}=@{1},{2}=@{2},{3}=@{3},{4}=@{4},{5}=@{5},{6}=@{6},{7}=@{7},{8}=@{8},{9}=@{9},{10}=@{10} WHERE Id = @Id",
-                 Id, Email, PassHash, FirstName, LastName, Phone, DynamicSalt, DateRegistration, Image, Rating, Role;
-            _connection.Execute(query,
+            string query = "UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Phone=@Phone, City=@City,Role=@Role, VerifyCodeForResetPass=@VerifyCodeForResetPass WHERE Id=@Id";
+            await _context.ExecuteAsync(query,
                     param: new
                     {
                         Id = entity.Id,
-                        Email = entity.Email,
-                        PassHash = entity.PassHash,
                         FirstName = entity.FirstName,
                         LastName = entity.LastName,
                         Phone = entity.Phone,
-                        DynamicSalt = entity.DynamicSalt,
-                        DateRegistration = entity.DateRegistration,
-                        Image = entity.Image,
-                        Rating = entity.Rating,
-                        Role = entity.Role
-                    },
-                    transaction: _transaction
+                        City = entity.City,
+                        Role = entity.Role,
+                        VerifyCodeForResetPass = entity.VerifyCodeForResetPass
+                    }
+                );
+        }
+
+        public async Task ResetPassword(User entity)
+        {
+            string query = "UPDATE Users SET PassHash = @PassHash, VerifyCodeForResetPass=null WHERE Id=@Id";
+            await _context.ExecuteAsync(query,
+                    param: new
+                    {
+                        Id = entity.Id,
+                        PassHash = entity.PassHash,
+                    }
                 );
         }
     }

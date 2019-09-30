@@ -1,16 +1,15 @@
-﻿using FreelanceService.DAL.Repositories;
+﻿using FreelanceService.DAL.Concrate;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FreelanceService.DAL.Interfaces
 {
     public interface IDbContext
     {
-        UserRepository UserRepos { get; }
-        ProjectRepository ProjectRepos { get; }
-        CategoryRepository CategoryRepos { get; }
-        ResponseRepository ResponseRepos { get; }
-        ReviewRepository ReviewRepos { get; }
-        TaskRepository TaskRepos { get; }
-        void Commit();
-        void Rollback();
+        Task ExecuteAsync(string sql, object param = null);
+        Task<IEnumerable<T>> Query<T>(string sql, object param = null) where T : class;
+        Task<T> QueryFirst<T>(string sql, object param = null) where T : class;
+        IReadOnlyList<ICommand> GetQueue();
+        void ClearQueue();
     }
 }

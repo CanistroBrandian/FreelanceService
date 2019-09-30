@@ -1,37 +1,86 @@
-﻿@model IEnumerable<FreelanceService.DAL.Entities.User>
+﻿
+@using FreelanceService.Web.Helpers
+@model PaginatedListModel<FreelanceService.Models.JobViewModel>
+
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Index";
 }
 
-<table>
-    <tr>
-        <td>Id</td>
-        <td>Email</td>
-        <td>PassHash</td>
-        <td>FirstName</td>
-        <td>LastName</td>
-        <td>Phone</td>
-        <td>DynamicSalt</td>
-        <td>DateRegistration</td>
-        <td>Image</td>
-        <td>Role</td>
-        <td>Email</td>
-    </tr>
-    @foreach (var not in Model)
-    {
-<tr>
-    <td>@not.Id</td>
-    <td>@not.Email</td>
-    <td>@not.PassHash</td>
-    <td>@not.FirstName</td>
-    <td>@not.LastName</td>
-    <td>@not.Phone</td>
-    <td>@not.DynamicSalt</td>
-    <td>@not.DateRegistration</td>
-    <td>@not.Image</td>
-    <td>@not.Role</td>
-    <td>@not.Email</td>
+<h1>Index</h1>
 
-</tr>
-    }
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Поиск по имени: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Поиск" class="btn btn-default" /> |
+            <a asp-action="Index">Сбросить</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Имя</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Цена</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinishedDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+        }
+    </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Предыдущая
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Следующая
+</a>
