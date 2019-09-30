@@ -4,6 +4,7 @@ using FreelanceService.BLL.Interfaces;
 using FreelanceService.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,7 +49,9 @@ namespace FreelanceService.Web.Controllers
 
                 var list = await _jobService.GetAllSorting(sortOrder);
                 var search = _jobService.Search(searchString, list);
-                return View(await PaginatedListModel<JobViewModel>.Create(search.AsQueryable(), pageNumber ?? 1, pageSize));
+                var map = _mapper.Map <IEnumerable<JobDTO>, IEnumerable<JobViewModel>> (search);
+                var view = await PaginatedListModel<JobViewModel>.Create(map.AsQueryable(), pageNumber ?? 1, pageSize);
+                return View(view);
             
             }
             catch

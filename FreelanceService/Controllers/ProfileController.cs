@@ -143,7 +143,6 @@ namespace FreelanceService.Web.Controllers
                 var modelDTO = _mapper.Map<CreateJobViewModel, JobDTO>(model);
                 var user = await _userService.FindUserByEmail(User.Identity.Name);
                 await _jobService.AddJob(modelDTO, user);
-                await _jobService.CommitAsync();
                 return RedirectToAction("MyJobs");
             }
             catch

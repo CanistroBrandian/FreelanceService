@@ -13,6 +13,5 @@ namespace FreelanceService.BLL.Interfaces
         Task Update(JobDTO entity);
         Task<IEnumerable<JobDTO>> GetAllSorting(string orderSort);
         IEnumerable<JobDTO> Search(string searchString, IEnumerable<JobDTO> list);
-        Task CommitAsync();
     }
 }

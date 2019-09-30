@@ -25,7 +25,8 @@ namespace FreelanceService.BLL.Services
 
             var job = _mapper.Map<JobDTO, Job>(model);
             job.UserId_Customer = user.Id;
-
+            await _uow.JobRepos.AddJob(job);
+            await CommitAsync();
         }
 
         public async Task<JobDTO> FindJobById(int id)
@@ -33,6 +34,7 @@ namespace FreelanceService.BLL.Services
             if (id == 0)
                 throw new Exception("Поле Id не введено");
             var entity = await _uow.JobRepos.FindById(id);
+            await CommitAsync();
             return _mapper.Map<Job, JobDTO>(entity);
         }
 
@@ -40,6 +42,7 @@ namespace FreelanceService.BLL.Services
         {
             var user = _mapper.Map<UserDTO, User>(userDTO);
             var map = _mapper.Map<IEnumerable<Job>, IEnumerable<JobDTO>>(await _uow.JobRepos.GetAllJobsOfCustomer(user));
+            await CommitAsync();
             return map;
         }
 
@@ -47,6 +50,7 @@ namespace FreelanceService.BLL.Services
         {
             var users = await _uow.JobRepos.GetAll();
             var result = _mapper.Map<IEnumerable<Job>, IEnumerable<JobDTO>>(users);
+            await CommitAsync();
             return result;
         }
 
@@ -54,11 +58,13 @@ namespace FreelanceService.BLL.Services
         {
             var job = _mapper.Map<JobDTO, Job>(entity);
             await _uow.JobRepos.Update(job);
+            await CommitAsync();
         }
 
         public async Task Remove(JobDTO entity)
         {
             await _uow.JobRepos.Remove(entity.Id);
+            await CommitAsync();
         }
 
         public async Task<IEnumerable<JobDTO>> GetAllSorting(string sortOrder)
@@ -96,7 +102,7 @@ namespace FreelanceService.BLL.Services
         }
 
 
-        public async Task CommitAsync()
+        private async Task CommitAsync()
         {
             await _uow.CommitAsync();
         }
