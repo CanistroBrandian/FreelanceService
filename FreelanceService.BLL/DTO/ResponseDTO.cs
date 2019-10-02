@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace FreelanceService.BLL.DTO
 {
@@ -10,6 +11,7 @@ namespace FreelanceService.BLL.DTO
         public int Status { get; set; }
         public string Description { get; set; }
         public DateTime DateTimeOfResponse { get; set; }
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
+        public IEnumerable<UserDTO> UserDTOs { get; set; }
     }
 }

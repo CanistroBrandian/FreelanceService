@@ -8,7 +8,9 @@ namespace FreelanceService.BLL.Interfaces
     {
         Task AddResponse(ResponseDTO entity, int userExecutorId, int jobId);
         Task<ResponseDTO> FindResponseById(int id);
+        Task<ResponseDTO> FindResponseByJobId(int id);
         Task<IEnumerable<ResponseDTO>> GetAll();
+        Task<IEnumerable<ResponseDTO>> GetAllResponseOfJob(int jobId);
         Task Update(ResponseDTO entity);
         Task CommitAsync();
     }

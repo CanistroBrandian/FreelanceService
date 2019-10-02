@@ -1,4 +1,4 @@
-﻿@model FreelanceService.Models.JobDetailsViewModel;
+﻿@model FreelanceService.Web.Models.JobDetailsViewModel;
 
 
 @if (User.IsInRole("Исполнитель"))
@@ -16,6 +16,6 @@
                 <textarea class="form-control" asp-for="ResponseAddViewModel.Description" rows="3"></textarea>
             </div>
         </div>
-        <input type="submit" valuse="Откликнуться" asp-controller="Job" asp-action="Response" class="btn  btn-outline-primary" />
+        <input type="submit" value="Откликнуться" asp-controller="Job" asp-action="Response" class="btn  btn-outline-primary" />
     </form>
 }

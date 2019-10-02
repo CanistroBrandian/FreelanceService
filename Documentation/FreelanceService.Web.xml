@@ -22,7 +22,7 @@
             </summary>
             <returns>View Account/Login</returns>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.AccountController.Login(FreelanceService.Models.LoginViewModel)">
+        <member name="M:FreelanceService.Web.Controllers.AccountController.Login(FreelanceService.Web.Models.LoginViewModel)">
             <summary>
             The client side sends the LoginViewModel to the server to authorize the user. With successful authorization redirects to user profile and added authorization cookies
             </summary>
@@ -35,7 +35,7 @@
             </summary>
             <returns>View Account/Register</returns>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.AccountController.Register(FreelanceService.Models.RegisterViewModel)">
+        <member name="M:FreelanceService.Web.Controllers.AccountController.Register(FreelanceService.Web.Models.RegisterViewModel)">
             <summary>
             The client side sends the RegistrationViewModel to add a new user. If the registration is successful, the user is authenticate
             </summary>
@@ -95,7 +95,7 @@
             </summary>
             <returns>View Profile/Edit</returns>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.ProfileController.Edit(FreelanceService.Models.ProfileEditViewModel)">
+        <member name="M:FreelanceService.Web.Controllers.ProfileController.Edit(FreelanceService.Web.Models.ProfileEditViewModel)">
             <summary>
             Request to edit user data
             </summary>
@@ -108,7 +108,7 @@
             </summary>
             <returns>View Profile/CreateJob</returns>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.ProfileController.CreateJob(FreelanceService.Models.CreateJobViewModel)">
+        <member name="M:FreelanceService.Web.Controllers.ProfileController.CreateJob(FreelanceService.Web.Models.CreateJobViewModel)">
             <summary>
             Request to create a new job for the customer
             </summary>

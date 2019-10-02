@@ -2,7 +2,7 @@
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
 using FreelanceService.Common.Enum;
-using FreelanceService.Models;
+using FreelanceService.Web.Models;
 using FreelanceService.Web.Validation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

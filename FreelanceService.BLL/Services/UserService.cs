@@ -41,9 +41,12 @@ namespace FreelanceService.BLL.Services
 
         public async Task<UserDTO> FindUserById(int id)
         {
-
-            var entity = await _uow.UserRepos.FindById(id);
-            return _mapper.Map<User, UserDTO>(entity);
+            if (id != 0)
+            {
+                var entity = await _uow.UserRepos.FindById(id);
+                return _mapper.Map<User, UserDTO>(entity);
+            }
+            else return null;
         }
 
         public async Task<IEnumerable<UserDTO>> GetAll()

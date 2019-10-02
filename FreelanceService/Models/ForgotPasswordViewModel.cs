@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FreelanceService.Models
+namespace FreelanceService.Web.Models
 {
     public class ForgotPasswordViewModel
     {

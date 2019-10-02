@@ -31,12 +31,22 @@ namespace FreelanceService.DAL.Repositories
         public async Task AddJob(Job entity)
         {
             string query = "INSERT INTO Jobs(UserId_Customer,UserId_Executor,CategoryId,Name,Description,City,Status,FinishedDateTime,Price) VALUES(@UserId_Customer,@UserId_Executor,@CategoryId,@Name,@Description,@City,@Status,@FinishedDateTime,@Price)";
-            if (entity == null)
-                throw new ArgumentNullException("entity");
             await _context.ExecuteAsync(
                  query, param: entity);
-
         }
+
+        public async Task AddExecutorForJob(int userExecutorId, int jobId)
+        {
+            string query = "UPDATE Jobs SET UserId_Executor=@UserId_Executor WHERE Id=@Id";
+
+            await _context.ExecuteAsync(
+                 query, param: new
+                 {
+                     UserId_Executor = userExecutorId,
+                     Id = jobId
+                 });
+        }
+
         /// <summary>
         /// Send query to serch fields in table Jobs equal to id and returns value
         /// </summary>

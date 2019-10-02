@@ -2,7 +2,7 @@
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
 using FreelanceService.Common.Encrypt;
-using FreelanceService.Models;
+using FreelanceService.Web.Models;
 using FreelanceService.Web.Helpers;
 using FreelanceService.Web.Validation;
 using Microsoft.AspNetCore.Authentication;

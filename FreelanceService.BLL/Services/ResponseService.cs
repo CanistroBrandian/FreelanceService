@@ -23,14 +23,21 @@ namespace FreelanceService.BLL.Services
         {
             var mapResponse = _mapper.Map<ResponseDTO, Response>(response);
             await _uow.ResponseRepos.AddResponse(mapResponse, userExecitorId, jobId);
+            await _uow.JobRepos.AddExecutorForJob(userExecitorId, jobId);
             await CommitAsync();
         }
 
         public async Task<ResponseDTO> FindResponseById(int id)
         {
-            if (id == 0)
-                throw new Exception("Поле Id не введено");
-            var entity = await _uow.ResponseRepos.FindById(id);
+
+            var entity = await _uow.ResponseRepos.FindResponseById(id);
+            return _mapper.Map<Response, ResponseDTO>(entity);
+        }
+
+        public async Task<ResponseDTO> FindResponseByJobId(int id)
+        {
+
+            var entity = await _uow.ResponseRepos.FindResponseByJobId(id);
             return _mapper.Map<Response, ResponseDTO>(entity);
         }
 
@@ -38,6 +45,13 @@ namespace FreelanceService.BLL.Services
         {
             var result = _mapper.Map<IEnumerable<Response>, IEnumerable<ResponseDTO>>(await _uow.ResponseRepos.GetAll());
             return result;
+        }
+
+        public async Task<IEnumerable<ResponseDTO>> GetAllResponseOfJob(int jobId)
+        {
+            var responses = await _uow.ResponseRepos.GetAllResponseOfJob(jobId);
+            var map = _mapper.Map<IEnumerable<Response>, IEnumerable<ResponseDTO>>(responses);
+            return map;
         }
 
         public async Task Update(ResponseDTO entity)

@@ -9,7 +9,7 @@ using FreelanceService.Common.Validation;
 using FreelanceService.DAL.Concrate;
 using FreelanceService.DAL.Interfaces;
 using FreelanceService.DAL.Repositories;
-using FreelanceService.Models;
+using FreelanceService.Web.Models;
 using FreelanceService.Web.Validation;
 using FreelanceService.Web.Validation.Validators;
 using Microsoft.AspNetCore.Authentication.Cookies;

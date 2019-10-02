@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
-using FreelanceService.Models;
+using FreelanceService.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

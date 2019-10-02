@@ -1,6 +1,6 @@
 ﻿
 using FreelanceService.Common.Validation;
-using FreelanceService.Models;
+using FreelanceService.Web.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 

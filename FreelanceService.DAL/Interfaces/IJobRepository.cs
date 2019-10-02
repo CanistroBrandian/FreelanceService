@@ -7,6 +7,7 @@ namespace FreelanceService.DAL.Interfaces
     public interface IJobRepository
     {
         Task AddJob(Job entity);
+        Task AddExecutorForJob(int userExecutorId, int jobid);
         Task<IEnumerable<Job>> GetAll();
         Task<IEnumerable<Job>> GetAllJobsOfCustomer(User entity);
         Task<Job> FindByIdJob(int id);

@@ -30,6 +30,7 @@ CREATE TABLE Responses (
     [Description]      VARCHAR (1024) NOT NULL,
     [ResponseDateTime] DATETIME       NOT NULL,
     [Status]           INT            NOT NULL,
+	[Price]				DECIMAL(18,2) NULL
    
 )
 GO 

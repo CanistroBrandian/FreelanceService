@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FreelanceService.BLL.DTO;
 using FreelanceService.DAL.Entities;
-using FreelanceService.Models;
+using FreelanceService.Web.Models;
 using System.Collections.Generic;
 
 namespace FreelanceService.BLL.Automapper
@@ -23,6 +23,8 @@ namespace FreelanceService.BLL.Automapper
             CreateMap<Response, ResponseDTO>().ReverseMap();
             CreateMap<PaginatedListModel<JobViewModel>, PaginatedListModel<JobDTO>>().ReverseMap();
             CreateMap<ResponseAddViewModel, ResponseDTO>().ReverseMap();
+
+            CreateMap<ResponseListOfExecutors, ResponseDTO>().ReverseMap();
 
             CreateMap<JobDetailsViewModel, JobDTO>().ReverseMap();
             CreateMap<JobViewModel, JobDTO>().ReverseMap();

@@ -31,16 +31,21 @@ namespace FreelanceService.DAL.Repositories
 
         }
 
-        public async Task<Response> FindById(int id)
+        public async Task<Response> FindResponseById(int id)
         {
             string query = "SELECT * FROM Responses WHERE Id = @id";
-
-            if (id == 0)
-                throw new ArgumentNullException("id");
 
             return await _context.QueryFirst<Response>(
                 query,
                 param: new { Id = id });
+        }
+
+        public async Task<Response> FindResponseByJobId(int jobId)
+        {
+            string query = "SELECT * FROM Responses WHERE JobId = @Id";
+            return await _context.QueryFirst<Response>(
+                query,
+                param: new { Id = jobId });
         }
 
         public async Task<IEnumerable<Response>> GetAll()
@@ -49,12 +54,15 @@ namespace FreelanceService.DAL.Repositories
             return await _context.Query<Response>(query);
         }
 
+        public async Task<IEnumerable<Response>> GetAllResponseOfJob(int id)
+        {
+            string query = "SELECT * FROM Responses WHERE JobId=@Id";
+            return await _context.Query<Response>(query,param: new { Id = id });
+        }
+
         public async Task Remove(int id)
         {
             string query = "DELETE FROM Responses WHERE Id = @id";
-
-            if (id == 0)
-                throw new ArgumentNullException("entity");
             await _context.ExecuteAsync(query);
 
         }
