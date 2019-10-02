@@ -1,6 +1,4 @@
-﻿using FreelanceService.Common.Validation;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 

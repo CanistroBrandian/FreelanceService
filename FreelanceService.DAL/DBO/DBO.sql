@@ -34,6 +34,10 @@ CREATE TABLE Responses (
 )
 GO 
 
+ALTER TABLE Responses
+ADD CONSTRAINT DF_Response_ResponseDateTime_Default DEFAULT (getdate()) FOR [ResponseDateTime]
+GO
+
 ALTER TABLE Responses 
 ADD CONSTRAINT PK_Responses_Id PRIMARY KEY CLUSTERED (Id)
 GO

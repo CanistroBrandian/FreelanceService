@@ -9,7 +9,8 @@ namespace FreelanceService.DAL.Interfaces
         Task AddJob(Job entity);
         Task<IEnumerable<Job>> GetAll();
         Task<IEnumerable<Job>> GetAllJobsOfCustomer(User entity);
-        Task<Job> FindById(int id);
+        Task<Job> FindByIdJob(int id);
+        Task<Job> FindByIdCustomer(int id);
         Task Remove(int id);
         Task Update(Job entity);
         Task<IEnumerable<Job>> OrderByDescending(string sortOrder);

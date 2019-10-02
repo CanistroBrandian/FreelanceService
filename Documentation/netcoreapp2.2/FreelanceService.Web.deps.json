@@ -641,6 +641,7 @@
       },
       "FreelanceService.DAL/1.0.0": {
         "dependencies": {
+          "FreelanceService.Common": "1.0.0",
           "Dapper": "1.60.0.0"
         },
         "runtime": {

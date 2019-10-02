@@ -29,10 +29,9 @@ namespace FreelanceService.BLL.Services
 
         public async Task<CategoryDTO> FindCategoryById(int id)
         {
-            if (id == 0)
-                throw new Exception("Поле Id не введено");
-            var entity = await _uow.CategoryRepos.FindById(id);
-            return _mapper.Map<Category, CategoryDTO>(entity);
+
+            var category = await _uow.CategoryRepos.FindById(id);
+            return _mapper.Map<Category, CategoryDTO>(category);
         }
 
         public async Task<IEnumerable<CategoryDTO>> GetAll()
@@ -48,7 +47,7 @@ namespace FreelanceService.BLL.Services
             await _uow.CategoryRepos.Update(category);
         }
 
-        public async Task Remove(ResponseDTO entity)
+        public async Task Remove(CategoryDTO entity)
         {
             await _uow.CategoryRepos.Remove(entity.Id);
         }

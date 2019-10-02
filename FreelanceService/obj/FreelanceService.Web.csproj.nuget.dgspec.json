@@ -43,7 +43,16 @@
       "restore": {
         "projectUniqueName": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj",
         "projectName": "FreelanceService.DAL",
-        "projectPath": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj"
+        "projectPath": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.DAL\\FreelanceService.DAL.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj": {
+                "projectPath": "C:\\Users\\Павел\\source\\repos\\FreelanceService\\FreelanceService.Common\\FreelanceService.Common.csproj"
+              }
+            }
+          }
+        }
       },
       "frameworks": {
         "net472": {}

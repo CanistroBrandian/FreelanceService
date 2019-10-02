@@ -22,36 +22,40 @@ namespace FreelanceService.BLL.Services
 
         public async Task AddJob(JobDTO model, UserDTO user)
         {
-
             var job = _mapper.Map<JobDTO, Job>(model);
             job.UserId_Customer = user.Id;
             await _uow.JobRepos.AddJob(job);
             await CommitAsync();
         }
 
-        public async Task<JobDTO> FindJobById(int id)
+        public async Task<JobDTO> FindJobByIdJob(int id)
         {
-            if (id == 0)
-                throw new Exception("Поле Id не введено");
-            var entity = await _uow.JobRepos.FindById(id);
-            await CommitAsync();
+
+            var entity = await _uow.JobRepos.FindByIdJob(id);
+            return _mapper.Map<Job, JobDTO>(entity);
+        }
+
+        public async Task<JobDTO> FindJobByIdCustomer(int id)
+        {
+            var entity = await _uow.JobRepos.FindByIdCustomer(id);
             return _mapper.Map<Job, JobDTO>(entity);
         }
 
         public async Task<IEnumerable<JobDTO>> GetAllJobsOfCustomer(UserDTO userDTO)
         {
             var user = _mapper.Map<UserDTO, User>(userDTO);
+            
             var map = _mapper.Map<IEnumerable<Job>, IEnumerable<JobDTO>>(await _uow.JobRepos.GetAllJobsOfCustomer(user));
             await CommitAsync();
             return map;
         }
 
-        public async Task<IEnumerable<JobDTO>> GetAll()
+        public async Task<IEnumerable<JobDTO>> GetAll()// удалить 
         {
-            var users = await _uow.JobRepos.GetAll();
-            var result = _mapper.Map<IEnumerable<Job>, IEnumerable<JobDTO>>(users);
+            var jobs = await _uow.JobRepos.GetAll();
+            var map = _mapper.Map<IEnumerable<Job>, IEnumerable<JobDTO>>(jobs);
             await CommitAsync();
-            return result;
+            return map;
         }
 
         public async Task Update(JobDTO entity)

@@ -75,5 +75,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FreelanceService.Common\FreelanceService.Common.csproj">
+      <Project>{0d2ce257-18a0-4bbe-ac78-731611138926}</Project>
+      <Name>FreelanceService.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

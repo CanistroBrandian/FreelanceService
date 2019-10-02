@@ -42,7 +42,7 @@ namespace FreelanceService.DAL.Repositories
         /// </summary>
         /// <param name="id"> id is of type int</param>
         /// <returns>Returns a job  with type Job</returns>
-        public async Task<Job> FindById(int id)
+        public async Task<Job> FindByIdJob(int id)
         {
             string query = "SELECT * FROM Jobs WHERE Id = @id";
 
@@ -52,6 +52,16 @@ namespace FreelanceService.DAL.Repositories
             return await _context.QueryFirst<Job>(
                 query,
                 param: new { Id = id });
+        }
+
+
+        public async Task<Job> FindByIdCustomer(int id)
+        {
+            string query = "SELECT * FROM Jobs WHERE UserId_Customer = @id";
+
+            return await _context.QueryFirst<Job>(
+                query,
+                param: new { UserId_Customer = id });
         }
 
         /// <summary>
@@ -82,9 +92,6 @@ namespace FreelanceService.DAL.Repositories
         public async Task Remove(int id)
         {
             string query = "DELETE FROM Jobs WHERE Id = @id";
-
-            if (id == 0)
-                throw new ArgumentNullException("entity");
             await _context.ExecuteAsync(query);
 
         }

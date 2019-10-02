@@ -3,7 +3,7 @@ using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using FreelanceService.Common.Enum;
 using System.Threading.Tasks;
 
 
@@ -17,14 +17,17 @@ namespace FreelanceService.DAL.Repositories
             _context = context;
         }
 
-        public async Task AddResponse(Response entity)
+        public async Task AddResponse(Response response, int userExecutorId, int jobId)
         {
-            string query = "INSERT INTO Responses VALUES(@Id,@UserId_Executor,@TaskId,@Status,@Description,@DateTimeOfResponse);SELECT CAST(SCOPE_IDENTITY() as int)";
-
-            if (entity == null)
-                throw new ArgumentNullException("entity");
-
-            await _context.ExecuteAsync(query, param: entity);
+            string query = "INSERT INTO Responses(UserId_Executor,JobId,Status,Description,Price) VALUES(@UserId_Executor,@JobId,@Status,@Description,@Price)";
+            await _context.ExecuteAsync(query, param: new {
+                UserId_Executor = userExecutorId,
+                JobId = jobId,
+                Description = response.Description,
+                Status = (int)ResponseStatusEnum.AlreadyResponded,
+                Price = response.Price
+                }
+                );
 
         }
 

@@ -1,0 +1,100 @@
+﻿@model FreelanceService.Models.JobDetailsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+    var parms = new Dictionary<string, string>
+{
+                { "id", "5" },
+                { "description", Model.DescriptionForResponse },
+                { "price", Model.PriceForResponse.ToString() } //поменять значения с другой модели
+            };
+}
+
+
+<h1 class="title mb-3" asp-for="Name">@Model.Name</h1>
+<div class="card">
+    <div class="row no-gutters">
+        <aside class="col-sm-5 border-right">
+            <article class="gallery-wrap">
+                <div class="img-big-wrap">
+                    <div> <a href="1.jpg" data-fancybox=""><img src="1.jpg"></a></div>
+                </div> <!-- slider-product.// -->
+                <div class="img-small-wrap">
+                    <div class="item-gallery"> <img src="1.jpg"></div>
+                    <div class="item-gallery"> <img src="images/items/2.jpg"></div>
+                    <div class="item-gallery"> <img src="images/items/3.jpg"></div>
+                    <div class="item-gallery"> <img src="images/items/4.jpg"></div>
+                </div> <!-- slider-nav.// -->
+            </article> <!-- gallery-wrap .end// -->
+        </aside>
+        <aside class="col-sm-7">
+            <article class="p-5">
+                <h3 class="title mb-3" asp-for="Name">@Model.Name</h3>
+                @if (Model.Price != null)
+                {
+                    <div class="mb-3">
+                        <var class="price h3 text-warning">
+                            <span class="currency">BYN</span><span class="num">@Model.Price</span>
+                        </var>
+                    </div> <!-- price-detail-wrap .// -->
+                }
+                <dl>
+                    <dt>Описание</dt>
+                    <dd>
+                        <p>
+                            @Model.Description
+                        </p>
+                    </dd>
+                </dl>
+                <dl class="row">
+                    <dt class="col-sm-3">Статус</dt>
+                    <dd class="col-sm-9"></dd>
+
+                    <dt class="col-sm-3">Выполнить до</dt>
+                    <dd class="col-sm-9">@Model.FinishedDateTime </dd>
+
+                    <dt class="col-sm-3">Город</dt>
+                    <dd class="col-sm-9">@Model.City</dd>
+
+                    <dt class="col-sm-3">Категория</dt>
+                    <dd class="col-sm-9">@Model.CategoryId</dd>
+                </dl>
+                <hr>
+
+            </article> <!-- card-body.// -->
+        </aside> <!-- col.// -->
+    </div> <!-- row.// -->
+</div> <!-- card.// -->
+@await Html.PartialAsync("_PartialResponse")
+
+<article class="itemlist">
+    <div class="row row-sm">
+        <aside class="col-sm-3">
+            <div class="img-wrap"><img src="images/items/1.jpg" class="img-md"></div>
+        </aside> <!-- col.// -->
+        <div class="col-sm-6">
+            <div class="text-wrap">
+                <h4 class="title"> </h4>
+                <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, Lorem ipsum dolor sit amet, consectetuer adipiscing elit, Ut wisi enim ad minim veniam </p>
+                <p class="rating-wrap my-0 text-muted">
+                    <span class="label-rating">132 reviews</span>
+                    <span class="label-rating">154 orders </span>
+                </p> <!-- rating-wrap.// -->
+            </div> <!-- text-wrap.// -->
+        </div> <!-- col.// -->
+        <aside class="col-sm-3">
+            <div class="border-left pl-3">
+                <div class="price-wrap">
+                    <span class="h3 price"> $56 </span><del class="price-old"> $98</del>
+                </div> <!-- info-price-detail // -->
+                <p class="text-success">Free shipping</p>
+                <p>
+                    <a href="#" class="btn btn-warning"> Buy now </a>
+                    <a href="#" class="btn btn-light"> Details  </a>
+                </p>
+            </div> <!-- action-wrap.// -->
+        </aside> <!-- col.// -->
+    </div> <!-- row.// -->
+</article> <!-- itemlist.// -->

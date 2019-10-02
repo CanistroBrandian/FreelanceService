@@ -4945,6 +4945,9 @@
       },
       "FreelanceService.DAL/1.0.0": {
         "type": "project",
+        "dependencies": {
+          "FreelanceService.Common": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/FreelanceService.DAL.dll": {}
         },

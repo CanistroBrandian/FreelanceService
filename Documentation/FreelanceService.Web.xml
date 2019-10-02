@@ -9,7 +9,7 @@
             The controller is responsible for user registration, login and authentication
             </summary>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.AccountController.#ctor(FreelanceService.BLL.Interfaces.IEmailService,FreelanceService.BLL.Interfaces.IUserService,AutoMapper.IMapper)">
+        <member name="M:FreelanceService.Web.Controllers.AccountController.#ctor(FreelanceService.BLL.Interfaces.IEmailService,FreelanceService.BLL.Interfaces.IUserService,AutoMapper.IMapper,FreelanceService.Web.Validation.IViewModelValidationService)">
             <summary>
             Dependency Injection User and Email service
             </summary>

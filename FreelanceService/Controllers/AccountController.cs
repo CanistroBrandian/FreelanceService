@@ -4,6 +4,7 @@ using FreelanceService.BLL.Interfaces;
 using FreelanceService.Common.Encrypt;
 using FreelanceService.Models;
 using FreelanceService.Web.Helpers;
+using FreelanceService.Web.Validation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -22,17 +23,20 @@ namespace FreelanceService.Web.Controllers
         IEmailService _emailService;
         IUserService _userService;
         IMapper _mapper;
+        IViewModelValidationService _validationService;
 
         /// <summary>
         /// Dependency Injection User and Email service
         /// </summary>
         /// <param name="emailService"></param>
         /// <param name="userService"></param>
-        public AccountController(IEmailService emailService, IUserService userService, IMapper mapper)
+        public AccountController(IEmailService emailService, IUserService userService, IMapper mapper,
+            IViewModelValidationService validationService)
         {
             _emailService = emailService;
             _userService = userService;
             _mapper = mapper;
+            _validationService = validationService;
         }
         /// <summary>
         /// User authorization page. If the user is authorized, then he will be redirected to his profile
@@ -72,7 +76,7 @@ namespace FreelanceService.Web.Controllers
         /// </summary>
         /// <returns>View Account/Register</returns>
         [HttpGet]
-        public IActionResult Register()
+        public ActionResult Register()
         {
             return View();
         }
@@ -86,9 +90,11 @@ namespace FreelanceService.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            var validationResult = _validationService.Validate(model);
+            if (!validationResult.IsValid)
             {
-                return View(model);
+                ModelState.Merge(validationResult.ModelState);
+                return View();
             }
             var user = await _userService.FindUserByEmail(model.Email);
             if (user == null)

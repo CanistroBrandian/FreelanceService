@@ -55,9 +55,10 @@
     <Compile Include="Encrypt\SHA256Encrypt.cs" />
     <Compile Include="Enum\CityEnum.cs" />
     <Compile Include="Enum\CityNameFromInt.cs" />
+    <Compile Include="Enum\JobStatusEnum.cs" />
     <Compile Include="Enum\RoleEnum.cs" />
     <Compile Include="Enum\RoleNameFromInt.cs" />
-    <Compile Include="Enum\StatusEnum.cs" />
+    <Compile Include="Enum\ResponseStatusEnum.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Salt\GenerateSalt.cs" />

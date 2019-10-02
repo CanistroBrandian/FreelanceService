@@ -7,7 +7,8 @@ namespace FreelanceService.BLL.Interfaces
     public interface IJobService
     {
         Task AddJob(JobDTO entity, UserDTO user);
-        Task<JobDTO> FindJobById(int id);
+        Task<JobDTO> FindJobByIdJob(int id);
+        Task<JobDTO> FindJobByIdCustomer(int id);
         Task<IEnumerable<JobDTO>> GetAll();
         Task<IEnumerable<JobDTO>> GetAllJobsOfCustomer(UserDTO user);
         Task Update(JobDTO entity);

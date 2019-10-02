@@ -22,8 +22,9 @@ namespace FreelanceService.BLL.Automapper
             CreateMap<Project, ProjectDTO>().ReverseMap();
             CreateMap<Response, ResponseDTO>().ReverseMap();
             CreateMap<PaginatedListModel<JobViewModel>, PaginatedListModel<JobDTO>>().ReverseMap();
+            CreateMap<ResponseAddViewModel, ResponseDTO>().ReverseMap();
 
-            CreateMap<JobDTO, JobViewModel>().ReverseMap();
+            CreateMap<JobDetailsViewModel, JobDTO>().ReverseMap();
             CreateMap<JobViewModel, JobDTO>().ReverseMap();
             CreateMap<UserDTO, ProfileViewModel>().ReverseMap();
         }

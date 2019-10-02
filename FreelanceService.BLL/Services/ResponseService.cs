@@ -19,11 +19,11 @@ namespace FreelanceService.BLL.Services
             _mapper = mapper;
         }
 
-        public async Task AddResponse(ResponseDTO entity)
+        public async Task AddResponse(ResponseDTO response, int userExecitorId, int jobId)
         {
-            var response = _mapper.Map<ResponseDTO, Response>(entity);
-            await _uow.ResponseRepos.AddResponse(response);
-
+            var mapResponse = _mapper.Map<ResponseDTO, Response>(response);
+            await _uow.ResponseRepos.AddResponse(mapResponse, userExecitorId, jobId);
+            await CommitAsync();
         }
 
         public async Task<ResponseDTO> FindResponseById(int id)
