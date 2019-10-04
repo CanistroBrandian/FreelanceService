@@ -52,7 +52,7 @@ namespace FreelanceService.DAL.Repositories
         /// </summary>
         /// <param name="id"> id is of type int</param>
         /// <returns>Returns a job  with type Job</returns>
-        public async Task<Job> FindByIdJob(int id)
+        public async Task<Job> FindJobById(int id)
         {
             string query = "SELECT * FROM Jobs WHERE Id = @id";
 
@@ -141,6 +141,7 @@ namespace FreelanceService.DAL.Repositories
                     return await _context.Query<Job>(queryName);
             }
         }
+
 
     }
 }

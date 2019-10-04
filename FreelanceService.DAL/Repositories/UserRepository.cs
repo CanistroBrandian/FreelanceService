@@ -56,17 +56,15 @@ namespace FreelanceService.DAL.Repositories
         /// </summary>
         /// <param name="id"> id is of type int</param>
         /// <returns>Returns a user with type User</returns>
-        public async Task<User> FindById(int id)
+        public async Task<User> FindUserById(int id)
         {
             string query = "SELECT * FROM Users WHERE Id = @id";
-
-            if (id == 0)
-                throw new ArgumentNullException("id");
 
             return await _context.QueryFirst<User>(
                 query,
                 param: new { Id = id });
         }
+
 
         /// <summary>
         /// Search value fields in table Users equal to email and returns value
@@ -93,6 +91,17 @@ namespace FreelanceService.DAL.Repositories
         {
             string query = "SELECT * FROM Users";
             return await _context.Query<User>(query);
+        }
+
+        public async Task<IEnumerable<User>> GetAllUsersExecutorsOfResponse(List<int> listUserExecutorId)
+        {
+            var usersExecutors = await GetAll();
+            foreach (var item in listUserExecutorId)
+            {
+                string query = "SELECT * FROM Users WHERE Id=@Id";
+                usersExecutors = await _context.Query<User>(query, param: new { Id = item });
+            }
+            return usersExecutors;
         }
 
         /// <summary>

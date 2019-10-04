@@ -10,7 +10,8 @@ namespace FreelanceService.DAL.Interfaces
         Task AddExecutorForJob(int userExecutorId, int jobid);
         Task<IEnumerable<Job>> GetAll();
         Task<IEnumerable<Job>> GetAllJobsOfCustomer(User entity);
-        Task<Job> FindByIdJob(int id);
+
+        Task<Job> FindJobById(int id);
         Task<Job> FindByIdCustomer(int id);
         Task Remove(int id);
         Task Update(Job entity);

@@ -20,6 +20,7 @@ namespace FreelanceService.DAL.Concrate
             Queue.Add(new ExecuteCommand(sql, param));
         }
 
+
         public async Task<IEnumerable<T>> Query<T>(string sql, object param = null) where T : class
         {
             using (var _connection = new SqlConnection(_connectionString))

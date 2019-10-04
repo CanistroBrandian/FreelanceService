@@ -9,7 +9,8 @@ namespace FreelanceService.DAL.Interfaces
     {
         Task AddUser(User entity);
         Task<IEnumerable<User>> GetAll();
-        Task<User> FindById(int id);
+        Task<IEnumerable<User>> GetAllUsersExecutorsOfResponse(List<int> listUserExecutorId);
+        Task<User> FindUserById(int id);
         Task<User> FindByEmail(string email);
         Task Remove(int id);
         Task Update(User entity);

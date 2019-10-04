@@ -22,7 +22,7 @@
             <param name="entity"></param>
             <returns>void</returns>
         </member>
-        <member name="M:FreelanceService.DAL.Repositories.JobRepository.FindByIdJob(System.Int32)">
+        <member name="M:FreelanceService.DAL.Repositories.JobRepository.FindJobById(System.Int32)">
             <summary>
             Send query to serch fields in table Jobs equal to id and returns value
             </summary>
@@ -67,7 +67,7 @@
             <param name="entity">Accepts an entity of type User</param>
             <returns>Void</returns>   
         </member>
-        <member name="M:FreelanceService.DAL.Repositories.UserRepository.FindById(System.Int32)">
+        <member name="M:FreelanceService.DAL.Repositories.UserRepository.FindUserById(System.Int32)">
             <summary>
             Send query to serch fields in table Users equal to id and returns value
             </summary>

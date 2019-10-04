@@ -21,6 +21,7 @@ namespace FreelanceService.BLL.Services
 
         public async Task AddResponse(ResponseDTO response, int userExecitorId, int jobId)
         {
+            
             var mapResponse = _mapper.Map<ResponseDTO, Response>(response);
             await _uow.ResponseRepos.AddResponse(mapResponse, userExecitorId, jobId);
             await _uow.JobRepos.AddExecutorForJob(userExecitorId, jobId);
@@ -49,6 +50,7 @@ namespace FreelanceService.BLL.Services
 
         public async Task<IEnumerable<ResponseDTO>> GetAllResponseOfJob(int jobId)
         {
+        
             var responses = await _uow.ResponseRepos.GetAllResponseOfJob(jobId);
             var map = _mapper.Map<IEnumerable<Response>, IEnumerable<ResponseDTO>>(responses);
             return map;

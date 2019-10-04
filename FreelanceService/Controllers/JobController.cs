@@ -28,23 +28,19 @@ namespace FreelanceService.Web.Controllers
         }
         public async Task<IActionResult> Job(int id)
         {
-            var jobDTO = await _jobService.FindJobByIdJob(id);
-            var userExecutor = await _userService.FindUserById(jobDTO.UserId_Executor);
+            var jobDTO = await _jobService.FindJobById(id);
             var userCustomer = await _userService.FindUserById(jobDTO.UserId_Customer);
-            var response = await _responseService.FindResponseByJobId(jobDTO.Id);
-            var allResponseOfJob = await _responseService.GetAllResponseOfJob(jobDTO.Id);
-            var mapResponse = _mapper.Map<IEnumerable<ResponseDTO>, IEnumerable<ResponseListOfExecutors>>(allResponseOfJob);
+            var allResponsesOfJob = await _responseService.GetAllResponseOfJob(jobDTO.Id);
+            var getAllUsersExecutorsOfResponse = await _userService.GetAllUsersExecutorsOfResponse(jobDTO.Id);
+            var result = (jobDTO, userCustomer, allResponsesOfJob, getAllUsersExecutorsOfResponse);
+            var mapResponsesOfJob = _mapper.Map<IEnumerable<ResponseDTO>, IEnumerable<ResponseListOfExecutors>>(allResponsesOfJob);
             var mapJobDelails = _mapper.Map<JobDTO, JobDetailsViewModel>(jobDTO);
             mapJobDelails.UserId_Customer = jobDTO.UserId_Customer;
             mapJobDelails.UserId_Executor = jobDTO.UserId_Executor;
             mapJobDelails.FirstNameCustomer = userCustomer.FirstName;
             mapJobDelails.LastNameCustmoer = userCustomer.LastName;
-            //mapJobDelails.ResponseListOfExecutors = response.UserDTOs;
-            //mapJobDelails.ResponseListOfExecutors.FirstNameExecutor = userExecutor.FirstName;
-            //mapJobDelails.ResponseListOfExecutors.Price = response.Price;
-            //mapJobDelails.ResponseListOfExecutors.Description = response.Description;
-            mapJobDelails.ResponseListOfExecutors = mapResponse;
-           
+            mapJobDelails.ResponseListOfExecutors = mapResponsesOfJob;
+            mapJobDelails.userDTOs = getAllUsersExecutorsOfResponse;
 
             return View(mapJobDelails);
         }
@@ -54,7 +50,7 @@ namespace FreelanceService.Web.Controllers
         public async Task<IActionResult> Response(JobDetailsViewModel model)
         {
             var userExecutor = await _userService.FindUserByEmail(User.Identity.Name);
-            var job = await _jobService.FindJobByIdJob(model.Id);
+            var job = await _jobService.FindJobById(model.Id);
             var responseViewModel = new ResponseAddViewModel
             {
                 Description = model.ResponseAddViewModel.Description,

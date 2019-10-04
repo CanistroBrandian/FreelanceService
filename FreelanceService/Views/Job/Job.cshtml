@@ -66,26 +66,26 @@
 {
     @foreach (var item in Model.ResponseListOfExecutors)
     {
-    <section class="my-5">
-        <!-- Card header -->
-        <div class="card-header border-0 font-weight-bold d-flex justify-content-between">
-            <p class="mr-4 mb-0">@item.FirstNameExecutor @item.LastNameExecutor</p>
-            <ul class="list-unstyled list-inline mb-0">
-                <li class="list-inline-item"><a href="" class="mr-3"><i class="fas fa-envelope mr-1"></i>Send message</a></li>
-                <li class="list-inline-item"><a href="" class="mr-3"><i class="fas fa-user mr-1"></i>See profile</a></li>
-            </ul>
-        </div>
-        <div class="media mt-4 px-1 text-md-left">
-            <img class="card-img-100 d-flex z-depth-1 mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg" alt="Generic placeholder image">
-            <div class="media-body">
-                <h5 class="font-weight-bold mt-0">
-                    <a href="">Danny Newman</a>
-                </h5>
-                @item.Description
-                @item.Price
+        <section class="my-5">
+            <!-- Card header -->
+            <div class="card-header border-0 font-weight-bold d-flex justify-content-between">
+                <p class="mr-4 mb-0">UserId: @item.UserId_Executor</p>
+                <ul class="list-unstyled list-inline mb-0">
+                    <li class="list-inline-item"><a href="" class="mr-3"><i class="fas fa-envelope mr-1"></i>Send message</a></li>
+                    <li class="list-inline-item"><a href="" class="mr-3"><i class="fas fa-user mr-1"></i>See profile</a></li>
+                </ul>
             </div>
-        </div>
-    </section>
-        }
+            <div class="media mt-4 px-1 text-md-left">
+                <img class="card-img-100 d-flex z-depth-1 mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg" alt="Generic placeholder image">
+                <div class="media-body">
+                    <h5 class="font-weight-bold mt-0">
+                        <a href="">Danny Newman</a>
+                    </h5>
+                    <h5 class="font-weight-bold mt-0">Описание: @item.Description </h5>
+                    <h5 class="font-weight-bold mt-0">Цена: @item.Price </h5>
+                </div>
+            </div>
+        </section>
     }
+}
 <!--Section: Author Box-->

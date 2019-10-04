@@ -14,10 +14,14 @@ namespace FreelanceService.BLL.Services
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
-        public JobService(IUnitOfWork uow, IMapper mapper)
+        private readonly IUserService _userService;
+        private readonly IResponseService _responseService;
+        public JobService(IUnitOfWork uow, IMapper mapper, IUserService userService, IResponseService responseService)
         {
             _uow = uow;
             _mapper = mapper;
+            _userService = userService;
+            _responseService = responseService;
         }
 
         public async Task AddJob(JobDTO model, UserDTO user)
@@ -28,10 +32,10 @@ namespace FreelanceService.BLL.Services
             await CommitAsync();
         }
 
-        public async Task<JobDTO> FindJobByIdJob(int id)
+        public async Task<JobDTO> FindJobById(int id)
         {
 
-            var entity = await _uow.JobRepos.FindByIdJob(id);
+            var entity = await _uow.JobRepos.FindJobById(id);
             return _mapper.Map<Job, JobDTO>(entity);
         }
 
@@ -50,12 +54,14 @@ namespace FreelanceService.BLL.Services
             return map;
         }
 
-        public async Task<IEnumerable<JobDTO>> GetAll()// удалить 
+        public  async Task<(JobDTO , UserDTO ,IEnumerable<ResponseDTO> , IEnumerable<UserDTO> )>  JobDetails(int jobId)
         {
-            var jobs = await _uow.JobRepos.GetAll();
-            var map = _mapper.Map<IEnumerable<Job>, IEnumerable<JobDTO>>(jobs);
-            await CommitAsync();
-            return map;
+            var jobDTO = await FindJobById(jobId);
+            var userCustomer = await _userService.FindUserById(jobDTO.UserId_Customer);
+            var allResponsesOfJob = await _responseService.GetAllResponseOfJob(jobDTO.Id);
+            var getAllUsersExecutorsOfResponse = await _userService.GetAllUsersExecutorsOfResponse(jobDTO.Id);
+            var result=(jobDTO, userCustomer, allResponsesOfJob, getAllUsersExecutorsOfResponse);
+            return result;
         }
 
         public async Task Update(JobDTO entity)
@@ -110,5 +116,7 @@ namespace FreelanceService.BLL.Services
         {
             await _uow.CommitAsync();
         }
+
+
     }
 }

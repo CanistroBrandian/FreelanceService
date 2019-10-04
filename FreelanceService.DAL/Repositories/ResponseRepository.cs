@@ -19,7 +19,7 @@ namespace FreelanceService.DAL.Repositories
 
         public async Task AddResponse(Response response, int userExecutorId, int jobId)
         {
-            string query = "INSERT INTO Responses(UserId_Executor,JobId,Status,Description,Price) VALUES(@UserId_Executor,@JobId,@Status,@Description,@Price)";
+            string query = "if((SELECT COUNT(*) AS result FROM Responses  WHERE JobId = @JobId and UserId_Executor = @UserId_Executor) = 0) INSERT INTO Responses(UserId_Executor, JobId, Status, Description, Price) VALUES(@UserId_executor, @JobId, @Status, @Description, @Price)";
             await _context.ExecuteAsync(query, param: new {
                 UserId_Executor = userExecutorId,
                 JobId = jobId,

@@ -43,7 +43,7 @@ namespace FreelanceService.BLL.Services
         {
             if (id != 0)
             {
-                var entity = await _uow.UserRepos.FindById(id);
+                var entity = await _uow.UserRepos.FindUserById(id);
                 return _mapper.Map<User, UserDTO>(entity);
             }
             else return null;
@@ -53,6 +53,20 @@ namespace FreelanceService.BLL.Services
         {
             var result = _mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(await _uow.UserRepos.GetAll());
             return result;
+        }
+
+        public async Task<IEnumerable<UserDTO>> GetAllUsersExecutorsOfResponse(int jobId)
+        {
+            var listUserExecutorId = new List<int>();
+          //var mapResponseDTO = _mapper.Map<IEnumerable<ResponseDTO>, IEnumerable<Response>>(responseDTO);
+          var allResponseOfJob = await _uow.ResponseRepos.GetAllResponseOfJob(jobId);
+
+            foreach(var item in allResponseOfJob)          
+                listUserExecutorId.Add(item.UserId_Executor);
+                    
+            var allUsersExecutorsOfResponse = await _uow.UserRepos.GetAllUsersExecutorsOfResponse(listUserExecutorId);
+            var mapUserDTO = _mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(allUsersExecutorsOfResponse);
+            return mapUserDTO;
         }
 
         public async Task Update(UserProfileEditDTO editModel, UserDTO userDTO)

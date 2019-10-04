@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FreelanceService.BLL.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace FreelanceService.Web.Models
         public decimal? Price { get; set; }
         public ResponseAddViewModel ResponseAddViewModel { get; set; }
         public IEnumerable<ResponseListOfExecutors> ResponseListOfExecutors { get;set;}
+        public IEnumerable<UserDTO> userDTOs { get;set;}
 
     }
 }
