@@ -60,6 +60,13 @@
             </summary>
             <returns>View Home/Index</returns>
         </member>
+        <member name="M:FreelanceService.Web.Controllers.MyJobsController.#ctor(FreelanceService.BLL.Interfaces.IJobService,FreelanceService.BLL.Interfaces.IUserService,FreelanceService.Web.Validation.IViewModelValidationService,AutoMapper.IMapper)">
+            <summary>
+            Dependency Injection for jobService and userService
+            </summary>
+            <param name="jobService"></param>
+            <param name="userService"></param>
+        </member>
         <member name="T:FreelanceService.Web.Controllers.ProfileController">
             <summary>
             Сontroller is responsible for displaying profile information, profile edit, adding new jobs by the customer

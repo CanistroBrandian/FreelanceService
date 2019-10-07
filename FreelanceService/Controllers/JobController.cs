@@ -32,7 +32,6 @@ namespace FreelanceService.Web.Controllers
             var userCustomer = await _userService.FindUserById(jobDTO.UserId_Customer);
             var allResponsesOfJob = await _responseService.GetAllResponseOfJob(jobDTO.Id);
             var getAllUsersExecutorsOfResponse = await _userService.GetAllUsersExecutorsOfResponse(jobDTO.Id);
-            var result = (jobDTO, userCustomer, allResponsesOfJob, getAllUsersExecutorsOfResponse);
             var mapResponsesOfJob = _mapper.Map<IEnumerable<ResponseDTO>, IEnumerable<ResponseListOfExecutors>>(allResponsesOfJob);
             var mapJobDelails = _mapper.Map<JobDTO, JobDetailsViewModel>(jobDTO);
             mapJobDelails.UserId_Customer = jobDTO.UserId_Customer;
@@ -40,7 +39,7 @@ namespace FreelanceService.Web.Controllers
             mapJobDelails.FirstNameCustomer = userCustomer.FirstName;
             mapJobDelails.LastNameCustmoer = userCustomer.LastName;
             mapJobDelails.ResponseListOfExecutors = mapResponsesOfJob;
-            mapJobDelails.userDTOs = getAllUsersExecutorsOfResponse;
+           // mapJobDelails.userDTOs = getAllUsersExecutorsOfResponse;
 
             return View(mapJobDelails);
         }

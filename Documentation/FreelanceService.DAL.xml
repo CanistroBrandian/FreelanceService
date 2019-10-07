@@ -35,7 +35,7 @@
             </summary>
             <returns> Returns all entries ​​in IEnumerable Jobs type </returns>
         </member>
-        <member name="M:FreelanceService.DAL.Repositories.JobRepository.GetAllJobsOfCustomer(FreelanceService.DAL.Entities.User)">
+        <member name="M:FreelanceService.DAL.Repositories.JobRepository.GetAllJobsOfCustomer(System.Int32)">
             <summary>
             Send query to search all entries in the Jobs table
             </summary>

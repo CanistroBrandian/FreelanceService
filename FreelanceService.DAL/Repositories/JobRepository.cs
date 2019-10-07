@@ -30,7 +30,7 @@ namespace FreelanceService.DAL.Repositories
         /// <returns>void</returns>
         public async Task AddJob(Job entity)
         {
-            string query = "INSERT INTO Jobs(UserId_Customer,UserId_Executor,CategoryId,Name,Description,City,Status,FinishedDateTime,Price) VALUES(@UserId_Customer,@UserId_Executor,@CategoryId,@Name,@Description,@City,@Status,@FinishedDateTime,@Price)";
+            string query = "INSERT INTO Jobs(UserId_Customer,UserId_Executor,CategoryId,Name,Description,City,FinishedDateTime,Price) VALUES(@UserId_Customer,@UserId_Executor,@CategoryId,@Name,@Description,@City,@FinishedDateTime,@Price)";
             await _context.ExecuteAsync(
                  query, param: entity);
         }
@@ -55,10 +55,6 @@ namespace FreelanceService.DAL.Repositories
         public async Task<Job> FindJobById(int id)
         {
             string query = "SELECT * FROM Jobs WHERE Id = @id";
-
-            if (id == 0)
-                throw new ArgumentNullException("id");
-
             return await _context.QueryFirst<Job>(
                 query,
                 param: new { Id = id });
@@ -88,10 +84,10 @@ namespace FreelanceService.DAL.Repositories
         /// Send query to search all entries in the Jobs table
         /// </summary>
         /// <returns> Returns all entries of user ​​in IEnumerable Jobs type </returns>
-        public async Task<IEnumerable<Job>> GetAllJobsOfCustomer(User user)
+        public async Task<IEnumerable<Job>> GetAllJobsOfCustomer(int userId)
         {
             string query = "SELECT * FROM Jobs WHERE UserId_Customer=@Id";
-            return await _context.Query<Job>(query, param: new { Id = user.Id });
+            return await _context.Query<Job>(query, param: new { Id = userId });
         }
 
         /// <summary>
@@ -102,7 +98,7 @@ namespace FreelanceService.DAL.Repositories
         public async Task Remove(int id)
         {
             string query = "DELETE FROM Jobs WHERE Id = @id";
-            await _context.ExecuteAsync(query);
+            await _context.ExecuteAsync(query,param: new { Id = id });
 
         }
         /// <summary>

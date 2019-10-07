@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace FreelanceService.BLL.DTO
+namespace FreelanceService.Web.Models
 {
-    public class JobEditDTO
+    public class JobEditViewModel
     {
         public int Id { get; set; }
         public int CategoryId { get; set; }

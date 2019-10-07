@@ -23,8 +23,7 @@ namespace FreelanceService.BLL.Services
         {
             
             var mapResponse = _mapper.Map<ResponseDTO, Response>(response);
-            await _uow.ResponseRepos.AddResponse(mapResponse, userExecitorId, jobId);
-            await _uow.JobRepos.AddExecutorForJob(userExecitorId, jobId);
+            await _uow.ResponseRepos.AddResponse(mapResponse, userExecitorId, jobId);          
             await CommitAsync();
         }
 

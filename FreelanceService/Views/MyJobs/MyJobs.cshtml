@@ -6,9 +6,7 @@
 
 <h1>MyJobs</h1>
 
-<p>
-    <a asp-action="CreateJob">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -55,9 +53,9 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a asp-controller="MyJobs" asp-action="ViewDetailsJob" asp-route-jobId="@item.Id">Посмотреть</a>
+                <a asp-controller="MyJobs" asp-action="EditJob" asp-route-jobId="@item.Id">Редактировать</a>
+                <a asp-controller="MyJobs" asp-action="DeleteJob" asp-route-jobId="@item.Id">Удалить</a>
             </td>
         </tr>
 }

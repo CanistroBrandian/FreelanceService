@@ -23,33 +23,36 @@ ALTER TABLE Users
 ADD CONSTRAINT DF_Users_RegistrationDateTime_Default DEFAULT (getdate()) FOR RegistrationDateTime
 GO
 
-CREATE TABLE Responses (
-    [Id]               INT         IDENTITY (1, 1)  NOT NULL,
-    [UserId_Executor]  INT            NOT NULL,
-    [JobId]            INT            NOT NULL,
-    [Description]      VARCHAR (1024) NOT NULL,
-    [ResponseDateTime] DATETIME       NOT NULL,
-    [Status]           INT            NOT NULL,
-	[Price]				DECIMAL(18,2) NULL
-   
+
+
+CREATE TABLE Reviews (
+    [Id]              INT             IDENTITY (1, 1) NOT NULL,
+    [Name]            VARCHAR (128)   NOT NULL,
+	[UserId]          INT             NOT NULL,
+	[JobId]           INT             NOT NULL,
+    [Description]     VARCHAR (1024)    NOT NULL,
+    [WritingDateTime] DATETIME        NOT NULL,
+    [Feedback]        BIT             NOT NULL,
+    [Rating]          DECIMAL (18, 2) NULL,
+  
 )
-GO 
-
-ALTER TABLE Responses
-ADD CONSTRAINT DF_Response_ResponseDateTime_Default DEFAULT (getdate()) FOR [ResponseDateTime]
 GO
 
-ALTER TABLE Responses 
-ADD CONSTRAINT PK_Responses_Id PRIMARY KEY CLUSTERED (Id)
+ALTER TABLE Reviews 
+ADD CONSTRAINT PK_Reviews_Id PRIMARY KEY CLUSTERED (Id)
 GO
 
+ALTER TABLE Reviews
+ADD CONSTRAINT DF_Reviews_WritingDateTime_Default DEFAULT (getdate()) FOR WritingDateTime
+GO
 
-ALTER TABLE Responses
-WITH CHECK ADD CONSTRAINT FK_Responses_UserId_Executor_Users FOREIGN KEY (UserId_Executor)
+ALTER TABLE Reviews
+WITH CHECK ADD CONSTRAINT FK_Review_UserId_Users_Id FOREIGN KEY (UserId)
 REFERENCES Users(Id) 
 ON UPDATE CASCADE 
 ON DELETE CASCADE 
 GO
+
 
 CREATE TABLE Jobs (
     [Id]                      INT             IDENTITY(1,1),
@@ -86,32 +89,52 @@ ON UPDATE CASCADE
 ON DELETE CASCADE 
 GO
 
-ALTER TABLE Jobs
-WITH CHECK ADD CONSTRAINT FK_Jobs_Id_Responses FOREIGN KEY (Id)
-REFERENCES Responses(JobId) 
-ON UPDATE CASCADE 
+CREATE TABLE Responses (
+    [Id]               INT         IDENTITY (1, 1)  NOT NULL,
+    [UserId_Executor]  INT            NOT NULL,
+    [JobId]            INT            NOT NULL,
+    [Description]      VARCHAR (1024) NOT NULL,
+    [ResponseDateTime] DATETIME       NOT NULL,
+    [Status]           INT            NOT NULL,
+	[Price]				DECIMAL(18,2) NULL
+   
+)
+GO 
+
+ALTER TABLE Responses
+ADD CONSTRAINT DF_Response_ResponseDateTime_Default DEFAULT (getdate()) FOR [ResponseDateTime]
+GO
+
+ALTER TABLE Responses 
+ADD CONSTRAINT PK_Responses_Id PRIMARY KEY CLUSTERED (Id)
+GO
+
+
+ALTER TABLE Responses
+WITH CHECK ADD CONSTRAINT FK_Responses_UserId_Executor_Users FOREIGN KEY (UserId_Executor)
+REFERENCES Users(Id) 
+ON UPDATE no action 
 ON DELETE CASCADE 
 GO
 
-CREATE TABLE Reviews (
-    [Id]              INT             IDENTITY (1, 1) NOT NULL,
-    [Name]            VARCHAR (128)   NOT NULL,
-	[UserId]          INT             NOT NULL,
-	[JobId]           INT             NOT NULL,
-    [Description]     VARCHAR (1024)    NOT NULL,
-    [WritingDateTime] DATETIME        NOT NULL,
-    [Feedback]        BIT             NOT NULL,
-    [Rating]          DECIMAL (18, 2) NULL,
-  
-)
+ALTER TABLE Responses
+WITH CHECK ADD CONSTRAINT FK_Jobs_Id_Responses FOREIGN KEY (JobId)
+REFERENCES Jobs(Id) 
+ON UPDATE no action
+ON DELETE no action
 GO
 
-ALTER TABLE Reviews 
-ADD CONSTRAINT PK_Reviews_Id PRIMARY KEY CLUSTERED (Id)
-GO
+CREATE TRIGGER Response_Create_Status
+ON Responses
+AFTER INSERT AS  
+ BEGIN
+ DECLARE @IdJobs INT
+select @IdJobs= JobId from Responses where Id in
+(select Id from Jobs)
 
-ALTER TABLE Reviews
-ADD CONSTRAINT DF_Reviews_WritingDateTime_Default DEFAULT (getdate()) FOR WritingDateTime
+UPDATE Jobs SET Status=3 WHERE Id = @IdJobs;
+
+END
 GO
 
 CREATE TABLE Projects (

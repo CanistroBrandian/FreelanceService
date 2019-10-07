@@ -143,27 +143,11 @@ namespace FreelanceService.Web.Controllers
                 var modelDTO = _mapper.Map<CreateJobViewModel, JobDTO>(model);
                 var user = await _userService.FindUserByEmail(User.Identity.Name);
                 await _jobService.AddJob(modelDTO, user);
-                return RedirectToAction("MyJobs");
+                return RedirectToAction("MyJobs","MyJobs");
             }
             catch
             {
                 return View();
-            }
-        }
-
-        [Authorize(Roles = "Заказчик")]
-        public async Task<IActionResult> MyJobs()
-        {
-            try
-            {
-                var user = await _userService.FindUserByEmail(User.Identity.Name);
-                var jobs = await _jobService.GetAllJobsOfCustomer(user);
-                var map = _mapper.Map<IEnumerable<JobDTO>, IEnumerable<JobViewModel>>(jobs);
-                return View(map);
-            }
-            catch
-            {
-                throw;
             }
         }
 

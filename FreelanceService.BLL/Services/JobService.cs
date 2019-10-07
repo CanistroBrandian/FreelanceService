@@ -45,11 +45,11 @@ namespace FreelanceService.BLL.Services
             return _mapper.Map<Job, JobDTO>(entity);
         }
 
-        public async Task<IEnumerable<JobDTO>> GetAllJobsOfCustomer(UserDTO userDTO)
+
+        public async Task<IEnumerable<JobDTO>> GetAllJobsOfCustomer(int userId)
         {
-            var user = _mapper.Map<UserDTO, User>(userDTO);
-            
-            var map = _mapper.Map<IEnumerable<Job>, IEnumerable<JobDTO>>(await _uow.JobRepos.GetAllJobsOfCustomer(user));
+            var user = await _uow.JobRepos.GetAllJobsOfCustomer(userId);
+            var map = _mapper.Map<IEnumerable<Job>, IEnumerable<JobDTO>>(user);
             await CommitAsync();
             return map;
         }
@@ -64,16 +64,16 @@ namespace FreelanceService.BLL.Services
             return result;
         }
 
-        public async Task Update(JobDTO entity)
-        {
-            var job = _mapper.Map<JobDTO, Job>(entity);
-            await _uow.JobRepos.Update(job);
+        public async Task Update(int jobId, JobDTO entity)
+        {           
+            var mapJob = _mapper.Map<JobDTO, Job>(entity);
+            await _uow.JobRepos.Update(mapJob);
             await CommitAsync();
         }
 
-        public async Task Remove(JobDTO entity)
+        public async Task Remove(int jobId)
         {
-            await _uow.JobRepos.Remove(entity.Id);
+            await _uow.JobRepos.Remove(jobId);
             await CommitAsync();
         }
 
