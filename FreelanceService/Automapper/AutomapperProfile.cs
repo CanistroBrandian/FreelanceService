@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace FreelanceService.BLL.Automapper
 {
-    public class AutomapperProfile: Profile
+    public class AutomapperProfile : Profile
     {
         public AutomapperProfile()
         {
@@ -26,10 +26,10 @@ namespace FreelanceService.BLL.Automapper
             CreateMap<ResponseListOfExecutors, ResponseDTO>().ReverseMap();
             CreateMap<UserDTO, ResponseListOfExecutors>().ForMember(dest => dest.FirstNameExecutor, opt => opt.MapFrom(src => src.FirstName))
                 .ForMember(dest => dest.LastNameExecutor, opt => opt.MapFrom(src => src.LastName));
-
+            CreateMap<UserDTO, UserExecutorViewModel>().ReverseMap();
             CreateMap<JobEditViewModel, JobDTO>().ReverseMap();
             CreateMap<JobEditDTO, JobDTO>().ReverseMap();
-
+            CreateMap<MyJobDetailsViewModel, JobDTO>().ReverseMap();
             CreateMap<JobDetailsViewModel, JobDTO>().ReverseMap();
             CreateMap<JobViewModel, JobDTO>().ReverseMap();
             CreateMap<UserDTO, ProfileViewModel>().ReverseMap();

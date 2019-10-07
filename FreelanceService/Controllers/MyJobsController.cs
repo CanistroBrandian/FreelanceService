@@ -14,6 +14,7 @@ namespace FreelanceService.Web.Controllers
     {
         IUserService _userService;
         IJobService _jobService;
+        IResponseService _responseService;
         IMapper _mapper;
 
 
@@ -28,11 +29,13 @@ namespace FreelanceService.Web.Controllers
             IJobService jobService,
             IUserService userService,
             IViewModelValidationService validationService,
+            IResponseService responseService,
             IMapper mapper)
         {
             _jobService = jobService;
             _userService = userService;
             _validationService = validationService;
+            _responseService = responseService;
             _mapper = mapper;
         }
 
@@ -42,6 +45,7 @@ namespace FreelanceService.Web.Controllers
 
             var user = await _userService.FindUserByEmail(User.Identity.Name);
             var jobs = await _jobService.GetAllJobsOfCustomer(user.Id);
+
             var map = _mapper.Map<IEnumerable<JobDTO>, IEnumerable<JobViewModel>>(jobs);
             return View(map);
         }
@@ -84,14 +88,24 @@ namespace FreelanceService.Web.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Заказчик")]
-        public async Task<ViewResult> ViewDetailsJob(int jobId)
+        public async Task<ViewResult> MyJobDetails(int jobId)
         {
             var job = await _jobService.FindJobById(jobId);
-            var mapJob = _mapper.Map<JobDTO, MyJobDetaiksViewModel> (job);
-            return View(mapJob);
+            var allResponsesOfJob = await _responseService.GetAllResponseOfJob(jobId);
+            var mapResponsesOfJob = _mapper.Map<IEnumerable<ResponseDTO>, IEnumerable<ResponseListOfExecutors>>(allResponsesOfJob);
+            var mapJobDetails = _mapper.Map<JobDTO, MyJobDetailsViewModel> (job);
+            mapJobDetails.ResponseListOfExecutors = mapResponsesOfJob;
+            return View(mapJobDetails);
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Заказчик")]
+        public async Task<IActionResult> SelectExecutorForJob(int jobId, int userId_Executor)
+        {
 
+            await _jobService.SelectExecutorForJob(jobId, userId_Executor);
+            return RedirectToAction("MyJobs");
+        }
 
     }
 }

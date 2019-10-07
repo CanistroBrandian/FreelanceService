@@ -1,11 +1,6 @@
-﻿@model PaginatedListModel<FreelanceService.Web.Models.JobViewModel>
+﻿@model PaginatedListModel<FreelanceService.Web.Models.UserExecutorViewModel>
 
-@{
-    ViewData["Title"] = "Index";
-}
-
-
-<h1>Index</h1>
+<h1>Executors</h1>
 
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
@@ -31,30 +26,33 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FinishedDateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    
-                    <a asp-controller="Job" asp-action="Job" asp-route-id="@item.Id">Посмотреть</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+
+                <a asp-controller="Profile" asp-action="Profile" asp-route-userId="@item.Id">Посмотреть</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
@@ -64,14 +62,14 @@
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
-<a asp-action="Index"
+<a asp-action="Executors"
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex - 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-default @prevDisabled">
     Предыдущая
 </a>
-<a asp-action="Index"
+<a asp-action="Executors"
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"

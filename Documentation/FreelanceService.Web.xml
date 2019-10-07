@@ -60,7 +60,20 @@
             </summary>
             <returns>View Home/Index</returns>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.MyJobsController.#ctor(FreelanceService.BLL.Interfaces.IJobService,FreelanceService.BLL.Interfaces.IUserService,FreelanceService.Web.Validation.IViewModelValidationService,AutoMapper.IMapper)">
+        <member name="M:FreelanceService.Web.Controllers.JobController.CreateJob">
+            <summary>
+            View create new job of customer
+            </summary>
+            <returns>View Profile/CreateJob</returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.JobController.CreateJob(FreelanceService.Web.Models.CreateJobViewModel)">
+            <summary>
+            Request to create a new job for the customer
+            </summary>
+            <param name="model"></param>
+            <returns>View Home/Index</returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.MyJobsController.#ctor(FreelanceService.BLL.Interfaces.IJobService,FreelanceService.BLL.Interfaces.IUserService,FreelanceService.Web.Validation.IViewModelValidationService,FreelanceService.BLL.Interfaces.IResponseService,AutoMapper.IMapper)">
             <summary>
             Dependency Injection for jobService and userService
             </summary>
@@ -78,11 +91,6 @@
             </summary>
             <param name="jobService"></param>
             <param name="userService"></param>
-        </member>
-        <member name="M:FreelanceService.Web.Controllers.ProfileController.Profile">
-            <summary>
-            Redirection to the profile of the executor or customer
-            </summary>
         </member>
         <member name="M:FreelanceService.Web.Controllers.ProfileController.ProfileCustomer">
             <summary>
@@ -108,19 +116,6 @@
             </summary>
             <param name="model">model type of ProfileEditViewModel</param>
             <returns>View Profile/Profike</returns>
-        </member>
-        <member name="M:FreelanceService.Web.Controllers.ProfileController.CreateJob">
-            <summary>
-            View create new job of customer
-            </summary>
-            <returns>View Profile/CreateJob</returns>
-        </member>
-        <member name="M:FreelanceService.Web.Controllers.ProfileController.CreateJob(FreelanceService.Web.Models.CreateJobViewModel)">
-            <summary>
-            Request to create a new job for the customer
-            </summary>
-            <param name="model"></param>
-            <returns>View Home/Index</returns>
         </member>
         <member name="M:FreelanceService.Web.Controllers.ProfileController.Logout">
             <summary>

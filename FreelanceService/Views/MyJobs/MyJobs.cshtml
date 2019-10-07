@@ -53,7 +53,7 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                <a asp-controller="MyJobs" asp-action="ViewDetailsJob" asp-route-jobId="@item.Id">Посмотреть</a>
+                <a asp-controller="MyJobs" asp-action="MyJobDetails" asp-route-jobId="@item.Id">Посмотреть</a>
                 <a asp-controller="MyJobs" asp-action="EditJob" asp-route-jobId="@item.Id">Редактировать</a>
                 <a asp-controller="MyJobs" asp-action="DeleteJob" asp-route-jobId="@item.Id">Удалить</a>
             </td>

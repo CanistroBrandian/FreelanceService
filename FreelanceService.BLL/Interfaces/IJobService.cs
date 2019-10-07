@@ -10,6 +10,7 @@ namespace FreelanceService.BLL.Interfaces
         Task<JobDTO> FindJobById(int id);
         Task<JobDTO> FindJobByIdCustomer(int id);
         Task<IEnumerable<JobDTO>> GetAllJobsOfCustomer(int userId);
+        Task SelectExecutorForJob(int jobId, int userId_Executor);
         Task Update(int jobId, JobDTO entity);
         Task Remove(int jobId);
         Task<IEnumerable<JobDTO>> GetAllSorting(string orderSort);

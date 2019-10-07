@@ -58,14 +58,22 @@ namespace FreelanceService.BLL.Services
         public async Task<IEnumerable<UserDTO>> GetAllUsersExecutorsOfResponse(int jobId)
         {
             var listUserExecutorId = new List<int>();
-          //var mapResponseDTO = _mapper.Map<IEnumerable<ResponseDTO>, IEnumerable<Response>>(responseDTO);
-          var allResponseOfJob = await _uow.ResponseRepos.GetAllResponseOfJob(jobId);
+            //var mapResponseDTO = _mapper.Map<IEnumerable<ResponseDTO>, IEnumerable<Response>>(responseDTO);
+            var allResponseOfJob = await _uow.ResponseRepos.GetAllResponseOfJob(jobId);
 
-            foreach(var item in allResponseOfJob)          
+            foreach (var item in allResponseOfJob)
                 listUserExecutorId.Add(item.UserId_Executor);
-                    
+
             var allUsersExecutorsOfResponse = await _uow.UserRepos.GetAllUsersExecutorsOfResponse(listUserExecutorId);
             var mapUserDTO = _mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(allUsersExecutorsOfResponse);
+            return mapUserDTO;
+        }
+
+        public async Task<IEnumerable<UserDTO>> GetAllExecutor()
+        {
+
+            var allExecutor = await _uow.UserRepos.GetAllExecutor();
+            var mapUserDTO = _mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(allExecutor);
             return mapUserDTO;
         }
 

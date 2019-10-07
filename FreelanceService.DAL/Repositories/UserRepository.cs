@@ -1,4 +1,5 @@
 ﻿
+using FreelanceService.Common.Enum;
 using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
@@ -29,9 +30,6 @@ namespace FreelanceService.DAL.Repositories
         public async Task AddUser(User entity)
         {
             string query = "INSERT INTO Users(Email,PassHash,FirstName,LastName,Phone,DynamicSalt,City,Rating,Role) VALUES(@Email,@PassHash,@FirstName,@LastName,@Phone,@DynamicSalt,@City,@Rating,@Role);SELECT CAST(SCOPE_IDENTITY() as int)";
-
-            if (entity == null)
-                throw new ArgumentNullException("Entity is empty");
 
             await _context.ExecuteAsync(
                 query, param: new
@@ -75,9 +73,6 @@ namespace FreelanceService.DAL.Repositories
         {
             string query = "Select * From Users Where Email = @email";
 
-            if (email == null)
-                throw new ArgumentNullException("email");
-
             return await _context.QueryFirst<User>(
                 query,
                 param: new { Email = email });
@@ -104,6 +99,13 @@ namespace FreelanceService.DAL.Repositories
             return usersExecutors;
         }
 
+
+        public async Task<IEnumerable<User>> GetAllExecutor()
+        {
+            string query = "SELECT * FROM Users WHERE Role=@Role";
+            return await _context.Query<User>(query, param: new { Role = (int)RoleEnum.Executor });
+        }
+
         /// <summary>
         ///Send query to delete the Users table field equal to Id
         /// </summary>
@@ -112,9 +114,6 @@ namespace FreelanceService.DAL.Repositories
         public async Task Remove(int id)
         {
             string query = "DELETE FROM Users WHERE Id = @id";
-
-            if (id == 0)
-                throw new ArgumentNullException("entity");
             await _context.ExecuteAsync(query);
         }
 

@@ -113,6 +113,13 @@ namespace FreelanceService.DAL.Repositories
                      param: entity);
         }
 
+        public async Task SelectExectutorForJob(Job entity)
+        {
+            string query = "UPDATE Jobs SET Status=@Status,UserId_Executor = @UserId_Executor WHERE Id = @Id";
+            await _context.ExecuteAsync(query,
+                     param: entity);
+        }
+
         public async Task<IEnumerable<Job>> OrderByAscending(string sortOrder)
         {
             switch (sortOrder)
@@ -133,7 +140,7 @@ namespace FreelanceService.DAL.Repositories
                     string query = "SELECT * FROM Jobs ORDER BY Price DESC ";
                     return await _context.Query<Job>(query);
                 default:
-                    string queryName = "SELECT * FROM Jobs ORDER BY Price DESC ";
+                    string queryName = "SELECT * FROM Jobs ORDER BY Name DESC ";
                     return await _context.Query<Job>(queryName);
             }
         }

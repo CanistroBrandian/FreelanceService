@@ -2,6 +2,7 @@
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
 using FreelanceService.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,32 @@ namespace FreelanceService.Web.Controllers
             _jobService = jobService;
             _userService = userService;
             _mapper = mapper;
+        }
+
+   
+        [Authorize(Roles = "Исполнитель,Заказчик")]
+        public async Task<ActionResult> Executors(string sortOrder, string currentFilter, string searchString, int? pageNumber)
+        {
+            var allExecutor = await _userService.GetAllExecutor();
+         
+            int pageSize = 5;
+
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+            ViewData["PriceSortParm"] = sortOrder == "Price" ? "Price_desc" : "Price";
+
+            if (searchString != null)
+                pageNumber = 1;
+            else
+                searchString = currentFilter;
+            ViewData["CurrentFilter"] = searchString;
+
+            var list = await _jobService.GetAllSorting(sortOrder);
+            var search = _jobService.Search(searchString, list);
+            var mapAllExecutor = _mapper.Map<IEnumerable<UserDTO>, IEnumerable<UserExecutorViewModel>>(allExecutor);
+            var view = await PaginatedListModel<UserExecutorViewModel>.Create(mapAllExecutor.AsQueryable(), pageNumber ?? 1, pageSize);
+            return View(view);
+
         }
 
 

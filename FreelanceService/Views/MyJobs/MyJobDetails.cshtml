@@ -1,0 +1,49 @@
+﻿@model FreelanceService.Web.Models.MyJobDetailsViewModel
+@using FreelanceService.Common.Enum
+@{
+    var param = new Dictionary<string, string>
+{
+        {"jobId" , Model.Id.ToString() },
+        {"userId_Executor", Model.UserId_Executor.ToString() }
+    };
+}
+
+<div><label asp-for="Id" class="control-label"></label> <label> : @Model.Id</label></div>
+<div><label asp-for="Name" class="control-label"></label> <label> : @Model.Name</label></div>
+<div><label asp-for="Description" class="control-label"></label> <label> : @Model.Description</label></div>
+<div><label asp-for="Price" class="control-label"></label> <label> : @Model.Price</label></div>
+<div><label asp-for="CategoryId" class="control-label"></label> <label> : @Model.CategoryId</label></div>
+<div><label asp-for="FinishedDateTime" class="control-label"></label> <label> : @Model.FinishedDateTime</label></div>
+<div><label asp-for="Status" class="control-label"></label>  <select asp-for="Status" asp-items="Html.GetEnumSelectList<JobStatusEnum>()"></select></div>
+<div><label asp-for="UserId_Executor" class="control-label"></label> <label> : @Model.UserId_Executor</label></div>
+<div>
+    <h2 asp-for="ResponseListOfExecutors"> Отклики:</h2>
+    @if (Model.ResponseListOfExecutors != null)
+    {
+        @foreach (var item in Model.ResponseListOfExecutors)
+        {
+            <section class="my-5">
+                <!-- Card header -->
+                <div class="card-header border-0 font-weight-bold d-flex justify-content-between">
+                    <p class="mr-4 mb-0">UserId: @item.UserId_Executor</p>
+                    <ul class="list-unstyled list-inline mb-0">
+                        <li class="list-inline-item"><a asp-controller="Profile" asp-action="Profile" asp-route-userId="@item.UserId_Executor" class="mr-3"><i class="fas fa-user mr-1"></i>Посмотреть профиль</a></li>
+                        <li class="list-inline-item"><a asp-controller="MyJobs" asp-action="SelectExecutorForJob" asp-route-jobId="@Model.Id" asp-route-userId_Executor="@item.UserId_Executor" class="mr-3"><i class="fas fa-user mr-1"></i>Выбрать исполнителем</a></li>
+                    </ul>
+                </div>
+                <div class="media mt-4 px-1 text-md-left">
+                    <img class="card-img-100 d-flex z-depth-1 mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg" alt="Generic placeholder image">
+                    <div class="media-body">
+                        <h5 class="font-weight-bold mt-0">
+                            <a href="">Danny Newman</a>
+                        </h5>
+                        <h5 class="font-weight-bold mt-0">Описание: @item.Description </h5>
+                        <h5 class="font-weight-bold mt-0">Цена: @item.Price </h5>
+                    </div>
+                </div>
+            </section>
+        }
+    }
+    else
+    { <label class="control-label">На данный момент откликов нет</label>}
+</div>

@@ -30,8 +30,7 @@ namespace FreelanceService.Web.Controllers
         {
             var jobDTO = await _jobService.FindJobById(id);
             var userCustomer = await _userService.FindUserById(jobDTO.UserId_Customer);
-            var allResponsesOfJob = await _responseService.GetAllResponseOfJob(jobDTO.Id);
-            var getAllUsersExecutorsOfResponse = await _userService.GetAllUsersExecutorsOfResponse(jobDTO.Id);
+            var allResponsesOfJob = await _responseService.GetAllResponseOfJob(jobDTO.Id);          
             var mapResponsesOfJob = _mapper.Map<IEnumerable<ResponseDTO>, IEnumerable<ResponseListOfExecutors>>(allResponsesOfJob);
             var mapJobDelails = _mapper.Map<JobDTO, JobDetailsViewModel>(jobDTO);
             mapJobDelails.UserId_Customer = jobDTO.UserId_Customer;
@@ -39,9 +38,43 @@ namespace FreelanceService.Web.Controllers
             mapJobDelails.FirstNameCustomer = userCustomer.FirstName;
             mapJobDelails.LastNameCustmoer = userCustomer.LastName;
             mapJobDelails.ResponseListOfExecutors = mapResponsesOfJob;
-           // mapJobDelails.userDTOs = getAllUsersExecutorsOfResponse;
+           // var getAllUsersExecutorsOfResponse = await _userService.GetAllUsersExecutorsOfResponse(jobDTO.Id);
+            // mapJobDelails.userDTOs = getAllUsersExecutorsOfResponse;
 
             return View(mapJobDelails);
+        }
+
+        /// <summary>
+        /// View create new job of customer
+        /// </summary>
+        /// <returns>View Profile/CreateJob</returns>
+        [HttpGet]
+        public IActionResult CreateJob()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Request to create a new job for the customer
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>View Home/Index</returns>
+        [Authorize(Roles = "Заказчик")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateJob(CreateJobViewModel model)
+        {
+            try
+            {
+                var modelDTO = _mapper.Map<CreateJobViewModel, JobDTO>(model);
+                var user = await _userService.FindUserByEmail(User.Identity.Name);
+                await _jobService.AddJob(modelDTO, user);
+                return RedirectToAction("MyJobs", "MyJobs");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         [HttpPost]

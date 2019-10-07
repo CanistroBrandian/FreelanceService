@@ -2,6 +2,7 @@
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
 using FreelanceService.Common.Enum;
+using FreelanceService.Common.Helpers;
 using FreelanceService.Web.Models;
 using FreelanceService.Web.Validation;
 using Microsoft.AspNetCore.Authentication;
@@ -45,15 +46,25 @@ namespace FreelanceService.Web.Controllers
             _mapper = mapper;
         }
 
-        /// <summary>
-        /// Redirection to the profile of the executor or customer
-        /// </summary>
+       
         [Authorize(Roles = "Исполнитель,Заказчик")]
-        public ActionResult Profile()
+        public async Task<ActionResult> Profile(int userId)
         {
-            if (User.IsInRole("Исполнитель"))
-                return RedirectToAction(nameof(ProfileExecutor));
-            else return RedirectToAction(nameof(ProfileCustomer));
+            if (userId == 0)
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    var user = await _userService.FindUserByEmail(User.Identity.Name);
+                    var checkUser = User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType);
+                    if (Equals(user.Email, checkUser))
+                    {
+                        var myprofile = await GetProfile(user.Id);
+                        return View(myprofile);
+                    }
+                }
+            }
+            var profile = await GetProfile(userId);
+            return View(profile);
         }
 
         /// <summary>
@@ -119,39 +130,6 @@ namespace FreelanceService.Web.Controllers
         }
 
         /// <summary>
-        /// View create new job of customer
-        /// </summary>
-        /// <returns>View Profile/CreateJob</returns>
-        [HttpGet]
-        public IActionResult CreateJob()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// Request to create a new job for the customer
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns>View Home/Index</returns>
-        [Authorize(Roles = "Заказчик")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateJob(CreateJobViewModel model)
-        {
-            try
-            {
-                var modelDTO = _mapper.Map<CreateJobViewModel, JobDTO>(model);
-                var user = await _userService.FindUserByEmail(User.Identity.Name);
-                await _jobService.AddJob(modelDTO, user);
-                return RedirectToAction("MyJobs","MyJobs");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        /// <summary>
         /// Logout user
         /// </summary>
         /// <returns>View Account/User</returns>
@@ -176,6 +154,15 @@ namespace FreelanceService.Web.Controllers
         private async Task<ProfileViewModel> GetProfile()
         {
             var userDTO = await _userService.FindUserByEmail(User.Identity.Name);
+            var map = _mapper.Map<UserDTO, ProfileViewModel>(userDTO);
+            map.Role = RoleNameFromInt.GetName(userDTO.Role);
+            map.City = CityNameFromInt.GetName(userDTO.City);
+            return map;
+        }
+
+        private async Task<ProfileViewModel> GetProfile(int userId)
+        {
+            var userDTO = await _userService.FindUserById(userId);
             var map = _mapper.Map<UserDTO, ProfileViewModel>(userDTO);
             map.Role = RoleNameFromInt.GetName(userDTO.Role);
             map.City = CityNameFromInt.GetName(userDTO.City);

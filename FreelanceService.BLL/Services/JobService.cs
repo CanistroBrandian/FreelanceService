@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
+using FreelanceService.Common.Enum;
 using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
@@ -29,6 +30,16 @@ namespace FreelanceService.BLL.Services
             var job = _mapper.Map<JobDTO, Job>(model);
             job.UserId_Customer = user.Id;
             await _uow.JobRepos.AddJob(job);
+            await CommitAsync();
+        }
+
+        public async Task SelectExecutorForJob(int jobId, int userId_Executor)
+        {
+           var jobDTO = await FindJobById(jobId);
+            var job = _mapper.Map<JobDTO, Job>(jobDTO);
+            job.UserId_Executor = userId_Executor;
+            job.Status = (int)JobStatusEnum.Deal;
+            await _uow.JobRepos.SelectExectutorForJob(job);
             await CommitAsync();
         }
 
