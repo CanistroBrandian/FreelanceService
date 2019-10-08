@@ -7,6 +7,7 @@ using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FreelanceService.BLL.Services
@@ -87,6 +88,40 @@ namespace FreelanceService.BLL.Services
         }
 
 
+        public async Task<IEnumerable<UserDTO>> GetAllSorting(string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "RegistrationDateTime_desc":
+                    var userNamesOrderDesc = await _uow.UserRepos.OrderByDescending(sortOrder);
+                    await CommitAsync();
+                    return _mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(userNamesOrderDesc);
+                case "RegistrationDateTime":
+                    var userPricesOrderAsc = await _uow.UserRepos.OrderByAscending(sortOrder);
+                    await CommitAsync();
+                    return _mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(userPricesOrderAsc);
+                case "Rating_desc":
+                    var userPricesOrderDesc = await _uow.UserRepos.OrderByDescending(sortOrder);
+                    await CommitAsync();
+                    return _mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(userPricesOrderDesc);
+                default:
+                    var userNameOrderAsc = await _uow.UserRepos.OrderByAscending(sortOrder);
+                    await CommitAsync();
+                    return _mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(userNameOrderAsc);
+
+            }
+        }
+
+        public async Task<IEnumerable<UserDTO>> Search(string searchString, IEnumerable<UserDTO> list)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                return list.Where(s => s.Email.Contains(searchString));
+            }
+            else return list;
+        }
+
+
         public async Task<bool> ResetPasswordAsync(UserDTO user, string token, string newPassword)
         {
             if (token == user.VerifyCodeForResetPass)
@@ -114,5 +149,7 @@ namespace FreelanceService.BLL.Services
         {
             await _uow.CommitAsync();
         }
+
+   
     }
 }

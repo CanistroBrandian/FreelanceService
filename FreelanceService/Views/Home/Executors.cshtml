@@ -2,12 +2,12 @@
 
 <h1>Executors</h1>
 
-<form asp-action="Index" method="get">
+<form asp-action="Executors" method="get">
     <div class="form-actions no-color">
         <p>
             Поиск по имени: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
             <input type="submit" value="Поиск" class="btn btn-default" /> |
-            <a asp-action="Index">Сбросить</a>
+            <a asp-action="Executors">Сбросить</a>
         </p>
     </div>
 </form>
@@ -16,10 +16,10 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Имя</a>
+                <a asp-action="Executors" asp-route-sortOrder="@ViewData["RatingSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Рейтинг</a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Цена</a>
+                <a asp-action="Executors" asp-route-sortOrder="@ViewData["RegistrationDateTimeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Дата регистрации</a>
             </th>
         </tr>
     </thead>

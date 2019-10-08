@@ -70,6 +70,7 @@ namespace FreelanceService.DAL.Repositories
                 param: new { UserId_Customer = id });
         }
 
+
         /// <summary>
         /// Send query to search all entries in the Jobs table
         /// </summary>
@@ -98,7 +99,7 @@ namespace FreelanceService.DAL.Repositories
         public async Task Remove(int id)
         {
             string query = "DELETE FROM Jobs WHERE Id = @id";
-            await _context.ExecuteAsync(query,param: new { Id = id });
+            await _context.ExecuteAsync(query, param: new { Id = id });
 
         }
         /// <summary>

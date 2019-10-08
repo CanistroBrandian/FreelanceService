@@ -67,35 +67,16 @@ namespace FreelanceService.Web.Controllers
             return View(profile);
         }
 
-        /// <summary>
-        /// View ProfileCustomer
-        /// </summary>
-        /// <returns>View Profile/ProfileCusomer</returns>
-        [Authorize(Roles = "Заказчик")]
-        public async Task<ActionResult> ProfileCustomer()
-        {
-            var profile = await GetProfile();
-            return View(profile);
-        }
-
-        /// <summary>
-        /// View Profile Executor
-        /// </summary>
-        /// <returns>View Profile/ProfileExecutorr</returns>
-        [Authorize(Roles = "Исполнитель")]
-        public async Task<ActionResult> ProfileExecutor()
-        {
-            var profile = await GetProfile();
-            return View(profile);
-        }
 
         /// <summary>
         /// View edit profile
         /// </summary>
         /// <returns>View Profile/Edit</returns>
-        public ActionResult Edit()
+        public async Task<ActionResult> Edit()
         {
-            return View();
+            var user = await _userService.FindUserByEmail(User.Identity.Name);
+            var mapUserViewModel = _mapper.Map<UserDTO, ProfileEditViewModel> (user);
+            return View(mapUserViewModel);
         }
 
         /// <summary>

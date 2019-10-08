@@ -139,6 +139,32 @@ namespace FreelanceService.DAL.Repositories
                 );
         }
 
+        public async Task<IEnumerable<User>> OrderByAscending(string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "RegistrationDateTime":
+                    string queryPrice = "SELECT * FROM Users WHERE Role=@Role ORDER BY RegistrationDateTime ";
+                    return await _context.Query<User>(queryPrice, param: new { Role = (int)RoleEnum.Executor });
+                default:
+                    string queryName = "SELECT * FROM Users WHERE Role=@Role ORDER BY Rating ";
+                    return await _context.Query<User>(queryName, param: new { Role = (int)RoleEnum.Executor });
+            }
+        }
+
+        public async Task<IEnumerable<User>> OrderByDescending(string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "RegistrationDateTime_desc":
+                    string query = "SELECT * FROM Users WHERE Role=@Role ORDER BY RegistrationDateTime DESC ";
+                    return await _context.Query<User>(query, param: new { Role = (int)RoleEnum.Executor });
+                default:
+                    string queryName = "SELECT * FROM Users WHERE Role=@Role ORDER BY Rating DESC ";
+                    return await _context.Query<User>(queryName, param: new {Role = (int)RoleEnum.Executor });
+            }
+        }
+
         public async Task ResetPassword(User entity)
         {
             string query = "UPDATE Users SET PassHash = @PassHash, VerifyCodeForResetPass=null WHERE Id=@Id";

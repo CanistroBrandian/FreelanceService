@@ -1,42 +1,66 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
 using FreelanceService.Web.Models;
-using FreelanceService.Web.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace FreelanceService.Web.Controllers
 {
-    public class MyJobsController : Controller
+    public class CustomerController : Controller
     {
-        IUserService _userService;
         IJobService _jobService;
-        IResponseService _responseService;
         IMapper _mapper;
+        IUserService _userService;
+        IResponseService _responseService;
 
-
-        IViewModelValidationService _validationService;
-
-        /// <summary>
-        /// Dependency Injection for jobService and userService
-        /// </summary>
-        /// <param name="jobService"></param>
-        /// <param name="userService"></param>
-        public MyJobsController(
-            IJobService jobService,
+        public CustomerController(IJobService jobService,
+            IMapper mapper,
             IUserService userService,
-            IViewModelValidationService validationService,
-            IResponseService responseService,
-            IMapper mapper)
+            IResponseService responseService)
         {
             _jobService = jobService;
-            _userService = userService;
-            _validationService = validationService;
-            _responseService = responseService;
             _mapper = mapper;
+            _userService = userService;
+            _responseService = responseService;
+        }
+
+
+        /// <summary>
+        /// View create new job of customer
+        /// </summary>
+        /// <returns>View Profile/CreateJob</returns>
+        [HttpGet]
+        public IActionResult CreateJob()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Request to create a new job for the customer
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>View Home/Index</returns>
+        [Authorize(Roles = "Заказчик")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateJob(CreateJobViewModel model)
+        {
+            try
+            {
+                var modelDTO = _mapper.Map<CreateJobViewModel, JobDTO>(model);
+                var user = await _userService.FindUserByEmail(User.Identity.Name);
+                await _jobService.AddJob(modelDTO, user);
+                return RedirectToAction("MyJobs");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         [Authorize(Roles = "Заказчик,Исполнитель")]
@@ -91,7 +115,7 @@ namespace FreelanceService.Web.Controllers
             var job = await _jobService.FindJobById(jobId);
             var allResponsesOfJob = await _responseService.GetAllResponseOfJob(jobId);
             var mapResponsesOfJob = _mapper.Map<IEnumerable<ResponseDTO>, IEnumerable<ResponseListOfExecutors>>(allResponsesOfJob);
-            var mapJobDetails = _mapper.Map<JobDTO, MyJobDetailsViewModel> (job);
+            var mapJobDetails = _mapper.Map<JobDTO, MyJobDetailsViewModel>(job);
             mapJobDetails.ResponseListOfExecutors = mapResponsesOfJob;
             return View(mapJobDetails);
         }
@@ -100,16 +124,6 @@ namespace FreelanceService.Web.Controllers
         [Authorize(Roles = "Заказчик")]
         public async Task<IActionResult> SelectExecutorForJob(int jobId, int userId_Executor)
         {
-
-            await _jobService.SelectExecutorForJob(jobId, userId_Executor);
-            return RedirectToAction("MyJobs");
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Заказчик")]
-        public async Task<IActionResult> CancelResponse(int jobId, int userId_Executor)
-        {
-
             await _jobService.SelectExecutorForJob(jobId, userId_Executor);
             return RedirectToAction("MyJobs");
         }

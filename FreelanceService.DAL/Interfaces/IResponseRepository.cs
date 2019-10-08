@@ -12,6 +12,8 @@ namespace FreelanceService.DAL.Interfaces
         Task <IEnumerable<Response>> GetAll();
         Task<Response> FindResponseById(int id);
         Task<Response> FindResponseByJobId(int id);
+        Task<Response> FindResponseByIdExecutorAndJobId(int userId_executor, int jobId);
+        Task<IEnumerable<Response>> FindResponseByUserExecutorId(int id);
         Task Remove(int id);
         Task Update(Response entity);
     }

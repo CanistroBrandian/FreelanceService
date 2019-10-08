@@ -48,6 +48,27 @@ namespace FreelanceService.DAL.Repositories
                 param: new { Id = jobId });
         }
 
+        public async Task<IEnumerable<Response>> FindResponseByUserExecutorId(int userId_executor)
+        {
+            string query = "SELECT * FROM Responses WHERE UserId_Executor = @Id";
+            return await _context.Query<Response>(
+                query,
+                param: new { Id = userId_executor });
+        }
+
+       public async Task<Response> FindResponseByIdExecutorAndJobId(int userId_executor, int jobId)
+        {
+            string query = "SELECT * FROM Responses WHERE UserId_Executor = @UserId_Executor AND JobId=@JobId";
+
+            return await _context.QueryFirst<Response>(
+                query,
+                param: new
+                {
+                    UserId_Executor = userId_executor,
+                    JobId = jobId
+                });
+        }
+
         public async Task<IEnumerable<Response>> GetAll()
         {
             string query = "SELECT * FROM Responses";
@@ -63,15 +84,17 @@ namespace FreelanceService.DAL.Repositories
         public async Task Remove(int id)
         {
             string query = "DELETE FROM Responses WHERE Id = @id";
-            await _context.ExecuteAsync(query);
+            await _context.ExecuteAsync(query, param: new {Id = id});
 
         }
 
         public async Task Update(Response entity)
         {
-            string query = "UPDATE Responses SET Id=@Id,UserId_Executor=@UserId_Executor,TaskId=@TaskId,Status=@Status,Description=@Description,DateTimeOfResponse=@DateTimeOfResponse WHERE Id = @Id";
+            string query = "UPDATE Responses SET JobId = @JobId, UserId_Executor = @UserId_Executor, Description = @Description, Price = @Price WHERE Id = @Id";
             await _context.ExecuteAsync(query,
                      param: entity);
         }
+
+        
     }
 }

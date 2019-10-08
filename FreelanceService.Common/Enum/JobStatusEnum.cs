@@ -4,10 +4,10 @@ namespace FreelanceService.Common.Enum
 {
    public enum JobStatusEnum
     {
-        [Display(Name = "Неопубликовано")]
-        Unpublished=1,
         [Display(Name = "Опубликовано")]
-        Published,
+        Published = 1,
+        [Display(Name = "Неопубликовано")]
+        Unpublished,
         [Display(Name = "Отклик")]
         Response,
         [Display(Name = "Сделка")]

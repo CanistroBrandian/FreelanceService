@@ -41,31 +41,43 @@ namespace FreelanceService.BLL.Services
             return _mapper.Map<Response, ResponseDTO>(entity);
         }
 
+      public async  Task<ResponseDTO> FindResponseByIdExecutorAndJobId(int userId_executor, int jobId)
+        {
+            var entity = await _uow.ResponseRepos.FindResponseByIdExecutorAndJobId(userId_executor, jobId);
+            return _mapper.Map<Response, ResponseDTO>(entity);
+        }
+
         public async Task<IEnumerable<ResponseDTO>> GetAll()
         {
-            var result = _mapper.Map<IEnumerable<Response>, IEnumerable<ResponseDTO>>(await _uow.ResponseRepos.GetAll());
-            return result;
+            var mapResponse = _mapper.Map<IEnumerable<Response>, IEnumerable<ResponseDTO>>(await _uow.ResponseRepos.GetAll());
+            return mapResponse;
         }
 
         public async Task<IEnumerable<ResponseDTO>> GetAllResponseOfJob(int jobId)
         {
-        
             var responses = await _uow.ResponseRepos.GetAllResponseOfJob(jobId);
-            var map = _mapper.Map<IEnumerable<Response>, IEnumerable<ResponseDTO>>(responses);
-            return map;
+            var mapResponse = _mapper.Map<IEnumerable<Response>, IEnumerable<ResponseDTO>>(responses);
+            return mapResponse;
+        }
+
+        public async Task<IEnumerable<ResponseDTO>> FindResponseByUserExecutorId(int userId_Executor) {
+            var responses = await _uow.ResponseRepos.FindResponseByUserExecutorId(userId_Executor);
+            var mapResponse = _mapper.Map<IEnumerable<Response>, IEnumerable<ResponseDTO>>(responses);
+            return mapResponse;
         }
 
         public async Task Update(ResponseDTO entity)
         {
-
-            var response = _mapper.Map<ResponseDTO, Response>(entity);
-            await _uow.ResponseRepos.Update(response);
+            var mapJob = _mapper.Map<ResponseDTO, Response>(entity);
+            await _uow.ResponseRepos.Update(mapJob);
+            await CommitAsync();
         }
 
-        public async Task Remove(ResponseDTO entity)
+        public async Task Remove(int id)
         {
 
-            await _uow.ResponseRepos.Remove(entity.Id);
+            await _uow.ResponseRepos.Remove(id);
+            await CommitAsync();
         }
 
         public async Task CommitAsync()

@@ -14,6 +14,7 @@ namespace FreelanceService.BLL.Automapper
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<UserProfileEditDTO, User>().ReverseMap();
             CreateMap<ProfileEditViewModel, UserProfileEditDTO>().ReverseMap();
+            CreateMap<UserDTO, ProfileEditViewModel>().ReverseMap();
             CreateMap<UserRegistrationDTO, RegisterViewModel>().ReverseMap();
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Job, JobDTO>().ReverseMap();
@@ -23,10 +24,13 @@ namespace FreelanceService.BLL.Automapper
             CreateMap<Response, ResponseDTO>().ReverseMap();
             CreateMap<PaginatedListModel<JobViewModel>, PaginatedListModel<JobDTO>>().ReverseMap();
             CreateMap<ResponseAddViewModel, ResponseDTO>().ReverseMap();
-            CreateMap<ResponseListOfExecutors, ResponseDTO>().ReverseMap();
+
+            CreateMap<ResponseDTO,ResponseListOfExecutors>().ForMember(dest => dest.ResponseId, opt => opt.MapFrom(src => src.Id));
             CreateMap<UserDTO, ResponseListOfExecutors>().ForMember(dest => dest.FirstNameExecutor, opt => opt.MapFrom(src => src.FirstName))
                 .ForMember(dest => dest.LastNameExecutor, opt => opt.MapFrom(src => src.LastName));
             CreateMap<UserDTO, UserExecutorViewModel>().ReverseMap();
+            CreateMap<ResponseDTO, ResponseEditViewModel>().ReverseMap();
+            CreateMap<ResponseDTO,ResponseDetailsViewModel>().ForMember(dest => dest.ResponseId, opt => opt.MapFrom(src => src.Id));
             CreateMap<JobEditViewModel, JobDTO>().ReverseMap();
             CreateMap<JobEditDTO, JobDTO>().ReverseMap();
             CreateMap<MyJobDetailsViewModel, JobDTO>().ReverseMap();

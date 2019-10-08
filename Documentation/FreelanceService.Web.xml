@@ -49,6 +49,26 @@
             <param name="user">model type of UserDTO</param>
             <returns></returns>
         </member>
+        <member name="M:FreelanceService.Web.Controllers.CustomerController.CreateJob">
+            <summary>
+            View create new job of customer
+            </summary>
+            <returns>View Profile/CreateJob</returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.CustomerController.CreateJob(FreelanceService.Web.Models.CreateJobViewModel)">
+            <summary>
+            Request to create a new job for the customer
+            </summary>
+            <param name="model"></param>
+            <returns>View Home/Index</returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.ExecutorController.#ctor(FreelanceService.BLL.Interfaces.IJobService,FreelanceService.BLL.Interfaces.IUserService,FreelanceService.Web.Validation.IViewModelValidationService,FreelanceService.BLL.Interfaces.IResponseService,AutoMapper.IMapper)">
+            <summary>
+            Dependency Injection for jobService and userService
+            </summary>
+            <param name="jobService"></param>
+            <param name="userService"></param>
+        </member>
         <member name="T:FreelanceService.Web.Controllers.HomeController">
             <summary>
             Display all jobs in system
@@ -58,19 +78,6 @@
             <summary>
             View all jobs
             </summary>
-            <returns>View Home/Index</returns>
-        </member>
-        <member name="M:FreelanceService.Web.Controllers.JobController.CreateJob">
-            <summary>
-            View create new job of customer
-            </summary>
-            <returns>View Profile/CreateJob</returns>
-        </member>
-        <member name="M:FreelanceService.Web.Controllers.JobController.CreateJob(FreelanceService.Web.Models.CreateJobViewModel)">
-            <summary>
-            Request to create a new job for the customer
-            </summary>
-            <param name="model"></param>
             <returns>View Home/Index</returns>
         </member>
         <member name="M:FreelanceService.Web.Controllers.MyJobsController.#ctor(FreelanceService.BLL.Interfaces.IJobService,FreelanceService.BLL.Interfaces.IUserService,FreelanceService.Web.Validation.IViewModelValidationService,FreelanceService.BLL.Interfaces.IResponseService,AutoMapper.IMapper)">
@@ -91,18 +98,6 @@
             </summary>
             <param name="jobService"></param>
             <param name="userService"></param>
-        </member>
-        <member name="M:FreelanceService.Web.Controllers.ProfileController.ProfileCustomer">
-            <summary>
-            View ProfileCustomer
-            </summary>
-            <returns>View Profile/ProfileCusomer</returns>
-        </member>
-        <member name="M:FreelanceService.Web.Controllers.ProfileController.ProfileExecutor">
-            <summary>
-            View Profile Executor
-            </summary>
-            <returns>View Profile/ProfileExecutorr</returns>
         </member>
         <member name="M:FreelanceService.Web.Controllers.ProfileController.Edit">
             <summary>

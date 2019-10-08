@@ -16,8 +16,6 @@ C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\net
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.g.cshtml.cs
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Profile\Edit.g.cshtml.cs
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Profile\Profile.g.cshtml.cs
-C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Profile\ProfileCustomer.g.cshtml.cs
-C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Profile\ProfileExecutor.g.cshtml.cs
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.g.cshtml.cs
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.g.cshtml.cs
@@ -41,10 +39,13 @@ C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\net
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\FreelanceService.Web.csproj.CopyComplete
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Job\Job.g.cshtml.cs
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Job\_PartialResponse.g.cshtml.cs
-C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\MyJobs\MyJobs.g.cshtml.cs
-C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\MyJobs\EditJob.g.cshtml.cs
-C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\MyJobs\DeleteJob.g.cshtml.cs
-C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\MyJobs\MyJobDetails.g.cshtml.cs
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Profile\_PartialFunctionality.g.cshtml.cs
-C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Job\CreateJob.g.cshtml.cs
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Home\Executors.g.cshtml.cs
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Customer\CreateJob.g.cshtml.cs
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Customer\DeleteJob.g.cshtml.cs
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Customer\EditJob.g.cshtml.cs
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Customer\MyJobDetails.g.cshtml.cs
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Customer\MyJobs.g.cshtml.cs
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Executor\MyResponses.g.cshtml.cs
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Executor\ResponseDetails.g.cshtml.cs
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Executor\EditResponse.g.cshtml.cs

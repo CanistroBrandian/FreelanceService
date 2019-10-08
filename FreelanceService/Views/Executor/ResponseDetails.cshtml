@@ -1,0 +1,11 @@
+﻿@model FreelanceService.Web.Models.ResponseDetailsViewModel
+
+<div><label asp-for="JobId" class="control-label"></label> <label> : @Model.JobId</label></div>
+<div><label asp-for="NameJob" class="control-label"></label> <label> : @Model.NameJob</label></div>
+<div><label asp-for="Description" class="control-label"></label> <label> : @Model.Description</label></div>
+<div><label asp-for="Price" class="control-label"></label> <label> : @Model.Price</label></div>
+<div><label asp-for="ResponseDateTime" class="control-label"></label> <label> : @Model.ResponseDateTime</label></div>
+<div>
+    <a asp-action="EditResponse" asp-controller="Executor" asp-route-responseId="@Model.ResponseId"> Редактировать Отклик</a>
+    <a asp-action="CancelResponse" asp-controller="Executor" asp-route-jobId="@Model.JobId" > Отказаться от заказа</a>
+</div>

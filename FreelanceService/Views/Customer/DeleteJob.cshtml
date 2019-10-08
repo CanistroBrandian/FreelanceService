@@ -1,0 +1,10 @@
+﻿@model int
+@{
+    ViewBag.Title = "Delete";
+}
+
+    <form method="post">
+        <h2>Вы уверены, что хотите удалить задачу?</h2>
+        <input type="submit" class="btn  btn-outline-danger" value="Удалить" asp-controller="Customer" asp-action="ConfirmDeleteJob" asp-route-jobId="@Model"  />
+        <input type="submit" class="btn  btn-secondary" value="Отмена" asp-controller="Customer" asp-action="MyJobs" />
+    </form>

@@ -89,6 +89,8 @@ ON UPDATE CASCADE
 ON DELETE CASCADE 
 GO
 
+
+
 CREATE TABLE Responses (
     [Id]               INT         IDENTITY (1, 1)  NOT NULL,
     [UserId_Executor]  INT            NOT NULL,
@@ -114,28 +116,37 @@ ALTER TABLE Responses
 WITH CHECK ADD CONSTRAINT FK_Responses_UserId_Executor_Users FOREIGN KEY (UserId_Executor)
 REFERENCES Users(Id) 
 ON UPDATE no action 
-ON DELETE CASCADE 
+ON DELETE no action
 GO
 
 ALTER TABLE Responses
 WITH CHECK ADD CONSTRAINT FK_Jobs_Id_Responses FOREIGN KEY (JobId)
 REFERENCES Jobs(Id) 
-ON UPDATE no action
-ON DELETE no action
+ON UPDATE Cascade
+ON DELETE Cascade
 GO
 
 CREATE TRIGGER Response_Create_Status
 ON Responses
 AFTER INSERT AS  
  BEGIN
- DECLARE @IdJobs INT
-select @IdJobs= JobId from Responses where Id in
+ DECLARE @JobId INT
+select @JobId= JobId from Responses where Id in
 (select Id from Jobs)
-
-UPDATE Jobs SET Status=3 WHERE Id = @IdJobs;
-
+UPDATE Jobs SET Status=3 WHERE Id = @JobId;
 END
 GO
+
+
+CREATE TRIGGER Response_Delete_Response
+ON Responses
+AFTER Delete AS  
+ BEGIN
+UPDATE Jobs SET UserId_Executor=0, Status=8 WHERE Id in(select JobId from deleted);
+END
+GO
+
+
 
 CREATE TABLE Projects (
     [Id]          INT     IDENTITY (1, 1)  NOT NULL,

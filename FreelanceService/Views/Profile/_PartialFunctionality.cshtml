@@ -1,22 +1,21 @@
 ﻿@model FreelanceService.Web.Models.ProfileViewModel
-@using FreelanceService.Web.Helpers
 @using System.Security.Claims;
 
 @if (User.Identity.IsAuthenticated)
 {
-    @if (User.FindFirstValue(ClaimsIdentity.DefaultRoleClaimType) == "Заказчик" && Model.Role =="Заказчик")
+    @if (User.FindFirstValue(ClaimsIdentity.DefaultRoleClaimType) == "Заказчик" && User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType)== Model.Email)
     {
 
         <a asp-action="Edit" asp-controller="Profile"> Редактировать профиль</a>
-        <a asp-action="CreateJob" asp-controller="Job"> Создать заказ</a>
-        <a asp-action="MyJobs" asp-controller="MyJobs"> Мои заказы</a>
+        <a asp-action="CreateJob" asp-controller="Customer"> Создать заказ</a>
+        <a asp-action="MyJobs" asp-controller="Customer"> Мои заказы</a>
         <a asp-action="Logout" asp-controller="Profile"> Сменить пользователя</a>
     }
 
-    @if (User.FindFirstValue(ClaimsIdentity.DefaultRoleClaimType) == "Исполнитель" && Model.Role =="Исполнитель")
+    @if (User.FindFirstValue(ClaimsIdentity.DefaultRoleClaimType) == "Исполнитель" && User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType)== Model.Email)
     {
         <a asp-action="Edit" asp-controller="Profile"> Редактировать профиль</a>
         <a asp-action="Logout" asp-controller="Profile"> Сменить пользователя</a>
-
+        <a asp-action="MyResponses" asp-controller="Executor"> Мои отклики</a>
     }
 }

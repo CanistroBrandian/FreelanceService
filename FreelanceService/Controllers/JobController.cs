@@ -44,39 +44,6 @@ namespace FreelanceService.Web.Controllers
             return View(mapJobDelails);
         }
 
-        /// <summary>
-        /// View create new job of customer
-        /// </summary>
-        /// <returns>View Profile/CreateJob</returns>
-        [HttpGet]
-        public IActionResult CreateJob()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// Request to create a new job for the customer
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns>View Home/Index</returns>
-        [Authorize(Roles = "Заказчик")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateJob(CreateJobViewModel model)
-        {
-            try
-            {
-                var modelDTO = _mapper.Map<CreateJobViewModel, JobDTO>(model);
-                var user = await _userService.FindUserByEmail(User.Identity.Name);
-                await _jobService.AddJob(modelDTO, user);
-                return RedirectToAction("MyJobs", "MyJobs");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         [HttpPost]
         [Authorize(Roles = "Исполнитель")]
         public async Task<IActionResult> Response(JobDetailsViewModel model)
@@ -93,7 +60,5 @@ namespace FreelanceService.Web.Controllers
 
             return RedirectToAction("Job", new { job.Id });
         }
-
-
     }
 }

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<FreelanceService.Web.Models.ResponseListOfExecutors>
+
+<table calss="table">
+    <thead>
+        <tr>
+            <th>
+                <label class="control-label">Номер заказа</label>
+            </th>
+            <th>
+                <label class="control-label">Время отклика</label>
+            </th>
+            <th>
+                <label class="control-label">Описание</label>
+            </th>
+            <th>
+                <label class="control-label">Цена</label>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <p class="fa-paragraph">@item.JobId</p>
+                </td>
+                <td>
+                    <p class="fa-paragraph">@item.ResponseDateTime</p>
+                </td>
+                <td>
+                    <p class="fa-paragraph">@item.Description</p>
+                </td>
+                <td>
+                    <p class="fa-paragraph">@item.Price</p>
+                </td>
+                <td>
+                    <a asp-controller="Executor" asp-action="ResponseDetails" asp-route-responseId="@item.ResponseId">Посмотреть</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
