@@ -11,22 +11,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
+                <label class="control-label" >Категория</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <label class="control-label">Имя</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                <label class="control-label">Описание</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                <label class="control-label">Местоположение</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FinishedDateTime)
+                <label class="control-label">Дата окончания</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                <label class="control-label">Цена</label>
             </th>
             <th></th>
         </tr>
@@ -35,22 +35,22 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CategoryId)
+                <p class="fa-paragraph">@item.CategoryId</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                <p class="fa-paragraph">@item.Name</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                <p class="fa-paragraph">@item.Description</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.City)
+                <p class="fa-paragraph">@item.City</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FinishedDateTime)
+                <p class="fa-paragraph">@item.FinishedDateTime</p>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                <p class="fa-paragraph">@item.Price</p>
             </td>
             <td>
                 <a asp-controller="Customer" asp-action="MyJobDetails" asp-route-jobId="@item.Id">Посмотреть</a>

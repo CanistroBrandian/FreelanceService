@@ -23,11 +23,6 @@ namespace FreelanceService.DAL.Repositories
         public async Task AddReview(Review entity)
         {
             string query = "INSERT INTO Reviews VALUES(@Id, @UserId, @Name, @Description, @DateOfWriting, @Feedback, @Rating); SELECT CAST(SCOPE_IDENTITY() as int)";
-
-            if (entity == null)
-                throw new ArgumentNullException("entity");
-
-
            await _context.ExecuteAsync(
                 query, param: entity
             );
@@ -37,10 +32,6 @@ namespace FreelanceService.DAL.Repositories
         public async Task<Review> FindById(int id)
         {
             string query = "SELECT * FROM Reviews WHERE Id = @id";
-
-            if (id == 0)
-                throw new ArgumentNullException("id");
-
             return await _context.QueryFirst<Review>(
                 query,
                 param: new { Id = id });
@@ -55,9 +46,6 @@ namespace FreelanceService.DAL.Repositories
         public async Task Remove(int id)
         {
             string query = "DELETE FROM Reviews WHERE Id = @id";
-
-            if (id == 0)
-                throw new ArgumentNullException("entity");
            await _context.ExecuteAsync(query);
 
         }

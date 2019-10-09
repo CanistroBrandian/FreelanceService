@@ -42,12 +42,8 @@ namespace FreelanceService.BLL.Services
 
         public async Task<UserDTO> FindUserById(int id)
         {
-            if (id != 0)
-            {
                 var entity = await _uow.UserRepos.FindUserById(id);
-                return _mapper.Map<User, UserDTO>(entity);
-            }
-            else return null;
+            return _mapper.Map<User, UserDTO>(entity);
         }
 
         public async Task<IEnumerable<UserDTO>> GetAll()
@@ -72,7 +68,6 @@ namespace FreelanceService.BLL.Services
 
         public async Task<IEnumerable<UserDTO>> GetAllExecutor()
         {
-
             var allExecutor = await _uow.UserRepos.GetAllExecutor();
             var mapUserDTO = _mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(allExecutor);
             return mapUserDTO;

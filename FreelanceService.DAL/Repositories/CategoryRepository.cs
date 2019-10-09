@@ -18,9 +18,6 @@ namespace FreelanceService.DAL.Repositories
         public async Task AddCategory(Category entity)
         {
             string query = "INSERT INTO Categories VALUES(@Id,@Name);SELECT CAST(SCOPE_IDENTITY() as int)";
-
-            if (entity == null)
-                throw new ArgumentNullException("entity");
             await _context.ExecuteAsync(query, param: entity);
 
         }
@@ -28,9 +25,6 @@ namespace FreelanceService.DAL.Repositories
         public async Task<Category> FindById(int id)
         {
             string query = "SELECT * FROM Categories WHERE Id = @id";
-
-            if (id == 0)
-                throw new ArgumentNullException("id");
 
             return  await _context.QueryFirst<Category>(
                 query,
@@ -46,9 +40,6 @@ namespace FreelanceService.DAL.Repositories
         public async Task Remove(int id)
         {
             string query = "DELETE FROM Categories WHERE Id = @id";
-
-            if (id == 0)
-                throw new ArgumentNullException("entity");
             await _context.ExecuteAsync(query);
 
         }

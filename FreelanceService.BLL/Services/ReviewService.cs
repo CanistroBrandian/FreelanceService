@@ -27,8 +27,6 @@ namespace FreelanceService.BLL.Services
 
         public async Task<ReviewDTO> FindReviewById(int id)
         {
-            if (id == 0)
-                throw new Exception("Поле Id не введено");
             var entity = await _uow.ReviewRepos.FindById(id);
             return _mapper.Map<Review, ReviewDTO>(entity);
         }

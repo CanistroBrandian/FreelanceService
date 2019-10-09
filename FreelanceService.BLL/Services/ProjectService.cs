@@ -28,8 +28,6 @@ namespace FreelanceService.BLL.Services
 
         public async Task<ProjectDTO> FindProjectById(int id)
         {
-            if (id == 0)
-                throw new Exception("Поле Id не введено");
             var entity = await _uow.ProjectRepos.FindById(id);
             return _mapper.Map<Project, ProjectDTO>(entity);
         }
