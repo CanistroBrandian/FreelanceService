@@ -75,7 +75,7 @@ namespace FreelanceService.Web.Controllers
         {
             var responseDTO = await _responseService.FindResponseById(model.Id);
             var mapJob = _mapper.Map<ResponseEditViewModel, ResponseDTO>(model);
-            responseDTO.Price = mapJob.Price;
+            responseDTO.Price = mapJob.Price; //вынести на bll
             responseDTO.Description = mapJob.Description;
             await _responseService.Update(responseDTO);
         
@@ -86,7 +86,7 @@ namespace FreelanceService.Web.Controllers
         [Authorize(Roles = "Исполнитель")]
         public async Task<IActionResult> CancelResponse(int jobId)
         {
-            var user = await _userService.FindUserByEmail(User.Identity.Name);
+            var user = await _userService.FindUserByEmail(User.Identity.Name);  //перенести логику в responsesrvice
             var response = await _responseService.FindResponseByIdExecutorAndJobId(user.Id, jobId);
             await _responseService.Remove(response.Id);
             return RedirectToAction("MyResponses");

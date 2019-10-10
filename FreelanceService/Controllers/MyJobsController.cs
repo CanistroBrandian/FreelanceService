@@ -78,7 +78,7 @@ namespace FreelanceService.Web.Controllers
         [Authorize(Roles = "Заказчик")]
         public async Task<IActionResult> ConfirmDeleteJob(int jobId)
         {
-
+            //валидация на присуттвие такой работы
             await _jobService.Remove(jobId);
             return RedirectToAction("MyJobs");
         }
@@ -89,7 +89,7 @@ namespace FreelanceService.Web.Controllers
         public async Task<ViewResult> MyJobDetails(int jobId)
         {
             var job = await _jobService.FindJobById(jobId);
-            var allResponsesOfJob = await _responseService.GetAllResponseOfJob(jobId);
+            var allResponsesOfJob = await _responseService.GetAllResponseOfJob(jobId); //bll вынести
             var mapResponsesOfJob = _mapper.Map<IEnumerable<ResponseDTO>, IEnumerable<ResponseListOfExecutors>>(allResponsesOfJob);
             var mapJobDetails = _mapper.Map<JobDTO, MyJobDetailsViewModel> (job);
             mapJobDetails.ResponseListOfExecutors = mapResponsesOfJob;
@@ -100,7 +100,7 @@ namespace FreelanceService.Web.Controllers
         [Authorize(Roles = "Заказчик")]
         public async Task<IActionResult> SelectExecutorForJob(int jobId, int userId_Executor)
         {
-
+            //валидация
             await _jobService.SelectExecutorForJob(jobId, userId_Executor);
             return RedirectToAction("MyJobs");
         }
@@ -109,7 +109,7 @@ namespace FreelanceService.Web.Controllers
         [Authorize(Roles = "Заказчик")]
         public async Task<IActionResult> CancelResponse(int jobId, int userId_Executor)
         {
-
+            //валдиация
             await _jobService.SelectExecutorForJob(jobId, userId_Executor);
             return RedirectToAction("MyJobs");
         }

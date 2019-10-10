@@ -42,10 +42,6 @@ namespace FreelanceService.Web.Models
             return new PaginatedListModel<T>(items, count, pageIndex, pageSize);
         }
 
-        public static IEnumerable<int> PageSize()
-        {
-            List<int> page = new List<int>() { 5, 15, 25 };
-            return page;
-        }
+      
     }
 }

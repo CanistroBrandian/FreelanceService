@@ -124,7 +124,7 @@ namespace FreelanceService.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userService.FindUserByEmail(model.Email);
-                if (user == null || user !=null)
+                if (user == null || user !=null) // посмотреть 
                 {
                     var code = await _userService.GeneratePasswordResetTokenAsync(user);
                     var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
@@ -146,7 +146,7 @@ namespace FreelanceService.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model) //разобраться с неймингами 
         {
             if (!ModelState.IsValid)
             {
@@ -155,9 +155,9 @@ namespace FreelanceService.Web.Controllers
             var user = await _userService.FindUserByEmail(model.Email);
             if (user == null)
             {
-                return View("ResetPasswordConfirmation");
+                return View("ResetPasswordConfirmation"); // скидывать вюху о том, что нет такого email
             }
-            var result = await _userService.ResetPasswordAsync(user, model.Code, model.Password);
+            var result = await _userService.ResetPasswordAsync(user, model.Code, model.Password); //разобраться с неймингом 
             if (result)
             {
                 return View("ResetPasswordConfirmation");

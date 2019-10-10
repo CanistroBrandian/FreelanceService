@@ -46,16 +46,16 @@ namespace FreelanceService.Web.Controllers
             _mapper = mapper;
         }
 
-       
+
         [Authorize(Roles = "Исполнитель,Заказчик")]
-        public async Task<ActionResult> Profile(int userId)
+        public async Task<ActionResult> Profile(int? userId)
         {
-            if (userId == 0)
+            if (userId == null)
             {
                 if (User.Identity.IsAuthenticated)
                 {
                     var user = await _userService.FindUserByEmail(User.Identity.Name);
-                    var checkUser = User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType);
+                    var checkUser = User.FindFirstValue(ClaimsIdentity.DefaultNameClaimType); //нейминг checkUser
                     if (Equals(user.Email, checkUser))
                     {
                         var myprofile = await GetProfile(user.Id);
@@ -63,7 +63,7 @@ namespace FreelanceService.Web.Controllers
                     }
                 }
             }
-            var profile = await GetProfile(userId);
+            var profile = await GetProfile(userId.Value);
             return View(profile);
         }
 
@@ -75,7 +75,7 @@ namespace FreelanceService.Web.Controllers
         public async Task<ActionResult> Edit()
         {
             var user = await _userService.FindUserByEmail(User.Identity.Name);
-            var mapUserViewModel = _mapper.Map<UserDTO, ProfileEditViewModel> (user);
+            var mapUserViewModel = _mapper.Map<UserDTO, ProfileEditViewModel>(user);
             return View(mapUserViewModel);
         }
 
@@ -95,19 +95,14 @@ namespace FreelanceService.Web.Controllers
                 ModelState.Merge(validationResult.ModelState);
                 return View();
             }
-            try
-            {
-                var modelDTO = _mapper.Map<ProfileEditViewModel, UserProfileEditDTO>(model);
-                var user = await _userService.FindUserByEmail(User.Identity.Name);
-                await _userService.Update(modelDTO, user);
-                var newuser = await _userService.FindUserByEmail(User.Identity.Name);
-                await Authenticate(newuser);
-                return RedirectToAction(nameof(Profile));
-            }
-            catch
-            {
-                return View();
-            }
+
+            var modelDTO = _mapper.Map<ProfileEditViewModel, UserProfileEditDTO>(model);
+            var user = await _userService.FindUserByEmail(User.Identity.Name);
+            await _userService.Update(modelDTO, user);
+            var newuser = await _userService.FindUserByEmail(User.Identity.Name);
+            await Authenticate(newuser);
+            return RedirectToAction(nameof(Profile));
+
         }
 
         /// <summary>
@@ -125,7 +120,7 @@ namespace FreelanceService.Web.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, Common.Enum.RoleNameFromInt.GetName(user.Role))
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, RoleNameFromInt.GetName(user.Role))
             };
             ClaimsIdentity id = new ClaimsIdentity(claims, "AuthCookie", ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);

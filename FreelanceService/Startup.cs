@@ -82,7 +82,6 @@ namespace FreelanceService
         {
             services.AddSingleton<IDTOValidationService, DTOValidationService>();
             services.AddSingleton<IValidator<UserProfileEditDTO>, UserProfileEditDTOValidator>();
-
             services.AddSingleton<IViewModelValidationService, ViewModelValidationService>();
             services.AddSingleton<IValidator<ProfileEditViewModel>, ProfileEditViewModelValidator>();
             services.AddSingleton<IValidator<RegisterViewModel>, RegisterViewModelValidator>();

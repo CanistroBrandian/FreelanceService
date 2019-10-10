@@ -26,14 +26,14 @@ namespace FreelanceService.Web.Controllers
             _userService = userService;
             _responseService = responseService;
         }
-        public async Task<IActionResult> Job(int id)
+        public async Task<IActionResult> Job(int id) //нейминг 
         {
             var jobDTO = await _jobService.FindJobById(id);
             var userCustomer = await _userService.FindUserById(jobDTO.UserId_Customer);
             var allResponsesOfJob = await _responseService.GetAllResponseOfJob(jobDTO.Id);          
             var mapResponsesOfJob = _mapper.Map<IEnumerable<ResponseDTO>, IEnumerable<ResponseListOfExecutors>>(allResponsesOfJob);
             var mapJobDelails = _mapper.Map<JobDTO, JobDetailsViewModel>(jobDTO);
-            mapJobDelails.UserId_Customer = jobDTO.UserId_Customer;
+            mapJobDelails.UserId_Customer = jobDTO.UserId_Customer; //вынести в bll
             mapJobDelails.UserId_Executor = jobDTO.UserId_Executor;
             mapJobDelails.FirstNameCustomer = userCustomer.FirstName;
             mapJobDelails.LastNameCustmoer = userCustomer.LastName;
@@ -46,11 +46,11 @@ namespace FreelanceService.Web.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Исполнитель")]
-        public async Task<IActionResult> Response(JobDetailsViewModel model)
+        public async Task<IActionResult> Response(JobDetailsViewModel model) //нейминг 
         {
             var userExecutor = await _userService.FindUserByEmail(User.Identity.Name);
             var job = await _jobService.FindJobById(model.Id);
-            var responseViewModel = new ResponseAddViewModel
+            var responseViewModel = new ResponseAddViewModel //вынести в bll
             {
                 Description = model.ResponseAddViewModel.Description,
                 Price = model.ResponseAddViewModel.Price
