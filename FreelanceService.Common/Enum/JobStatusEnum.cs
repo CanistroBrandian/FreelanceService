@@ -12,6 +12,8 @@ namespace FreelanceService.Common.Enum
         Response,
         [Display(Name = "Сделка")]
         Deal,
+        [Display(Name = "В ожидании подтверждения")]
+        WaitingForConfirmation,
         [Display(Name = "Выполнено")]
         Done,
         [Display(Name = "Просрочено")]

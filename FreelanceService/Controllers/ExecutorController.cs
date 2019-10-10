@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
+using FreelanceService.Common.Enum;
 using FreelanceService.Web.Models;
 using FreelanceService.Web.Validation;
 using Microsoft.AspNetCore.Authorization;
@@ -79,6 +80,22 @@ namespace FreelanceService.Web.Controllers
             responseDTO.Description = mapJob.Description;
             await _responseService.Update(responseDTO);
         
+            return RedirectToAction("MyResponses");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Исполнитель")]
+        public async Task<IActionResult> SendForVerification(int jobId)
+        {
+            return View(jobId);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Исполнитель")]
+        public async Task<IActionResult> ConfirmSendForVerification(int jobId)
+        {
+            var statusCode = (int)JobStatusEnum.WaitingForConfirmation;
+            await _jobService.UpdateStatusJob(jobId, statusCode);
             return RedirectToAction("MyResponses");
         }
 

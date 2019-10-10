@@ -1,0 +1,11 @@
+﻿@model int
+@{
+    ViewBag.Title = "Delete";
+}
+
+<form method="post">
+    <h2>Отправить запрос на подвтерждение выполненного заказа?</h2>
+    <input type="submit" class="btn  btn-outline-success" value="Подтвердить" asp-controller="Executor" asp-action="ConfirmSendForVerification" asp-route-jobId="@Model" />
+    <input type="submit" class="btn  btn-secondary" value="Отмена" asp-controller="Executor" asp-action="MyResponses" />
+</form>
+

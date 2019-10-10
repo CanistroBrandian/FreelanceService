@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
+using FreelanceService.Common.Enum;
 using FreelanceService.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -119,6 +120,16 @@ namespace FreelanceService.Web.Controllers
             mapJobDetails.ResponseListOfExecutors = mapResponsesOfJob;
             return View(mapJobDetails);
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Заказчик")]
+        public async Task<IActionResult> ConfirmationRequestFromExecutorOnJob(int jobId)
+        {
+            var statusCode = (int)JobStatusEnum.Done;
+            await _jobService.UpdateStatusJob(jobId, statusCode);
+            return RedirectToAction("MyJobs");
+        }
+
 
         [HttpGet]
         [Authorize(Roles = "Заказчик")]

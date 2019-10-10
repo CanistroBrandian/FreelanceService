@@ -75,8 +75,6 @@ namespace FreelanceService.Web.Controllers
             var view = await PaginatedListModel<JobViewModel>.Create(map.AsQueryable(), pageNumber ?? 1, pageSize);
             return View(view);
 
-
-
         }
     }
 }

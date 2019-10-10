@@ -43,6 +43,12 @@ namespace FreelanceService.BLL.Services
             await CommitAsync();
         }
 
+       public async Task UpdateStatusJob(int jobId, int statusCode)
+        {
+           await _uow.JobRepos.UpdateStatusJob(jobId, statusCode);
+           await CommitAsync();
+        }
+
         public async Task<JobDTO> FindJobById(int id)
         {
 

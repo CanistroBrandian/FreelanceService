@@ -8,4 +8,5 @@
 <div>
     <a asp-action="EditResponse" asp-controller="Executor" asp-route-responseId="@Model.ResponseId"> Редактировать Отклик</a>
     <a asp-action="CancelResponse" asp-controller="Executor" asp-route-jobId="@Model.JobId" > Отказаться от заказа</a>
+    <a asp-action="SendForVerification" asp-controller="Executor" asp-route-jobId="@Model.JobId" > Заказ выполнен</a>
 </div>

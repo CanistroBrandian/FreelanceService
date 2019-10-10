@@ -28,7 +28,9 @@
             <th>
                 <label class="control-label">Цена</label>
             </th>
-            <th></th>
+            <th>
+                <label class="control-label">Статус</label>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -51,6 +53,9 @@
             </td>
             <td>
                 <p class="fa-paragraph">@item.Price</p>
+            </td>
+            <td>
+                <p class="fa-paragraph">@item.Status</p>
             </td>
             <td>
                 <a asp-controller="Customer" asp-action="MyJobDetails" asp-route-jobId="@item.Id">Посмотреть</a>

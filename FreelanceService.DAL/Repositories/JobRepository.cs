@@ -121,6 +121,17 @@ namespace FreelanceService.DAL.Repositories
                      param: entity);
         }
 
+        public async Task UpdateStatusJob(int jobId, int statusCode)
+        {
+            string query = "UPDATE Jobs SET Status=@Status WHERE Id = @Id";
+            await _context.ExecuteAsync(query,
+                     param: new
+                     {
+                         Id = jobId,
+                         Status = statusCode
+                     });
+        }
+
         public async Task<IEnumerable<Job>> OrderByAscending(string sortOrder)
         {
             switch (sortOrder)
