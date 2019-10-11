@@ -23,6 +23,15 @@ ALTER TABLE Users
 ADD CONSTRAINT DF_Users_RegistrationDateTime_Default DEFAULT (getdate()) FOR RegistrationDateTime
 GO
 
+CREATE TABLE Categories (
+    [Id]   INT       IDENTITY (1, 1)   NOT NULL,
+    [Name] VARCHAR (50) NOT NULL,
+)
+GO
+
+ALTER TABLE Categories 
+ADD CONSTRAINT PK_Categories_Id PRIMARY KEY CLUSTERED (Id)
+GO
 
 
 CREATE TABLE Reviews (
@@ -65,7 +74,7 @@ CREATE TABLE Jobs (
     [Status]                  INT             NOT NULL,
     [StartDateTime]        DATETIME           NULL,
     [RegistrationDateTime] DATETIME           NOT NULL,
-    [FinishedDateTime]        DATETIME        NOT NULL,
+    [FinishedDateTime]        DATE        NOT NULL,
     [Price]                   DECIMAL (18, 2) NULL,
 )
 GO 
@@ -87,6 +96,13 @@ WITH CHECK ADD CONSTRAINT FK_Jobs_UserId_Customer_Users FOREIGN KEY (UserId_Cust
 REFERENCES Users(Id) 
 ON UPDATE CASCADE 
 ON DELETE CASCADE 
+GO
+
+ALTER TABLE Jobs 
+WITH CHECK ADD CONSTRAINT FK_Categories_Id_Job_CategoryId FOREIGN KEY (CategoryId)
+REFERENCES Categories(Id) 
+ON UPDATE Cascade
+ON DELETE Cascade
 GO
 
 
@@ -158,12 +174,4 @@ ALTER TABLE Projects
 ADD CONSTRAINT PK_Projects_Id PRIMARY KEY CLUSTERED (Id)
 GO
 
-CREATE TABLE Categories (
-    [Id]   INT       IDENTITY (1, 1)   NOT NULL,
-    [Name] VARCHAR (50) NOT NULL,
-)
-GO
 
-ALTER TABLE Categories 
-ADD CONSTRAINT PK_Categories_Id PRIMARY KEY CLUSTERED (Id)
-GO

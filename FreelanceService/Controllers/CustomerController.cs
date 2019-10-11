@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
+using FreelanceService.BLL.Interfaces.ValidationServices;
 using FreelanceService.Common.Enum;
 using FreelanceService.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FreelanceService.Web.Controllers
 {
@@ -18,16 +17,22 @@ namespace FreelanceService.Web.Controllers
         IMapper _mapper;
         IUserService _userService;
         IResponseService _responseService;
+        ICategoryService _categoryService;
+        IValidateJob _validateJob;
 
         public CustomerController(IJobService jobService,
             IMapper mapper,
             IUserService userService,
-            IResponseService responseService)
+            IResponseService responseService,
+            ICategoryService categoryService,
+            IValidateJob validaterUser)
         {
             _jobService = jobService;
             _mapper = mapper;
             _userService = userService;
             _responseService = responseService;
+            _categoryService = categoryService;
+            _validateJob = validaterUser;
         }
 
 
@@ -36,9 +41,14 @@ namespace FreelanceService.Web.Controllers
         /// </summary>
         /// <returns>View Profile/CreateJob</returns>
         [HttpGet]
-        public IActionResult CreateJob()
+        public async Task<IActionResult> CreateJob()
         {
-            return View();
+            var allCategories = await _categoryService.GetAll();
+            var jobViewModel = new CreateJobViewModel
+            {
+                CategoryDTOs = allCategories
+            };
+            return View(jobViewModel);
         }
 
         /// <summary>
@@ -51,17 +61,16 @@ namespace FreelanceService.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateJob(CreateJobViewModel model)
         {
-            try
+            var validateModel = _validateJob.ValidateNewJob(model.Name, model.Description, model.FinishedDateTime, model.Price);
+            if (validateModel)
             {
                 var modelDTO = _mapper.Map<CreateJobViewModel, JobDTO>(model);
                 var user = await _userService.FindUserByEmail(User.Identity.Name);
                 await _jobService.AddJob(modelDTO, user);
                 return RedirectToAction("MyJobs");
             }
-            catch
-            {
-                return View();
-            }
+            else ModelState.AddModelError("", "Проверьте введеные данные");
+            return View();
         }
 
         [Authorize(Roles = "Заказчик,Исполнитель")]
@@ -70,6 +79,7 @@ namespace FreelanceService.Web.Controllers
             var user = await _userService.FindUserByEmail(User.Identity.Name);
             var jobs = await _jobService.GetAllJobsOfCustomer(user.Id);
             var map = _mapper.Map<IEnumerable<JobDTO>, IEnumerable<JobViewModel>>(jobs);
+           
             return View(map);
         }
 
@@ -86,16 +96,20 @@ namespace FreelanceService.Web.Controllers
         [Authorize(Roles = "Заказчик")]
         public async Task<IActionResult> EditJob(JobEditViewModel model)
         {
-            var modelDTO = _mapper.Map<JobEditViewModel, JobDTO>(model);
-            await _jobService.Update(modelDTO);
-            return RedirectToAction("MyJobs");
+            if (_validateJob.ValidateEditJob(model.Name, model.Description, model.FinishedDateTime, model.Price))
+            {
+                var modelDTO = _mapper.Map<JobEditViewModel, JobDTO>(model);
+                await _jobService.Update(modelDTO);
+                return RedirectToAction("MyJobs");
+            }
+            else ModelState.AddModelError("", "Проверьте введеные данные");
+            return View();
         }
 
         [HttpGet]
         [Authorize(Roles = "Заказчик")]
         public async Task<ViewResult> DeleteJob(int jobId)
         {
-
             return View(jobId);
         }
 
@@ -103,7 +117,7 @@ namespace FreelanceService.Web.Controllers
         [Authorize(Roles = "Заказчик")]
         public async Task<IActionResult> ConfirmDeleteJob(int jobId)
         {
-
+            // сделать валидацию по статусу 
             await _jobService.Remove(jobId);
             return RedirectToAction("MyJobs");
         }
@@ -115,9 +129,13 @@ namespace FreelanceService.Web.Controllers
         {
             var job = await _jobService.FindJobById(jobId);
             var allResponsesOfJob = await _responseService.GetAllResponseOfJob(jobId);
+            var userExecutor = await _userService.FindUserById(job.UserId_Executor);
             var mapResponsesOfJob = _mapper.Map<IEnumerable<ResponseDTO>, IEnumerable<ResponseListOfExecutors>>(allResponsesOfJob);
             var mapJobDetails = _mapper.Map<JobDTO, MyJobDetailsViewModel>(job);
+            var categoryOfJob = await _categoryService.FindCategoryById(mapJobDetails.CategoryId);
             mapJobDetails.ResponseListOfExecutors = mapResponsesOfJob;
+            mapJobDetails.UserExecutor = userExecutor;
+            mapJobDetails.Category = categoryOfJob;
             return View(mapJobDetails);
         }
 

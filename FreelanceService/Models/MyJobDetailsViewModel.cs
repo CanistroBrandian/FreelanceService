@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FreelanceService.BLL.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -30,5 +31,8 @@ namespace FreelanceService.Web.Models
         public decimal? Price { get; set; }
         [Display(Name = "Отклики")]
         public IEnumerable<ResponseListOfExecutors> ResponseListOfExecutors { get; set; }
+        [Display(Name = "Исполнитель")]
+        public UserDTO UserExecutor { get; set; }
+        public CategoryDTO Category { get; set; }
     }
 }

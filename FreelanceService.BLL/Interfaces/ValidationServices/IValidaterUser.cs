@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace FreelanceService.BLL.Interfaces.ValidationServices
 {
-    public interface IValidateUser
+    public interface IValidaterUser
     {
         Task<bool> ValidateNewUser(string email, string phone, string firstName, string lastName);
-
-
-
-
+        Task<bool> ValidateEditUser(string phone, string firstName, string lastName);
     }
 }

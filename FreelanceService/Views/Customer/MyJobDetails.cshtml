@@ -12,10 +12,18 @@
 <div><label asp-for="Name" class="control-label"></label> <label> : @Model.Name</label></div>
 <div><label asp-for="Description" class="control-label"></label> <label> : @Model.Description</label></div>
 <div><label asp-for="Price" class="control-label"></label> <label> : @Model.Price</label></div>
-<div><label asp-for="CategoryId" class="control-label"></label> <label> : @Model.CategoryId</label></div>
+<div><label asp-for="CategoryId" class="control-label"></label> <label> : @Model.Category.Name</label></div>
 <div><label asp-for="FinishedDateTime" class="control-label"></label> <label> : @Model.FinishedDateTime</label></div>
 <div><label asp-for="Status" class="control-label"></label>  <select asp-for="Status" asp-items="Html.GetEnumSelectList<JobStatusEnum>()"></select></div>
-<div><label asp-for="UserId_Executor" class="control-label"></label> <label> : @Model.UserId_Executor</label></div>
+<div>
+    <label asp-for="UserExecutor" class="control-label"></label>
+    @if (@Model.UserExecutor == null)
+    {<label> : Исполнитель не назначен</label>}
+    else
+    {<label> : @Model.UserExecutor.Email</label>}
+</div>
+
+
 
 @if (Model.Status == 5)
 {<a asp-action="ConfirmationRequestFromExecutorOnJob" asp-controller="Customer" asp-route-jobId="@Model.Id"> Принять заказ</a>}

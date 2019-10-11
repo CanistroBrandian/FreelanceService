@@ -21,7 +21,9 @@ namespace FreelanceService.Web.Models
         public decimal? Price { get; set; }
         public ResponseAddViewModel ResponseAddViewModel { get; set; }
         public IEnumerable<ResponseListOfExecutors> ResponseListOfExecutors { get;set;}
-        public IEnumerable<UserDTO> userDTOs { get;set;}
+        public IEnumerable<UserDTO> UserExecutors { get; set; }
+        public UserDTO UserCustomer { get; set; }
+        public CategoryDTO Category { get; set; }
 
     }
 }

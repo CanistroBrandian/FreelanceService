@@ -24,7 +24,7 @@ namespace FreelanceService.DAL.Repositories
                 UserId_Executor = userExecutorId,
                 JobId = jobId,
                 Description = response.Description,
-                Status = (int)ResponseStatusEnum.AlreadyResponded,
+                Status = 1,
                 Price = response.Price
                 }
                 );

@@ -15,6 +15,7 @@ namespace FreelanceService.DAL.Interfaces
         Task<IEnumerable<User>> OrderByAscending(string sortOrder);
         Task<User> FindUserById(int id);
         Task<User> FindByEmail(string email);
+        Task<User> FindByPhone(string phone);
         Task Remove(int id);
         Task Update(User entity);
         Task ResetPassword(User etity);

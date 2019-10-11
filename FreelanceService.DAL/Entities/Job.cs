@@ -17,5 +17,6 @@ namespace FreelanceService.DAL.Entities
         public DateTime? StartDateTime { get; set; }
         public DateTime FinishedDateTime { get; set; }
         public decimal? Price { get; set; }
+        public Category Category { get; set; }
     }
 }

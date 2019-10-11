@@ -16,5 +16,6 @@ namespace FreelanceService.BLL.DTO
         public DateTime StartDateTime { get; set; }
         public DateTime FinishedDateTime { get; set; }
         public decimal? Price { get; set; }
+        public CategoryDTO Category { get; set;  }
     }
 }

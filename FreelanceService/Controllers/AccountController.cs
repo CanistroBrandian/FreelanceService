@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
+using FreelanceService.BLL.Interfaces.ValidationServices;
 using FreelanceService.Common.Encrypt;
-using FreelanceService.Web.Models;
 using FreelanceService.Web.Helpers;
+using FreelanceService.Web.Models;
 using FreelanceService.Web.Validation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -23,7 +24,8 @@ namespace FreelanceService.Web.Controllers
         IEmailService _emailService;
         IUserService _userService;
         IMapper _mapper;
-        IViewModelValidationService _validationService;
+
+        IValidaterUser _validationUser;
 
         /// <summary>
         /// Dependency Injection User and Email service
@@ -31,12 +33,12 @@ namespace FreelanceService.Web.Controllers
         /// <param name="emailService"></param>
         /// <param name="userService"></param>
         public AccountController(IEmailService emailService, IUserService userService, IMapper mapper,
-            IViewModelValidationService validationService)
+            IValidaterUser validationUser)
         {
             _emailService = emailService;
             _userService = userService;
             _mapper = mapper;
-            _validationService = validationService;
+            _validationUser = validationUser;
         }
         /// <summary>
         /// User authorization page. If the user is authorized, then he will be redirected to his profile
@@ -90,22 +92,21 @@ namespace FreelanceService.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var validationResult = _validationService.Validate(model);
-            if (!validationResult.IsValid)
+            if (await _validationUser.ValidateNewUser(model.Email,model.Phone,model.FirstName, model.LastName))
             {
-                ModelState.Merge(validationResult.ModelState);
-                return View();
+
+                var user = await _userService.FindUserByEmail(model.Email);
+                if (user == null)
+                {
+                    var modelDTO = _mapper.Map<RegisterViewModel, UserRegistrationDTO>(model);
+                    await _userService.AddUser(modelDTO);
+                    //     await _emailService.SendEmailAsync(model.Email, "Succses registration", "You Login:" + model.Email + " You Pass:" + model.Password);
+                    await Authenticate(await _userService.FindUserByEmail(modelDTO.Email));
+                    return RedirectToAction("Profile", "Profile");
+                }
+                return View(model);
             }
-            var user = await _userService.FindUserByEmail(model.Email);
-            if (user == null)
-            {
-                var modelDTO = _mapper.Map<RegisterViewModel, UserRegistrationDTO>(model);
-                await _userService.AddUser(modelDTO);
-           //     await _emailService.SendEmailAsync(model.Email, "Succses registration", "You Login:" + model.Email + " You Pass:" + model.Password);
-                await Authenticate(await _userService.FindUserByEmail(modelDTO.Email));
-                return RedirectToAction("Profile", "Profile");
-            }
-            ModelState.AddModelError("", "Пользователь с таким Email существует");
+           else  ModelState.AddModelError("", "Проверьте введеные данные");
             return View(model);
         }
 

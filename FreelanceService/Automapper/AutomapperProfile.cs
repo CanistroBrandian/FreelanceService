@@ -24,7 +24,7 @@ namespace FreelanceService.BLL.Automapper
             CreateMap<Response, ResponseDTO>().ReverseMap();
             CreateMap<PaginatedListModel<JobViewModel>, PaginatedListModel<JobDTO>>().ReverseMap();
             CreateMap<ResponseAddViewModel, ResponseDTO>().ReverseMap();
-
+            CreateMap<CreateJobViewModel, CreateJobViewModel>().ReverseMap();
             CreateMap<ResponseDTO,ResponseListOfExecutors>().ForMember(dest => dest.ResponseId, opt => opt.MapFrom(src => src.Id));
             CreateMap<UserDTO, ResponseListOfExecutors>().ForMember(dest => dest.FirstNameExecutor, opt => opt.MapFrom(src => src.FirstName))
                 .ForMember(dest => dest.LastNameExecutor, opt => opt.MapFrom(src => src.LastName));

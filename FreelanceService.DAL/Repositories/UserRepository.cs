@@ -56,7 +56,7 @@ namespace FreelanceService.DAL.Repositories
         /// <returns>Returns a user with type User</returns>
         public async Task<User> FindUserById(int id)
         {
-            string query = "SELECT * FROM Users WHERE Id = @id";
+            string query = "SELECT * FROM Users WHERE Id = @Id";
 
             return await _context.QueryFirst<User>(
                 query,
@@ -71,11 +71,20 @@ namespace FreelanceService.DAL.Repositories
         /// <returns>Returns a user with type User</returns>
         public async Task<User> FindByEmail(string email)
         {
-            string query = "Select * From Users Where Email = @email";
+            string query = "Select * From Users Where Email = @Email";
 
             return await _context.QueryFirst<User>(
                 query,
                 param: new { Email = email });
+        }
+
+        public async Task<User> FindByPhone(string phone)
+        {
+            string query = "Select * From Users Where Phone = @Phone";
+
+            return await _context.QueryFirst<User>(
+                query,
+                param: new { Phone = phone });
         }
 
         /// <summary>

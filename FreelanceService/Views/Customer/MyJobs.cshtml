@@ -46,16 +46,16 @@
                 <p class="fa-paragraph">@item.Description</p>
             </td>
             <td>
-                <p class="fa-paragraph">@item.City</p>
+                <label asp-for="@item.City">@item.City</label>
             </td>
             <td>
-                <p class="fa-paragraph">@item.FinishedDateTime</p>
+                <label>@item.FinishedDateTime.Date.ToString("dd-mm-yyyy")</label>
             </td>
             <td>
                 <p class="fa-paragraph">@item.Price</p>
             </td>
             <td>
-                <p class="fa-paragraph">@item.Status</p>
+                <label asp-for="@item.Status" >@item.Status</label>
             </td>
             <td>
                 <a asp-controller="Customer" asp-action="MyJobDetails" asp-route-jobId="@item.Id">Посмотреть</a>

@@ -15,16 +15,19 @@ namespace FreelanceService.Web.Controllers
         IMapper _mapper;
         IUserService _userService;
         IResponseService _responseService;
+        ICategoryService _categoryService;
 
         public JobController(IJobService jobService,
             IMapper mapper,
             IUserService userService,
-            IResponseService responseService)
+            IResponseService responseService,
+            ICategoryService categoryService)
         {
             _jobService = jobService;
             _mapper = mapper;
             _userService = userService;
             _responseService = responseService;
+            _categoryService = categoryService;
         }
         public async Task<IActionResult> Job(int id) //нейминг 
         {
@@ -32,12 +35,12 @@ namespace FreelanceService.Web.Controllers
             var userCustomer = await _userService.FindUserById(jobDTO.UserId_Customer);
             var allResponsesOfJob = await _responseService.GetAllResponseOfJob(jobDTO.Id);          
             var mapResponsesOfJob = _mapper.Map<IEnumerable<ResponseDTO>, IEnumerable<ResponseListOfExecutors>>(allResponsesOfJob);
-            var mapJobDelails = _mapper.Map<JobDTO, JobDetailsViewModel>(jobDTO);
-            mapJobDelails.UserId_Customer = jobDTO.UserId_Customer; //вынести в bll
-            mapJobDelails.UserId_Executor = jobDTO.UserId_Executor;
-            mapJobDelails.FirstNameCustomer = userCustomer.FirstName;
-            mapJobDelails.LastNameCustmoer = userCustomer.LastName;
+            var mapJobDelails = _mapper.Map<JobDTO, JobDetailsViewModel>(jobDTO);//вынести в bll
+            mapJobDelails.UserCustomer = userCustomer;
+            mapJobDelails.UserExecutors = await _userService.GetAllUsersExecutorsOfResponse(jobDTO.Id);
+            mapJobDelails.Category = await _categoryService.FindCategoryById(mapJobDelails.CategoryId);
             mapJobDelails.ResponseListOfExecutors = mapResponsesOfJob;
+
            // var getAllUsersExecutorsOfResponse = await _userService.GetAllUsersExecutorsOfResponse(jobDTO.Id);
             // mapJobDelails.userDTOs = getAllUsersExecutorsOfResponse;
 

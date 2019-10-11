@@ -42,8 +42,7 @@
             </div>
             <div>
                 <label asp-for="City">Выберете город проживания</label><br />
-                <select asp-for="City" asp-items="Html.GetEnumSelectList<CityEnum>()"></select>
-                 
+                <select asp-for="City" asp-items="Html.GetEnumSelectList<CityEnum>()"></select>             
                 <span asp-validation-for="City" />
             </div>
             <div>

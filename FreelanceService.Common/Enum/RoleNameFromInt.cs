@@ -12,8 +12,6 @@ namespace FreelanceService.Common.Enum
                     return "Исполнитель";
                 case 2:
                     return "Заказчик";
-                case 3:
-                    return "Админ";
                 default:
                     throw new Exception("Такй роли не существует");
 

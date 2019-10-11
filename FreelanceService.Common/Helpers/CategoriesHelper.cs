@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FreelanceService.BLL.Services.Validations
+namespace FreelanceService.Common.Helpers
 {
-    class ValidateEditUser
+   public class CategoriesHelper
     {
+        
+      
     }
 }
