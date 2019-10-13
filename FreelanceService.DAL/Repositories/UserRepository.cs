@@ -4,6 +4,7 @@ using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -100,12 +101,13 @@ namespace FreelanceService.DAL.Repositories
         public async Task<IEnumerable<User>> GetAllUsersExecutorsOfResponse(List<int> listUserExecutorId)
         {
             var usersExecutors = await GetAll();
-            foreach (var item in listUserExecutorId)
-            {
-                string query = "SELECT * FROM Users WHERE Id=@Id";
-                usersExecutors = await _context.Query<User>(query, param: new { Id = item });
-            }
-            return usersExecutors;
+            //TODO: исправить
+            //foreach (var item in listUserExecutorId)
+            //{
+            //    string query = "SELECT * FROM Users WHERE Id=@Id";
+            //    usersExecutors = await _context.Query<User>(query, param: new { Id = item });
+            //}
+            return usersExecutors.Where(f => listUserExecutorId.Contains(f.Id));
         }
 
 
@@ -170,7 +172,7 @@ namespace FreelanceService.DAL.Repositories
                     return await _context.Query<User>(query, param: new { Role = (int)RoleEnum.Executor });
                 default:
                     string queryName = "SELECT * FROM Users WHERE Role=@Role ORDER BY Rating DESC ";
-                    return await _context.Query<User>(queryName, param: new {Role = (int)RoleEnum.Executor });
+                    return await _context.Query<User>(queryName, param: new { Role = (int)RoleEnum.Executor });
             }
         }
 

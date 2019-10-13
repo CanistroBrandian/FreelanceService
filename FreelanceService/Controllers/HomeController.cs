@@ -45,7 +45,7 @@ namespace FreelanceService.Web.Controllers
             var list = await _userService.GetAllSorting(sortOrder);
             var search = await _userService.Search(searchString, list);
             var mapAllExecutor = _mapper.Map<IEnumerable<UserDTO>, IEnumerable<UserExecutorViewModel>>(search);
-            var view = await PaginatedListModel<UserExecutorViewModel>.Create(mapAllExecutor.AsQueryable(), pageNumber ?? 1, pageSize);
+            var view = PaginatedListModel<UserExecutorViewModel>.Create(mapAllExecutor.AsQueryable(), pageNumber ?? 1, pageSize);
             return View(view);
         }
 
@@ -57,7 +57,7 @@ namespace FreelanceService.Web.Controllers
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
 
-            int pageSize = 5;
+            int pageSize = 1;
 
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
@@ -72,7 +72,7 @@ namespace FreelanceService.Web.Controllers
             var list = await _jobService.GetAllSorting(sortOrder);
             var search = _jobService.Search(searchString, list);
             var map = _mapper.Map<IEnumerable<JobDTO>, IEnumerable<JobViewModel>>(search);
-            var view = await PaginatedListModel<JobViewModel>.Create(map.AsQueryable(), pageNumber ?? 1, pageSize);
+            var view = PaginatedListModel<JobViewModel>.Create(map.AsQueryable(), pageNumber ?? 1, pageSize);
             return View(view);
 
         }

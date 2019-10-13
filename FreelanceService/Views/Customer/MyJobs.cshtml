@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FreelanceService.Web.Models.JobViewModel>
+﻿@model PaginatedListModel<FreelanceService.Web.Models.JobViewModel>
 
 @{
     ViewData["Title"] = "MyJobs";
@@ -11,7 +11,7 @@
     <thead>
         <tr>
             <th>
-                <label class="control-label" >Категория</label>
+                <label class="control-label">Категория</label>
             </th>
             <th>
                 <label class="control-label">Имя</label>
@@ -34,35 +34,45 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <p class="fa-paragraph">@item.CategoryId</p>
-            </td>
-            <td>
-                <p class="fa-paragraph">@item.Name</p>
-            </td>
-            <td>
-                <p class="fa-paragraph">@item.Description</p>
-            </td>
-            <td>
-                <label asp-for="@item.City">@item.City</label>
-            </td>
-            <td>
-                <label>@item.FinishedDateTime.Date.ToString("dd-mm-yyyy")</label>
-            </td>
-            <td>
-                <p class="fa-paragraph">@item.Price</p>
-            </td>
-            <td>
-                <label asp-for="@item.Status" >@item.Status</label>
-            </td>
-            <td>
-                <a asp-controller="Customer" asp-action="MyJobDetails" asp-route-jobId="@item.Id">Посмотреть</a>
-                <a asp-controller="Customer" asp-action="EditJob" asp-route-jobId="@item.Id">Редактировать</a>
-                <a asp-controller="Customer" asp-action="DeleteJob" asp-route-jobId="@item.Id">Удалить</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <p class="fa-paragraph">@item.CategoryId</p>
+                </td>
+                <td>
+                    <p class="fa-paragraph">@item.Name</p>
+                </td>
+                <td>
+                    <p class="fa-paragraph">@item.Description</p>
+                </td>
+                <td>
+                    <label asp-for="@item.City">@item.City</label>
+                </td>
+                <td>
+                    <label>@item.FinishedDateTime.Date.ToString("dd-mm-yyyy")</label>
+                </td>
+                <td>
+                    <p class="fa-paragraph">@item.Price</p>
+                </td>
+                <td>
+                    <label asp-for="@item.Status">@item.Status</label>
+                </td>
+                <td>
+                    <a asp-controller="Customer" asp-action="MyJobDetails" asp-route-jobId="@item.Id">Посмотреть</a>
+                    <a asp-controller="Customer" asp-action="EditJob" asp-route-jobId="@item.Id">Редактировать</a>
+                    <a asp-controller="Customer" asp-action="DeleteJob" asp-route-jobId="@item.Id">Удалить</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@await Html.PartialAsync("Partials/_Paginator",
+    new PaginatorViewModel
+    {
+        Action = "MyJobs",
+        Controller = "Customer",
+        Url = Url,
+        Paginator = Model
+    })

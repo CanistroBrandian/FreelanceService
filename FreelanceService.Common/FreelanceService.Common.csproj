@@ -54,10 +54,9 @@
   <ItemGroup>
     <Compile Include="Encrypt\SHA256Encrypt.cs" />
     <Compile Include="Enum\CityEnum.cs" />
-    <Compile Include="Enum\CityNameFromInt.cs" />
     <Compile Include="Enum\JobStatusEnum.cs" />
     <Compile Include="Enum\RoleEnum.cs" />
-    <Compile Include="Enum\RoleNameFromInt.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Helpers\CategoriesHelper.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -5,11 +5,12 @@ using FreelanceService.DAL.Entities;
 using FreelanceService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FreelanceService.BLL.Services
 {
-    public  class ResponseService:IResponseService
+    public class ResponseService : IResponseService
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
@@ -21,9 +22,9 @@ namespace FreelanceService.BLL.Services
 
         public async Task AddResponse(ResponseDTO response, int userExecitorId, int jobId)
         {
-            
+
             var mapResponse = _mapper.Map<ResponseDTO, Response>(response);
-            await _uow.ResponseRepos.AddResponse(mapResponse, userExecitorId, jobId);          
+            await _uow.ResponseRepos.AddResponse(mapResponse, userExecitorId, jobId);
             await CommitAsync();
         }
 
@@ -41,7 +42,7 @@ namespace FreelanceService.BLL.Services
             return _mapper.Map<Response, ResponseDTO>(entity);
         }
 
-      public async  Task<ResponseDTO> FindResponseByIdExecutorAndJobId(int userId_executor, int jobId)
+        public async Task<ResponseDTO> FindResponseByIdExecutorAndJobId(int userId_executor, int jobId)
         {
             var entity = await _uow.ResponseRepos.FindResponseByIdExecutorAndJobId(userId_executor, jobId);
             return _mapper.Map<Response, ResponseDTO>(entity);
@@ -56,11 +57,18 @@ namespace FreelanceService.BLL.Services
         public async Task<IEnumerable<ResponseDTO>> GetAllResponseOfJob(int jobId)
         {
             var responses = await _uow.ResponseRepos.GetAllResponseOfJob(jobId);
-            var mapResponse = _mapper.Map<IEnumerable<Response>, IEnumerable<ResponseDTO>>(responses);
-            return mapResponse;
+            var users = await _uow.UserRepos.GetAllUsersExecutorsOfResponse(responses.Select(f => f.UserId_Executor).ToList());
+            var mapResponses = _mapper.Map<IEnumerable<Response>, IEnumerable<ResponseDTO>>(responses);
+            foreach (var response in responses)
+            {
+                var mapResponse = mapResponses.FirstOrDefault(f => f.Id == response.Id);
+                mapResponse.Executor = _mapper.Map<User, UserDTO>(users.FirstOrDefault(s => s.Id == response.UserId_Executor));
+            }
+            return mapResponses;
         }
 
-        public async Task<IEnumerable<ResponseDTO>> FindResponseByUserExecutorId(int userId_Executor) {
+        public async Task<IEnumerable<ResponseDTO>> FindResponseByUserExecutorId(int userId_Executor)
+        {
             var responses = await _uow.ResponseRepos.FindResponseByUserExecutorId(userId_Executor);
             var mapResponse = _mapper.Map<IEnumerable<Response>, IEnumerable<ResponseDTO>>(responses);
             return mapResponse;

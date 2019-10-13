@@ -50,3 +50,4 @@ C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\net
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Executor\ResponseDetails.g.cshtml.cs
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Executor\EditResponse.g.cshtml.cs
 C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Executor\SendForVerification.g.cshtml.cs
+C:\Users\Павел\source\repos\FreelanceService\FreelanceService\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Partials\_Paginator.g.cshtml.cs

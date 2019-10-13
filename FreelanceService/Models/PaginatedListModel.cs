@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FreelanceService.Web.Models
 {
-    public class PaginatedListModel<T> : List<T>
+    public class PaginatedListModel<T> : List<T>, IPaginator
     {
         public int PageIndex { get; private set; }
         public int TotalPages { get; private set; }
@@ -35,13 +35,45 @@ namespace FreelanceService.Web.Models
             }
         }
 
-        public static async Task<PaginatedListModel<T>> Create(IQueryable<T> source, int pageIndex, int pageSize)
+        public int? PreviousPage
         {
-            var count =  source.Count();
-            var items =  source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            get
+            {
+                return HasPreviousPage ? (PageIndex - 1) : default(int?);
+            }
+        }
+
+        public int? NextPage
+        {
+            get
+            {
+                return HasNextPage ? (PageIndex + 1) : default(int?);
+            }
+        }
+
+        public static PaginatedListModel<T> Create(IEnumerable<T> source, int pageIndex, int pageSize)
+        {
+            var count = source.Count();
+            var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             return new PaginatedListModel<T>(items, count, pageIndex, pageSize);
         }
 
-      
+
+    }
+
+
+    public interface IPaginator
+    {
+        int PageIndex { get; }
+
+        int TotalPages { get; }
+
+        bool HasPreviousPage { get; }
+
+        bool HasNextPage { get; }
+
+        int? PreviousPage { get; }
+
+        int? NextPage { get; }
     }
 }

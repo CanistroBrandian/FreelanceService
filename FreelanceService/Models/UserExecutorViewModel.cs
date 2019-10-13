@@ -1,4 +1,5 @@
 ﻿using FreelanceService.BLL.DTO;
+using FreelanceService.Common.Enum;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,11 +18,11 @@ namespace FreelanceService.Web.Models
         [Display(Name = "Телефон")]
         public string Phone { get; set; }
         [Display(Name = "Местоположение")]
-        public int City { get; set; }
+        public CityEnum City { get; set; }
         [Display(Name = "Рейтинг")]
         public decimal? Rating { get; set; }
         [Display(Name = "Роль")]
-        public int Role { get; set; }
+        public RoleEnum Role { get; set; }
         [Display(Name = "Проекты")]
         public IEnumerable<ProjectDTO> projectDTOs {get;set; }
     }

@@ -14,7 +14,6 @@ namespace FreelanceService.Web.Models
         public string Description { get; set; }
         public DateTime ResponseDateTime { get; set; }
         public decimal Price { get; set; }
-        public IEnumerable<UserDTO> userDTOs { get; set; }
 
     }
 }

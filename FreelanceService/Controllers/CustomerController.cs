@@ -70,16 +70,19 @@ namespace FreelanceService.Web.Controllers
                 return RedirectToAction("MyJobs");
             }
             else ModelState.AddModelError("", "Проверьте введеные данные");
-            return View();
+            model.CategoryDTOs = await _categoryService.GetAll();
+            return View(model);
         }
 
         [Authorize(Roles = "Заказчик,Исполнитель")]
-        public async Task<IActionResult> MyJobs()
+        public async Task<IActionResult> MyJobs(int? pageNumber)
         {
+            var pageSize = 1;
+
             var user = await _userService.FindUserByEmail(User.Identity.Name);
             var jobs = await _jobService.GetAllJobsOfCustomer(user.Id);
-            var map = _mapper.Map<IEnumerable<JobDTO>, IEnumerable<JobViewModel>>(jobs);
-           
+            var map = PaginatedListModel<JobViewModel>.Create(_mapper.Map<IEnumerable<JobDTO>, IEnumerable<JobViewModel>>(jobs), pageNumber ?? 1, pageSize);
+
             return View(map);
         }
 

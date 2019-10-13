@@ -3,6 +3,7 @@ using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
 using FreelanceService.BLL.Interfaces.ValidationServices;
 using FreelanceService.Common.Encrypt;
+using FreelanceService.Common.Extensions;
 using FreelanceService.Web.Helpers;
 using FreelanceService.Web.Models;
 using FreelanceService.Web.Validation;
@@ -92,7 +93,7 @@ namespace FreelanceService.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (await _validationUser.ValidateNewUser(model.Email,model.Phone,model.FirstName, model.LastName))
+            if (await _validationUser.ValidateNewUser(model.Email,model.Phone))
             {
 
                 var user = await _userService.FindUserByEmail(model.Email);
@@ -178,7 +179,7 @@ namespace FreelanceService.Web.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, RoleNameFromInt.GetName(user.Role))
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.DisplayName())
             };
             ClaimsIdentity id = new ClaimsIdentity(claims, "AuthCookie", ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);

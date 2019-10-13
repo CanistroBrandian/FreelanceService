@@ -1,4 +1,5 @@
 ﻿using FreelanceService.BLL.DTO;
+using FreelanceService.Common.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,7 +15,7 @@ namespace FreelanceService.Web.Models
         [Display(Name = ("Категория"))]
         public int CategoryId { get; set; }
         [Display(Name = ("Город"))]
-        public int City { get; set; }
+        public CityEnum City { get; set; }
         [Display(Name = ("Дата выполнения"))]
         public DateTime FinishedDateTime { get; set; }
         [Display(Name = ("Цена"))]

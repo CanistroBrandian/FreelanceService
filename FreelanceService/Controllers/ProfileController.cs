@@ -2,6 +2,7 @@
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
 using FreelanceService.Common.Enum;
+using FreelanceService.Common.Extensions;
 using FreelanceService.Common.Helpers;
 using FreelanceService.Web.Models;
 using FreelanceService.Web.Validation;
@@ -120,7 +121,7 @@ namespace FreelanceService.Web.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, RoleNameFromInt.GetName(user.Role))
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.DisplayName())
             };
             ClaimsIdentity id = new ClaimsIdentity(claims, "AuthCookie", ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);
@@ -131,8 +132,8 @@ namespace FreelanceService.Web.Controllers
         {
             var userDTO = await _userService.FindUserByEmail(User.Identity.Name);
             var map = _mapper.Map<UserDTO, ProfileViewModel>(userDTO);
-            map.Role = RoleNameFromInt.GetName(userDTO.Role);
-            map.City = CityNameFromInt.GetName(userDTO.City);
+            map.Role = userDTO.Role.DisplayName();
+            map.City = userDTO.City.DisplayName();
             return map;
         }
 
@@ -140,8 +141,8 @@ namespace FreelanceService.Web.Controllers
         {
             var userDTO = await _userService.FindUserById(userId);
             var map = _mapper.Map<UserDTO, ProfileViewModel>(userDTO);
-            map.Role = RoleNameFromInt.GetName(userDTO.Role);
-            map.City = CityNameFromInt.GetName(userDTO.City);
+            map.Role = userDTO.Role.DisplayName();
+            map.City = userDTO.City.DisplayName();
             return map;
         }
     }

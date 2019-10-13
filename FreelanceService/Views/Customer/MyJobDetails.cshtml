@@ -25,10 +25,10 @@
 
 
 
-@if (Model.Status == 5)
+@if (Model.Status == JobStatusEnum.WaitingForConfirmation)
 {<a asp-action="ConfirmationRequestFromExecutorOnJob" asp-controller="Customer" asp-route-jobId="@Model.Id"> Принять заказ</a>}
 
-@if (Model.Status <= 3)
+@if (Model.Status <= JobStatusEnum.Response)
 {
     <div>
         <h2 asp-for="ResponseListOfExecutors"> Отклики:</h2>

@@ -4,6 +4,7 @@ namespace FreelanceService.Common.Enum
 {
    public enum JobStatusEnum
     {
+        //TODO: Исправить int на enum в соответствующих местах
         [Display(Name = "Опубликовано")]
         Published = 1,
         [Display(Name = "Неопубликовано")]

@@ -8,7 +8,7 @@ namespace FreelanceService.BLL.Interfaces.ValidationServices
 {
     public interface IValidaterUser
     {
-        Task<bool> ValidateNewUser(string email, string phone, string firstName, string lastName);
-        Task<bool> ValidateEditUser(string phone, string firstName, string lastName);
+        Task<bool> ValidateNewUser(string email, string phone);
+        Task<bool> ValidateEditUser(string phone);
     }
 }

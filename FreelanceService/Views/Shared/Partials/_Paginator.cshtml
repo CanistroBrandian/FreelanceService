@@ -1,0 +1,48 @@
+﻿@using System.Web
+
+@model PaginatorViewModel
+
+@{
+    var prevDisabled = !Model.Paginator.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Paginator.HasNextPage ? "disabled" : "";
+
+}
+
+<nav class="d-flex justify-content-center mt-5">
+    <ul class="pagination pg-blue mb-0">
+
+        <!--First-->
+        <li class="page-item">
+            <a href="@Model.GetUrlForPage(1)" class="page-link waves-effect waves-effect">К началу</a>
+        </li>
+
+        <!--Arrow left-->
+        <li class="page-item @prevDisabled">
+            <a href="@Model.GetUrlForPage(Model.Paginator.PreviousPage)" class="page-link waves-effect waves-effect" aria-label="Предыдущая">
+                <span aria-hidden="true">«</span>
+                <span class="sr-only">Предыдущая</span>
+            </a>
+        </li>
+
+        <!--Numbers-->
+        @for (int pageNumber = 1; pageNumber <= Model.Paginator.TotalPages; pageNumber++)
+        {
+            <li class="page-item @(pageNumber == Model.Paginator.PageIndex ? "active" : "")">
+                <a href="@Model.GetUrlForPage(pageNumber)" class="page-link waves-effect waves-effect">@pageNumber</a>
+            </li>
+        }
+        <!--Arrow right-->
+        <li class="page-item @nextDisabled">
+            <a href="@Model.GetUrlForPage(Model.Paginator.NextPage)" class="page-link waves-effect waves-effect" aria-label="Следующая">
+                <span aria-hidden="true">»</span>
+                <span class="sr-only">Следующая</span>
+            </a>
+        </li>
+
+        <!--Last-->
+        <li class="page-item">
+            <a href="@Model.GetUrlForPage(Model.Paginator.TotalPages)" class="page-link waves-effect waves-effect">Последняя</a>
+        </li>
+
+    </ul>
+</nav>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FreelanceService.Common.Enum;
+using System;
 
 namespace FreelanceService.BLL.DTO
 {
@@ -10,10 +11,10 @@ namespace FreelanceService.BLL.DTO
         public string LastName { get; set; }
         public string PassHash { get; set; }
         public string Phone { get; set; }
-        public int City { get; set; }
+        public CityEnum City { get; set; }
         public DateTime RegistrationDateTime { get; set; }
         public decimal? Rating { get; set; }
-        public int Role { get; set; }
+        public RoleEnum Role { get; set; }
         public string DynamicSalt { get; set; }
         public string VerifyCodeForResetPass { get; set; }
     }

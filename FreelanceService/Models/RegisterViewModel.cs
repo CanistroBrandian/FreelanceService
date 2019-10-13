@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FreelanceService.Common.Enum;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FreelanceService.Web.Models
@@ -15,9 +16,9 @@ namespace FreelanceService.Web.Models
         [Display(Name = "Телефон")]
         public string Phone { get; set; }
         [Display(Name = "Город")]
-        public int City { get; set; }
+        public CityEnum City { get; set; }
         [Display(Name = "Ваша роль")]
-        public int Role { get; set; }
+        public RoleEnum Role { get; set; }
         [Display(Name = "Пароль")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
