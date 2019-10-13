@@ -1,42 +1,56 @@
 ﻿@model IEnumerable<FreelanceService.Web.Models.ResponseListOfExecutors>
-
-<table calss="table">
-    <thead>
-        <tr>
-            <th>
-                <label class="control-label">Номер заказа</label>
-            </th>
-            <th>
-                <label class="control-label">Время отклика</label>
-            </th>
-            <th>
-                <label class="control-label">Описание</label>
-            </th>
-            <th>
-                <label class="control-label">Цена</label>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <p class="fa-paragraph">@item.JobId</p>
-                </td>
-                <td>
-                    <p class="fa-paragraph">@item.ResponseDateTime</p>
-                </td>
-                <td>
-                    <p class="fa-paragraph">@item.Description</p>
-                </td>
-                <td>
-                    <p class="fa-paragraph">@item.Price</p>
-                </td>
-                <td>
-                    <a asp-controller="Executor" asp-action="ResponseDetails" asp-route-responseId="@item.ResponseId">Посмотреть</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Мои отклики</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label class="control-label">Номер заказа</label>
+                                </th>
+                                <th>
+                                    <label class="control-label">Время отклика</label>
+                                </th>
+                                <th>
+                                    <label class="control-label">Описание</label>
+                                </th>
+                                <th>
+                                    <label class="control-label">Цена</label>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <p>@item.JobId</p>
+                                    </td>
+                                    <td>
+                                        <p>@item.ResponseDateTime</p>
+                                    </td>
+                                    <td>
+                                        <p>@item.Description</p>
+                                    </td>
+                                    <td>
+                                        <p>@item.Price</p>
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Executor" asp-action="ResponseDetails" asp-route-responseId="@item.ResponseId">Посмотреть</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

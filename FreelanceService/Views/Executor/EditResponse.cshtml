@@ -1,28 +1,40 @@
-﻿@model FreelanceService.Web.Models.ResponseEditViewModel 
+﻿@model FreelanceService.Web.Models.ResponseEditViewModel
 @{
     ViewData["Title"] = "EditResponse";
 }
 
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" action="MyJobs/EditJob">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id">
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Редактировать отзыв</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="MyJobs/EditJob">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <input type="text" asp-for="Description" class="form-control" value="@Model.Description">
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <label asp-for="Price"></label>
+                            <input type="number" asp-for="Price" class="form-control" value="@Model.Price">
+                            <span asp-validation-for="Price" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Сохранить" asp-controller="Executor" asp-action="EditResponse" class="btn  btn-outline-primary" />
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input type="text" asp-for="Description" class="form-control" value="@Model.Description">
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>        
-            <div>
-                <label asp-for="Price"></label>
-                <input type="number" asp-for="Price" class="form-control" value="@Model.Price">
-                <span asp-validation-for="Price" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Сохранить" asp-controller="Executor" asp-action="EditResponse" class="btn  btn-outline-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+

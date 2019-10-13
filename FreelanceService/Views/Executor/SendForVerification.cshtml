@@ -2,10 +2,25 @@
 @{
     ViewBag.Title = "Delete";
 }
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Запрос на подтверждение</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <h2>Отправить запрос на подвтерждение выполненного заказа?</h2>
+                        <input type="submit" class="btn  btn-outline-success" value="Подтвердить" asp-controller="Executor" asp-action="ConfirmSendForVerification" asp-route-jobId="@Model" />
+                        <input type="submit" class="btn  btn-secondary" value="Отмена" asp-controller="Executor" asp-action="MyResponses" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<form method="post">
-    <h2>Отправить запрос на подвтерждение выполненного заказа?</h2>
-    <input type="submit" class="btn  btn-outline-success" value="Подтвердить" asp-controller="Executor" asp-action="ConfirmSendForVerification" asp-route-jobId="@Model" />
-    <input type="submit" class="btn  btn-secondary" value="Отмена" asp-controller="Executor" asp-action="MyResponses" />
-</form>
 

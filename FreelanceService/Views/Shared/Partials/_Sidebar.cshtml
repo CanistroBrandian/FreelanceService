@@ -1,0 +1,44 @@
+﻿@using FreelanceService.Common.Enum
+@using FreelanceService.Common.Extensions
+
+<div class="sidebar" data-color="orange">
+    <div class="logo">
+        <a href="@Url.Content("~/")" class="simple-text logo-normal">
+            Freelance Service
+        </a>
+    </div>
+    <div class="sidebar-wrapper ps" id="sidebar-wrapper">
+        <ul class="nav">
+            <li>
+                <a asp-controller="Home" asp-action="Index">
+                    <i class="now-ui-icons design_app"></i>
+                    <p>Все Заказы</p>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Home" asp-action="Executors">
+                    <i class="now-ui-icons education_atom"></i>
+                    <p>Исполнители</p>
+                </a>
+            </li>
+            @if (User.IsInRole(RoleEnum.Customer.DisplayName()))
+            {
+                <li>
+                    <a asp-controller="Customer" asp-action="MyJobs">
+                        <i class="now-ui-icons education_atom"></i>
+                        <p>Мои заказы</p>
+                    </a>
+                </li>
+            }
+            @if (User.IsInRole(RoleEnum.Executor.DisplayName()))
+            {
+                <li>
+                    <a asp-controller="Executor" asp-action="MyResponses">
+                        <i class="now-ui-icons education_atom"></i>
+                        <p>Мои отклики</p>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

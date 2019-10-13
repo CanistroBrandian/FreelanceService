@@ -4,13 +4,26 @@
     ViewData["Title"] = "View";
 }
 
-<h1>Профиль</h1>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <div class="row">
+        <div class="offset-md-2 col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Профиль</h5>
+                </div>
+                <div class="card-body">
+                    <div><label asp-for="FirstName" class="control-label"></label> <label> : @Model.FirstName</label></div>
+                    <div><label asp-for="LastName" class="control-label"></label> <label> : @Model.LastName</label></div>
+                    <div><label asp-for="Email" class="control-label"></label> <label> : @Model.Email</label></div>
+                    <div><label asp-for="Phone" class="control-label"></label> <label> : @Model.Phone</label></div>
+                    <div><label asp-for="City" class="control-label"></label> <label> : @Model.City</label></div>
+                    <div><label asp-for="Role" class="control-label"></label> <label> : @Model.Role</label></div>
 
-<div><label asp-for="FirstName" class="control-label"></label> <label> : @Model.FirstName</label></div>
-<div><label asp-for="LastName" class="control-label"></label> <label> : @Model.LastName</label></div>
-<div><label asp-for="Email" class="control-label"></label> <label> : @Model.Email</label></div>
-<div><label asp-for="Phone" class="control-label"></label> <label> : @Model.Phone</label></div>
-<div><label asp-for="City" class="control-label"></label> <label> : @Model.City</label></div>
-<div><label asp-for="Role" class="control-label"></label> <label> : @Model.Role</label></div>
-
-@await Html.PartialAsync("_PartialFunctionality")
+                    @await Html.PartialAsync("_PartialFunctionality")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

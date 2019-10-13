@@ -13,12 +13,12 @@
 
         <!--First-->
         <li class="page-item">
-            <a href="@Model.GetUrlForPage(1)" class="page-link waves-effect waves-effect">К началу</a>
+            <a href="@Model.GetUrlForPage(1)" class="btn btn-primary btn-sm">К началу</a>
         </li>
 
         <!--Arrow left-->
-        <li class="page-item @prevDisabled">
-            <a href="@Model.GetUrlForPage(Model.Paginator.PreviousPage)" class="page-link waves-effect waves-effect" aria-label="Предыдущая">
+        <li>
+            <a href="@Model.GetUrlForPage(Model.Paginator.PreviousPage)" class="btn btn-primary btn-sm @prevDisabled" aria-label="Предыдущая">
                 <span aria-hidden="true">«</span>
                 <span class="sr-only">Предыдущая</span>
             </a>
@@ -27,21 +27,21 @@
         <!--Numbers-->
         @for (int pageNumber = 1; pageNumber <= Model.Paginator.TotalPages; pageNumber++)
         {
-            <li class="page-item @(pageNumber == Model.Paginator.PageIndex ? "active" : "")">
-                <a href="@Model.GetUrlForPage(pageNumber)" class="page-link waves-effect waves-effect">@pageNumber</a>
+            <li>
+                <a href="@Model.GetUrlForPage(pageNumber)" class="btn btn-primary btn-sm @(pageNumber == Model.Paginator.PageIndex ? "active" : "")">@pageNumber</a>
             </li>
         }
         <!--Arrow right-->
-        <li class="page-item @nextDisabled">
-            <a href="@Model.GetUrlForPage(Model.Paginator.NextPage)" class="page-link waves-effect waves-effect" aria-label="Следующая">
+        <li>
+            <a href="@Model.GetUrlForPage(Model.Paginator.NextPage)" class="btn btn-primary btn-sm @nextDisabled" aria-label="Следующая">
                 <span aria-hidden="true">»</span>
                 <span class="sr-only">Следующая</span>
             </a>
         </li>
 
         <!--Last-->
-        <li class="page-item">
-            <a href="@Model.GetUrlForPage(Model.Paginator.TotalPages)" class="page-link waves-effect waves-effect">Последняя</a>
+        <li>
+            <a href="@Model.GetUrlForPage(Model.Paginator.TotalPages)" class="btn btn-primary btn-sm">Последняя</a>
         </li>
 
     </ul>

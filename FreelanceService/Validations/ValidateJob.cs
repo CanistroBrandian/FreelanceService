@@ -24,7 +24,7 @@ namespace FreelanceService.Web.Validations
                 return false;
             }
 
-            if (price >= 0)
+            if (price <= 0)
             {
                 return false;
             }

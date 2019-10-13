@@ -2,9 +2,23 @@
 @{
     ViewBag.Title = "Delete";
 }
-
-    <form method="post">
-        <h2>Вы уверены, что хотите удалить задачу?</h2>
-        <input type="submit" class="btn  btn-outline-danger" value="Удалить" asp-controller="Customer" asp-action="ConfirmDeleteJob" asp-route-jobId="@Model"  />
-        <input type="submit" class="btn  btn-secondary" value="Отмена" asp-controller="Customer" asp-action="MyJobs" />
-    </form>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Удалить заказ</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <h2>Вы уверены, что хотите удалить задачу?</h2>
+                        <input type="submit" class="btn  btn-outline-danger" value="Удалить" asp-controller="Customer" asp-action="ConfirmDeleteJob" asp-route-jobId="@Model" />
+                        <input type="submit" class="btn  btn-secondary" value="Отмена" asp-controller="Customer" asp-action="MyJobs" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

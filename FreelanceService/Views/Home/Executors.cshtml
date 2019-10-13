@@ -1,78 +1,90 @@
 ﻿@model PaginatedListModel<FreelanceService.Web.Models.UserExecutorViewModel>
 
-<h1>Executors</h1>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Исполнители</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Executors" method="get">
+                        <div class="form-actions no-color">
+                            <p>
+                                Поиск по имени: <input type="text" class="form-control search-input" name="SearchString" value="@ViewData["currentFilter"]" />
+                                <input type="submit" value="Поиск" class="btn btn-sm btn-default" /> |
+                                <a asp-action="Executors">Сбросить</a>
+                            </p>
+                        </div>
+                    </form>
 
-<form asp-action="Executors" method="get">
-    <div class="form-actions no-color">
-        <p>
-            Поиск по имени: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-            <input type="submit" value="Поиск" class="btn btn-default" /> |
-            <a asp-action="Executors">Сбросить</a>
-        </p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a asp-action="Executors" asp-route-sortOrder="@ViewData["RatingSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Рейтинг</a>
+                                </th>
+                                <th>
+                                    <a asp-action="Executors" asp-route-sortOrder="@ViewData["RegistrationDateTimeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Дата регистрации</a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <p>@item.Email</p>
+                                    </td>
+                                    <td>
+                                        <p>@item.FirstName</p>
+                                    </td>
+                                    <td>
+                                        <p>@item.LastName</p>
+                                    </td>
+                                    <td>
+                                        <p>@item.Phone</p>
+                                    </td>
+                                    <td>
+                                        <p>@item.City</p>
+                                    </td>
+                                    <td>
+                                        <p>@item.Rating</p>
+                                    </td>
+                                    <td>
+                                        <p>@item.Role</p>
+                                    </td>
+                                    <td>
+
+                                        <a asp-controller="Profile" asp-action="Profile" asp-route-userId="@item.Id">Посмотреть</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @{
+                        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                    }
+
+                    <a asp-action="Executors"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @prevDisabled">
+                        Предыдущая
+                    </a>
+                    <a asp-action="Executors"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @nextDisabled">
+                        Следующая
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-</form>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                <a asp-action="Executors" asp-route-sortOrder="@ViewData["RatingSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Рейтинг</a>
-            </th>
-            <th>
-                <a asp-action="Executors" asp-route-sortOrder="@ViewData["RegistrationDateTimeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Дата регистрации</a>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                <p class="fa-paragraph">@item.Email</p>
-            </td>
-            <td>
-                <p class="fa-paragraph">@item.FirstName</p>
-            </td>
-            <td>
-                <p class="fa-paragraph">@item.LastName</p>
-            </td>
-            <td>
-                <p class="fa-paragraph">@item.Phone</p>
-            </td>
-            <td>
-                <p class="fa-paragraph">@item.City</p>
-            </td>
-            <td>
-                <p class="fa-paragraph">@item.Rating</p>
-            </td>
-            <td>
-                <p class="fa-paragraph">@item.Role</p>
-            </td>
-            <td>
-
-                <a asp-controller="Profile" asp-action="Profile" asp-route-userId="@item.Id">Посмотреть</a>
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
-
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
-
-<a asp-action="Executors"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
-    Предыдущая
-</a>
-<a asp-action="Executors"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
-    Следующая
-</a>
+</div>

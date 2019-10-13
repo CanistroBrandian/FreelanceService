@@ -5,85 +5,118 @@
     ViewData["Title"] = "Index";
 }
 
+<div class="panel-header panel-header-sm">
 
-
-<h1 class="title mb-3" asp-for="Name">@Model.Name</h1>
-<div class="card">
-    <div class="row no-gutters">
-        <aside class="col-sm-5 border-right">
-            <article class="gallery-wrap">
-                <div class="img-big-wrap">
-                    <div> <a href="1.jpg" data-fancybox=""><img src="1.jpg"></a></div>
-                </div> <!-- slider-product.// -->
-                <div class="img-small-wrap">
-                    <div class="item-gallery"> <img src="1.jpg"></div>
-                    <div class="item-gallery"> <img src="images/items/2.jpg"></div>
-                    <div class="item-gallery"> <img src="images/items/3.jpg"></div>
-                    <div class="item-gallery"> <img src="images/items/4.jpg"></div>
-                </div> <!-- slider-nav.// -->
-            </article> <!-- gallery-wrap .end// -->
-        </aside>
-        <aside class="col-sm-7">
-            <article class="p-5">
-                <h3 class="title mb-3" asp-for="Name">@Model.Name</h3>
-                @if (Model.Price != null)
-                {
-                    <div class="mb-3">
-                        <var class="price h3 text-warning">
-                            <span class="currency">BYN</span><span class="num">@Model.Price</span>
-                        </var>
-                    </div> <!-- price-detail-wrap .// -->
-                }
-                <dl>
-                    <dt>Описание</dt>
-                    <dd>
-                        <p>
-                            @Model.Description
-                        </p>
-                    </dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-3">Выполнить до</dt>
-                    <dd class="col-sm-9">@Model.FinishedDateTime.ToString("dd-mm-yyyy") </dd>
-
-                    <dt class="col-sm-3">Город</dt>
-                    <dd class="col-sm-9">@Model.City.DisplayName()</dd>
-
-                    <dt class="col-sm-3">Категория</dt>
-                    <dd class="col-sm-9">@Model.CategoryId</dd>
-                </dl>
-                <hr>
-
-            </article> <!-- card-body.// -->
-        </aside> <!-- col.// -->
-    </div> <!-- row.// -->
-</div> <!-- card.// -->
-@await Html.PartialAsync("_PartialResponse")
-
-@if (Model.ResponseListOfExecutors != null)
-{
-    @foreach (var item in Model.ResponseListOfExecutors)
-    {
-        <section class="my-5">
-            <!-- Card header -->
-            <div class="card-header border-0 font-weight-bold d-flex justify-content-between">
-                @*<p class="mr-4 mb-0">UserId: @Model.UserId_Executor</p>*@
-                <ul class="list-unstyled list-inline mb-0">
-
-                    <li class="list-inline-item"><a asp-controller="Profile" asp-action="Profile" asp-route-userId="@item.UserId_Executor" class="mr-3"><i class="fas fa-user mr-1"></i>Посмотреть профиль</a></li>
-                </ul>
-            </div>
-            <div class="media mt-4 px-1 text-md-left">
-                <img class="card-img-100 d-flex z-depth-1 mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg" alt="Generic placeholder image">
-                <div class="media-body">
-                    <h5 class="font-weight-bold mt-0">
-                        @item.FirstNameExecutor @item.LastNameExecutor
-                    </h5>
-                    <h5 class="font-weight-bold mt-0">Описание: @item.Description </h5>
-                    <h5 class="font-weight-bold mt-0">Цена: @item.Price </h5>
+</div>
+<div class="content">
+    <div class="row">
+        <div class="offset-md-1 col-md-5">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Картинки</h5>
+                </div>
+                <div class="card-body">
+                    <img src="https://fakeimg.pl/600x420/">
                 </div>
             </div>
-        </section>
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title" asp-for="Name">@Model.Name</h5>
+                </div>
+                <div class="card-body">
+                    <article class="p-3">
+                        @if (Model.Price != null)
+                        {
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <p><strong>Стоимость:</strong></p>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="currency">BYN</span><span class="num">@Model.Price</span>
+                                </div>
+                            </div>
+                            <hr />
+                        }
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p><strong>Описание:</strong></p>
+                            </div>
+                            <div class="col-md-12">
+                                <p>
+                                    @Model.Description
+                                </p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-3"><p><strong>Выполнить до:</strong></p></div>
+                            <div class="col-sm-9"><p>@Model.FinishedDateTime.ToString("dd-mm-yyyy")</p> </div>
+                            <hr />
+                            <div class="col-sm-3"><p><strong>Город:</strong></p></div>
+                            <div class="col-sm-9"><p>@Model.City.DisplayName()</p></div>
+                            <hr />
+                            <div class="col-sm-3"><p><strong>Категория:</strong></p></div>
+                            <div class="col-sm-9"><p>@Model.CategoryId</p></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (User.IsInRole("Исполнитель"))
+    {
+        <div class="row">
+            <div class="offset-md-1 col-md-10">
+                @await Html.PartialAsync("_PartialResponse")
+            </div>
+        </div>
+    }        @if (Model.ResponseListOfExecutors != null)
+    {
+        <div class="row">
+            <div class="offset-md-1 col-md-10">
+                <section>
+                    <h2 class="text-center">Отклики</h2>
+                </section>
+                @foreach (var item in Model.ResponseListOfExecutors)
+                {
+                    <section>
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- Card header -->
+                                <div class="card-header">
+                                    <h5> @item.FirstNameExecutor @item.LastNameExecutor</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg" alt="Generic placeholder image">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p><strong>Описание:</strong></p>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <p>
+                                                        @item.Description
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col-md-4"><p><strong>Цена:</strong></p></div>
+                                                <div class="col-md-8"><p>@item.Price</p> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                }
+            </div>
+        </div>
     }
-}
-<!--Section: Author Box-->
+</div>

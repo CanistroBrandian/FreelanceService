@@ -1,12 +1,26 @@
 ﻿@model FreelanceService.Web.Models.ResponseDetailsViewModel
-
-<div><label asp-for="JobId" class="control-label"></label> <label> : @Model.JobId</label></div>
-<div><label asp-for="NameJob" class="control-label"></label> <label> : @Model.NameJob</label></div>
-<div><label asp-for="Description" class="control-label"></label> <label> : @Model.Description</label></div>
-<div><label asp-for="Price" class="control-label"></label> <label> : @Model.Price</label></div>
-<div><label asp-for="ResponseDateTime" class="control-label"></label> <label> : @Model.ResponseDateTime</label></div>
-<div>
-    <a asp-action="EditResponse" asp-controller="Executor" asp-route-responseId="@Model.ResponseId"> Редактировать Отклик</a>
-    <a asp-action="CancelResponse" asp-controller="Executor" asp-route-jobId="@Model.JobId" > Отказаться от заказа</a>
-    <a asp-action="SendForVerification" asp-controller="Executor" asp-route-jobId="@Model.JobId" > Заказ выполнен</a>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Детали отклика</h5>
+                </div>
+                <div class="card-body">
+                    <div><label asp-for="JobId" class="control-label"></label> <label> : @Model.JobId</label></div>
+                    <div><label asp-for="NameJob" class="control-label"></label> <label> : @Model.NameJob</label></div>
+                    <div><label asp-for="Description" class="control-label"></label> <label> : @Model.Description</label></div>
+                    <div><label asp-for="Price" class="control-label"></label> <label> : @Model.Price</label></div>
+                    <div><label asp-for="ResponseDateTime" class="control-label"></label> <label> : @Model.ResponseDateTime</label></div>
+                    <div>
+                        <a asp-action="EditResponse" asp-controller="Executor" asp-route-responseId="@Model.ResponseId"> Редактировать Отклик</a>
+                        <a asp-action="CancelResponse" asp-controller="Executor" asp-route-jobId="@Model.JobId"> Отказаться от заказа</a>
+                        <a asp-action="SendForVerification" asp-controller="Executor" asp-route-jobId="@Model.JobId"> Заказ выполнен</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

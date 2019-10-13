@@ -74,7 +74,7 @@ namespace FreelanceService.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Заказчик,Исполнитель")]
+        [Authorize(Roles = "Заказчик")]
         public async Task<IActionResult> MyJobs(int? pageNumber)
         {
             var pageSize = 1;
@@ -106,7 +106,7 @@ namespace FreelanceService.Web.Controllers
                 return RedirectToAction("MyJobs");
             }
             else ModelState.AddModelError("", "Проверьте введеные данные");
-            return View();
+            return View(model);
         }
 
         [HttpGet]

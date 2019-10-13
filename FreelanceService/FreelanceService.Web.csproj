@@ -18,6 +18,57 @@
     <None Remove="HtmlHelpers\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\theme\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\theme\css\now-ui-dashboard.css.map" />
+    <None Include="wwwroot\theme\demo\demo.js" />
+    <None Include="wwwroot\theme\fonts\nucleo-license.md" />
+    <None Include="wwwroot\theme\fonts\nucleo-outline.woff2" />
+    <None Include="wwwroot\theme\js\core\bootstrap.min.js" />
+    <None Include="wwwroot\theme\js\core\jquery.min.js" />
+    <None Include="wwwroot\theme\js\core\popper.min.js" />
+    <None Include="wwwroot\theme\js\now-ui-dashboard.js" />
+    <None Include="wwwroot\theme\js\now-ui-dashboard.js.map" />
+    <None Include="wwwroot\theme\js\now-ui-dashboard.min.js" />
+    <None Include="wwwroot\theme\js\plugins\bootstrap-notify.js" />
+    <None Include="wwwroot\theme\js\plugins\chartjs.min.js" />
+    <None Include="wwwroot\theme\js\plugins\perfect-scrollbar.jquery.min.js" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\cards\_card-chart.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\cards\_card-map.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\cards\_card-plain.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\cards\_card-user.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\mixins\_buttons.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\mixins\_cards.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\mixins\_dropdown.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\mixins\_inputs.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\mixins\_page-header.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\mixins\_sidebar.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\mixins\_transparency.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\mixins\_vendor-prefixes.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\plugins\_plugin-animate-bootstrap-notify.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\plugins\_plugin-perfect-scrollbar.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_alerts.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_buttons.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_cards.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_checkboxes-radio.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_dropdown.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_fixed-plugin.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_footers.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_images.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_inputs.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_misc.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_mixins.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_navbar.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_nucleo-outline.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_page-header.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_responsive.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_sidebar-and-main-panel.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_tables.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_typography.scss" />
+    <None Include="wwwroot\theme\scss\now-ui-dashboard\_variables.scss" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />

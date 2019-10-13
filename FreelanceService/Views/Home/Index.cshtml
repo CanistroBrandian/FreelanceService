@@ -2,75 +2,88 @@
 
 @{
     ViewData["Title"] = "Index";
+    //Layout = "../Shared/_Layout.cshtml";
 }
 
+<div class="panel-header panel-header-sm">
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Заказы</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Index" method="get">
+                        <div class="form-actions no-color">
+                            <p>
+                                Поиск по имени: <input type="text" class="form-control search-input" name="SearchString" value="@ViewData["currentFilter"]" />
+                                <input type="submit" value="Поиск" class="btn btn-sm btn-default" /> |
+                                <a asp-action="Index">Сбросить</a>
+                            </p>
+                        </div>
+                    </form>
 
-<h1>Index</h1>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Имя</a>
+                                </th>
+                                <th>
+                                    <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Цена</a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.City)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FinishedDateTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CategoryId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Price)
+                                    </td>
+                                    <td>
 
-<form asp-action="Index" method="get">
-    <div class="form-actions no-color">
-        <p>
-            Поиск по имени: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-            <input type="submit" value="Поиск" class="btn btn-default" /> |
-            <a asp-action="Index">Сбросить</a>
-        </p>
+                                        <a asp-controller="Job" asp-action="Job" asp-route-id="@item.Id">Посмотреть</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @await Html.PartialAsync("Partials/_Paginator",
+                        new PaginatorViewModel
+                        {
+                            Action = "Index",
+                            Controller = "Home",
+                            Properties =
+                                new
+                                {
+                                    sortOrder = @ViewData["CurrentSort"],
+                                    currentFilter = @ViewData["CurrentFilter"]
+                                },
+                            Url = Url,
+                            Paginator = Model
+                        })
+                </div>
+            </div>
+        </div>
     </div>
-</form>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Имя</a>
-            </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Цена</a>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FinishedDateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoryId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-
-                    <a asp-controller="Job" asp-action="Job" asp-route-id="@item.Id">Посмотреть</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-@await Html.PartialAsync("Partials/_Paginator",
-    new PaginatorViewModel
-    {
-        Action = "Index",
-        Controller = "Home",
-        Properties =
-            new
-            {
-                sortOrder = @ViewData["CurrentSort"],
-                currentFilter = @ViewData["CurrentFilter"]
-            },
-        Url = Url,
-        Paginator = Model
-    })
+</div>
 
