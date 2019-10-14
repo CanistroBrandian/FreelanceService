@@ -1,14 +1,13 @@
 ﻿using FreelanceService.BLL.Interfaces.ValidationServices;
 using FreelanceService.DAL.Interfaces;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Threading.Tasks;
 
 namespace FreelanceService.BLL.Services.Validations
 {
 
 
-    public class ValidateUser : IValidaterUser //проборосить логгер
+    public class ValidateUser : IValidaterUser
     {
         IUnitOfWork _uow;
         ILogger _logger;
@@ -24,9 +23,12 @@ namespace FreelanceService.BLL.Services.Validations
 
             var user = await _uow.UserRepos.FindByEmail(email);
 
+            if (user == null)
+                return true;
+
             if (user.Email == email)
             {
-                //добавить строчку логера об ошибке чо такой пльзователь есть
+
                 _logger.LogError("Такой Email уже существует");
                 return false;
 
@@ -34,11 +36,12 @@ namespace FreelanceService.BLL.Services.Validations
 
             if (user.Phone == phone)
             {
-                //добавить строчку логера об ошибке чо такой пльзователь есть
+
                 _logger.LogError("Такой телефон уже существует");
                 return false;
 
             }
+
             return true;
         }
 
@@ -46,14 +49,17 @@ namespace FreelanceService.BLL.Services.Validations
         {
             var user = await _uow.UserRepos.FindByPhone(phone);
 
+            if (user == null)
+                return true;
 
             if (user.Phone == phone)
             {
-                //добавить строчку логера об ошибке чо такой пльзователь есть
+
                 _logger.LogError("Такой телефон уже существует");
                 return false;
 
             }
+
             return true;
         }
 

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FreelanceService.BLL.DTO;
 using FreelanceService.BLL.Interfaces;
+using FreelanceService.BLL.Interfaces.ValidationServices;
 using FreelanceService.Common.Enum;
 using FreelanceService.Common.Extensions;
 using FreelanceService.Common.Helpers;
@@ -26,7 +27,7 @@ namespace FreelanceService.Web.Controllers
         IUserService _userService;
         IJobService _jobService;
         IMapper _mapper;
-
+        IValidaterUser _validateUser;
 
         IViewModelValidationService _validationService;
 
@@ -39,12 +40,14 @@ namespace FreelanceService.Web.Controllers
             IJobService jobService,
             IUserService userService,
             IViewModelValidationService validationService,
-            IMapper mapper)
+            IMapper mapper,
+             IValidaterUser validateUser)
         {
             _jobService = jobService;
             _userService = userService;
             _validationService = validationService;
             _mapper = mapper;
+            _validateUser = validateUser;
         }
 
 
@@ -90,19 +93,21 @@ namespace FreelanceService.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(ProfileEditViewModel model)
         {
-            var validationResult = _validationService.Validate(model);
-            if (!validationResult.IsValid)
+            var validate = await _validateUser.ValidateEditUser(model.Phone);
+            if (ModelState.IsValid)
             {
-                ModelState.Merge(validationResult.ModelState);
-                return View();
+                if (validate)
+                {
+                    var modelDTO = _mapper.Map<ProfileEditViewModel, UserProfileEditDTO>(model);
+                    var user = await _userService.FindUserByEmail(User.Identity.Name);
+                    await _userService.Update(modelDTO, user);
+                    var newuser = await _userService.FindUserByEmail(User.Identity.Name);
+                    await Authenticate(newuser);
+                    return RedirectToAction(nameof(Profile));
+                }
             }
-
-            var modelDTO = _mapper.Map<ProfileEditViewModel, UserProfileEditDTO>(model);
-            var user = await _userService.FindUserByEmail(User.Identity.Name);
-            await _userService.Update(modelDTO, user);
-            var newuser = await _userService.FindUserByEmail(User.Identity.Name);
-            await Authenticate(newuser);
-            return RedirectToAction(nameof(Profile));
+            ModelState.AddModelError("", "Такой номер телефона уже используется в системе");
+            return View(model);
 
         }
 
@@ -132,8 +137,8 @@ namespace FreelanceService.Web.Controllers
         {
             var userDTO = await _userService.FindUserByEmail(User.Identity.Name);
             var map = _mapper.Map<UserDTO, ProfileViewModel>(userDTO);
-            map.Role = userDTO.Role.DisplayName();
-            map.City = userDTO.City.DisplayName();
+            map.Role = userDTO.Role;
+            map.City = userDTO.City;
             return map;
         }
 
@@ -141,8 +146,8 @@ namespace FreelanceService.Web.Controllers
         {
             var userDTO = await _userService.FindUserById(userId);
             var map = _mapper.Map<UserDTO, ProfileViewModel>(userDTO);
-            map.Role = userDTO.Role.DisplayName();
-            map.City = userDTO.City.DisplayName();
+            map.Role = userDTO.Role;
+            map.City = userDTO.City;
             return map;
         }
     }

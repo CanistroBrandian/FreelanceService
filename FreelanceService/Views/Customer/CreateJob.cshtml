@@ -13,7 +13,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="title">Create Job</h5>
+                    <h5 class="title">Создать заказ</h5>
                 </div>
                 <div class="card-body">
                     <form asp-action="CreateJob">
@@ -30,7 +30,10 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="CategoryId" class="control-label"></label>
-                            <select asp-for="CategoryId" asp-items="@(new SelectList(Model.CategoryDTOs, "Id","Name" ))"></select>
+                            @if (Model.CategoryDTOs != null)
+                            {
+                            <select asp-for="CategoryId" asp-items="@(new SelectList(Model.CategoryDTOs, "Id", "Name"))"></select>
+                            }
                             <span asp-validation-for="CategoryId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
@@ -49,11 +52,11 @@
                             <span asp-validation-for="Price" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <input type="submit" value="Создать" class="btn btn-primary" />
+                            <a  asp-action="Profile" asp-controller="Profile" class="btn btn-dark" > Отмена </a>
                         </div>
                     </form>
                     <div>
-                        <a asp-action="Index">Back to List</a>
                     </div>
                 </div>
             </div>

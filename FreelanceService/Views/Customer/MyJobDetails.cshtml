@@ -19,10 +19,15 @@
                 <div class="card-body">
                     <div><label asp-for="Id" class="control-label"></label> <label> : @Model.Id</label></div>
                     <div><label asp-for="Name" class="control-label"></label> <label> : @Model.Name</label></div>
-                    <div><label asp-for="Description" class="control-label"></label> <label> : @Model.Description</label></div>
-                    <div><label asp-for="Price" class="control-label"></label> <label> : @Model.Price</label></div>
+                    <div><label asp-for="Description" class="control-label"></label>: <label> @Model.Description</label></div>
+                    @if (Model.Price != null)
+                    {
+                        <div><label asp-for="Price" class="control-label"></label> <label> : @Model.Price</label></div>
+                    }
+                    else
+                    { <div><label asp-for="Price" class="control-label"></label> <label> : По договоренности</label></div>}
                     <div><label asp-for="CategoryId" class="control-label"></label> <label> : @Model.Category.Name</label></div>
-                    <div><label asp-for="FinishedDateTime" class="control-label"></label> <label> : @Model.FinishedDateTime</label></div>
+                    <div><label asp-for="FinishedDateTime" class="control-label"></label> <label> : @Model.FinishedDateTime.ToString("d")</label></div>
                     <div><label asp-for="Status" class="control-label"></label>  <select asp-for="Status" asp-items="Html.GetEnumSelectList<JobStatusEnum>()"></select></div>
                     <div>
                         <label asp-for="UserExecutor" class="control-label"></label>
@@ -45,30 +50,54 @@
                             {
                                 @foreach (var item in Model.ResponseListOfExecutors)
                                 {
-                                    <section class="my-5">
-                                        <!-- Card header -->
-                                        <div class="card-header border-0 font-weight-bold d-flex justify-content-between">
-                                            <p class="mr-4 mb-0">UserId: @item.UserId_Executor</p>
-                                            <ul class="list-unstyled list-inline mb-0">
-                                                <li class="list-inline-item"><a asp-controller="Profile" asp-action="Profile" asp-route-userId="@item.UserId_Executor" class="mr-3"><i class="fas fa-user mr-1"></i>Посмотреть профиль</a></li>
-                                                <li class="list-inline-item"><a asp-controller="Customer" asp-action="SelectExecutorForJob" asp-route-jobId="@Model.Id" asp-route-userId_Executor="@item.UserId_Executor" class="mr-3"><i class="fas fa-user mr-1"></i>Выбрать исполнителем</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="media mt-4 px-1 text-md-left">
-                                            <img class="card-img-100 d-flex z-depth-1 mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg" alt="Generic placeholder image">
-                                            <div class="media-body">
-                                                <h5 class="font-weight-bold mt-0">
-                                                    <a href="">Danny Newman</a>
-                                                </h5>
-                                                <h5 class="font-weight-bold mt-0">Описание: @item.Description </h5>
-                                                <h5 class="font-weight-bold mt-0">Цена: @item.Price </h5>
+                                    <section>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <!-- Card header -->
+                                                <div class="card-header">
+                                                    <h5> @item.FirstNameExecutor @item.LastNameExecutor</h5>
+                                                    <ul class="list-unstyled list-inline mb-0">
+                                                        <li class="list-inline-item"><a asp-action="SelectExecutorForJob" asp-controller="Customer" asp-route-jobId="@item.JobId" asp-route-userId_Executor="@item.UserId_Executor"  class="mr-3"><i class="fas fa-envelope mr-1"></i>Выбрать Исполнителем</a></li>
+                                                        <li class="list-inline-item"><a asp-action="Profile" asp-controller="Profile" asp-route-userId="@item.UserId_Executor" class="mr-3"><i class="fas fa-user mr-1"></i>Посмтреть Профиль</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg" alt="Generic placeholder image">
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <p><strong>Описание:</strong></p>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <p>
+                                                                        @item.Description
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <hr />
+                                                            <div class="row">
+                                                                <div class="col-md-4"><p><strong>Цена:</strong></p></div>
+                                                                @if (item.Price != 0)
+                                                                {
+                                                                    <div class="col-md-8"><p>@item.Price</p> </div>
+                                                                }
+                                                                else
+                                                                {<div class="col-md-8"><p>По договоренности</p> </div>}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </section>
                                 }
+
                             }
                             else
-                            { <label class="control-label">На данный момент откликов нет</label>}
+                            {<label class="control-label">На данный момент откликов нет</label>}
                         </div>
                     }
                 </div>

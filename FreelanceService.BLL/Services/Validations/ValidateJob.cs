@@ -5,26 +5,17 @@ namespace FreelanceService.BLL.Services.Validations
 {
     public class ValidateJob :IValidateJob
     {
-        public bool ValidateEditJob(string name, string description, DateTime finishedDate, decimal? price)
+        public bool ValidateEditJob(DateTime finishedDate, decimal? price)
         {
             var dateToDay = DateTime.Today;
 
-            if (String.IsNullOrWhiteSpace(name))
+
+            if (finishedDate < dateToDay)
             {
                 return false;
             }
 
-            if (String.IsNullOrWhiteSpace(description))
-            {
-                return false;
-            }
-
-            if (finishedDate >= dateToDay)
-            {
-                return false;
-            }
-
-            if (price >= 0)
+            if (price < 0)
             {
                 return false;
             }
@@ -32,25 +23,16 @@ namespace FreelanceService.BLL.Services.Validations
             return true;
         }
 
-        public bool ValidateNewJob(string name, string description, DateTime finishedDate, decimal? price)
+        public bool ValidateNewJob(DateTime finishedDate, decimal? price)
         {
             var dateToDay = DateTime.Today;
-            if (String.IsNullOrWhiteSpace(name))
+
+            if (finishedDate < dateToDay)
             {
                 return false;
             }
 
-            if (String.IsNullOrWhiteSpace(description))
-            {
-                return false;
-            }
-
-            if (finishedDate >= dateToDay)
-            {
-                return false;
-            }
-
-            if (price >= 0)
+            if (price < 0)
             {
                 return false;
             }

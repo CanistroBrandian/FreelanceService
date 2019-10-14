@@ -1,4 +1,5 @@
 ﻿@model PaginatedListModel<FreelanceService.Web.Models.JobViewModel>
+@using FreelanceService.Common.Extensions
 
 @{
     ViewData["Title"] = "MyJobs";
@@ -12,6 +13,9 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="title">Мои заказы</h5>
+                </div>
+                <div class="card-header">
+                    <a asp-controller="Customer" asp-action="CreateJob" class="btn btn-success btn-sm">Создать новый заказ</a>
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -54,16 +58,25 @@
                                         <p>@item.Description</p>
                                     </td>
                                     <td>
-                                        <label asp-for="@item.City">@item.City</label>
+                                        <p asp-for="@item.City">@item.City.DisplayName()</p>
                                     </td>
                                     <td>
-                                        <label>@item.FinishedDateTime.Date.ToString("dd-mm-yyyy")</label>
+                                        <p>@item.FinishedDateTime.Date.ToString("d")</p>
                                     </td>
+                                    @if (item.Price != null)
+                                    {
+                                        <td>
+                                            <p>@item.Price</p>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <p>По договоренности</p>
+                                        </td>
+                                    }
                                     <td>
-                                        <p>@item.Price</p>
-                                    </td>
-                                    <td>
-                                        <label asp-for="@item.Status">@item.Status</label>
+                                        <p asp-for="@item.Status">@item.Status.DisplayName()</p>
                                     </td>
                                     <td>
                                         <a asp-controller="Customer" asp-action="MyJobDetails" asp-route-jobId="@item.Id">Посмотреть</a>
@@ -74,14 +87,7 @@
                             }
                         </tbody>
                     </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-@await Html.PartialAsync("Partials/_Paginator",
+                    @await Html.PartialAsync("Partials/_Paginator",
     new PaginatorViewModel
     {
         Action = "MyJobs",
@@ -89,3 +95,11 @@
         Url = Url,
         Paginator = Model
     })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

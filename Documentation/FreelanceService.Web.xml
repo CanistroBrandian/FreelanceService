@@ -92,7 +92,7 @@
             Сontroller is responsible for displaying profile information, profile edit, adding new jobs by the customer
             </summary>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.ProfileController.#ctor(FreelanceService.BLL.Interfaces.IJobService,FreelanceService.BLL.Interfaces.IUserService,FreelanceService.Web.Validation.IViewModelValidationService,AutoMapper.IMapper)">
+        <member name="M:FreelanceService.Web.Controllers.ProfileController.#ctor(FreelanceService.BLL.Interfaces.IJobService,FreelanceService.BLL.Interfaces.IUserService,FreelanceService.Web.Validation.IViewModelValidationService,AutoMapper.IMapper,FreelanceService.BLL.Interfaces.ValidationServices.IValidaterUser)">
             <summary>
             Dependency Injection for jobService and userService
             </summary>

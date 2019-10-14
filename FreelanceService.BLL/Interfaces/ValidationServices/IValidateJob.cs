@@ -8,7 +8,7 @@ namespace FreelanceService.BLL.Interfaces.ValidationServices
 {
    public interface IValidateJob
     {
-        bool ValidateNewJob(string name, string description, DateTime finishedDate, decimal? price);
-        bool ValidateEditJob(string name, string description, DateTime finishedDate, decimal? price);
+        bool ValidateNewJob(DateTime finishedDate, decimal? price);
+        bool ValidateEditJob(DateTime finishedDate, decimal? price);
     }
 }

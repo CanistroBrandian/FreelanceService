@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FreelanceService.Common.Enum;
+using System.ComponentModel.DataAnnotations;
 
 namespace FreelanceService.Web.Models
 {
@@ -13,8 +14,8 @@ namespace FreelanceService.Web.Models
         [Display(Name = "Телефон")]
         public string Phone { get; set; }
         [Display(Name = "Город")]
-        public string City { get; set; }
+        public CityEnum City { get; set; }
         [Display(Name = "Роль")]
-        public string Role { get; set; }
+        public RoleEnum Role { get; set; }
     }
 }

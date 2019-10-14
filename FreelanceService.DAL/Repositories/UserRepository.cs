@@ -135,7 +135,7 @@ namespace FreelanceService.DAL.Repositories
         /// <returns>void</returns>
         public async Task Update(User entity)
         {
-            string query = "UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Phone=@Phone, City=@City,Role=@Role, VerifyCodeForResetPass=@VerifyCodeForResetPass WHERE Id=@Id";
+            string query = "UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Phone=@Phone, City=@City, VerifyCodeForResetPass=@VerifyCodeForResetPass WHERE Id=@Id";
             await _context.ExecuteAsync(query,
                     param: new
                     {
@@ -144,7 +144,6 @@ namespace FreelanceService.DAL.Repositories
                         LastName = entity.LastName,
                         Phone = entity.Phone,
                         City = entity.City,
-                        Role = entity.Role,
                         VerifyCodeForResetPass = entity.VerifyCodeForResetPass
                     }
                 );

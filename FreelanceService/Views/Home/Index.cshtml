@@ -1,4 +1,5 @@
 ﻿@model PaginatedListModel<FreelanceService.Web.Models.JobViewModel>
+@using FreelanceService.Common.Extensions
 
 @{
     ViewData["Title"] = "Index";
@@ -39,30 +40,39 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
+                            <tr>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @item.Description
+                                </td>
+                                <td>
+                                    @item.City.DisplayName()
+                                </td>
+                                <td>
+                                    @item.FinishedDateTime.ToString("d")
+                                </td>
+                                <td>
+                                    @item.CategoryId
+                                </td>
+                                @if (item.Price != null)
+                                {
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
+                                        @item.Price
                                     </td>
+                                }
+                                else
+                                {
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Description)
+                                        По договоренности
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.City)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.FinishedDateTime)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CategoryId)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Price)
-                                    </td>
-                                    <td>
+                                }
+                                <td>
 
-                                        <a asp-controller="Job" asp-action="Job" asp-route-id="@item.Id">Посмотреть</a>
-                                    </td>
-                                </tr>
+                                    <a asp-controller="Job" asp-action="Job" asp-route-id="@item.Id">Посмотреть</a>
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>

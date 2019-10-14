@@ -39,6 +39,17 @@
                             </div>
                             <hr />
                         }
+                        else
+                        { <div class="row">
+                                <div class="col-md-4">
+                                    <p><strong>Стоимость:</strong></p>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="currency">Договорная</span>
+                                </div>
+                            </div>
+                            <hr />
+                        }
                         <div class="row">
                             <div class="col-md-4">
                                 <p><strong>Описание:</strong></p>
@@ -52,13 +63,13 @@
                         <hr />
                         <div class="row">
                             <div class="col-sm-3"><p><strong>Выполнить до:</strong></p></div>
-                            <div class="col-sm-9"><p>@Model.FinishedDateTime.ToString("dd-mm-yyyy")</p> </div>
+                            <div class="col-sm-9"><p>@Model.FinishedDateTime.ToString("d")</p> </div>
                             <hr />
                             <div class="col-sm-3"><p><strong>Город:</strong></p></div>
                             <div class="col-sm-9"><p>@Model.City.DisplayName()</p></div>
                             <hr />
                             <div class="col-sm-3"><p><strong>Категория:</strong></p></div>
-                            <div class="col-sm-9"><p>@Model.CategoryId</p></div>
+                            <div class="col-sm-9"><p>@Model.Category.Name</p></div>
                         </div>
                     </article>
                 </div>

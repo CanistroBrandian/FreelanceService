@@ -1,4 +1,5 @@
 ﻿@model FreelanceService.Web.Models.ProfileViewModel
+@using FreelanceService.Common.Extensions
 
 @{
     ViewData["Title"] = "View";
@@ -18,8 +19,8 @@
                     <div><label asp-for="LastName" class="control-label"></label> <label> : @Model.LastName</label></div>
                     <div><label asp-for="Email" class="control-label"></label> <label> : @Model.Email</label></div>
                     <div><label asp-for="Phone" class="control-label"></label> <label> : @Model.Phone</label></div>
-                    <div><label asp-for="City" class="control-label"></label> <label> : @Model.City</label></div>
-                    <div><label asp-for="Role" class="control-label"></label> <label> : @Model.Role</label></div>
+                    <div><label asp-for="City" class="control-label"></label> <label> : @Model.City.DisplayName()</label></div>
+                    <div><label asp-for="Role" class="control-label"></label> <label> : @Model.Role.DisplayName()</label></div>
 
                     @await Html.PartialAsync("_PartialFunctionality")
                 </div>

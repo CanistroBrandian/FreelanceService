@@ -6,13 +6,17 @@ namespace FreelanceService.Web.Models
 {
     public class RegisterViewModel 
     {
+        [Required(ErrorMessage = "Не указан почтовый ящик")]
         [Display(Name ="Почтовый ящик")]
         [EmailAddress]
         public string Email { get; set; }
+        [Required(ErrorMessage = "Не указано имя")]
         [Display(Name = "Имя")]
         public string FirstName { get; set; }
+        [Required(ErrorMessage = "Не указана фамилия")]
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
+        [Required(ErrorMessage = "Не указан Телефон")]
         [Display(Name = "Телефон")]
         public string Phone { get; set; }
         [Display(Name = "Город")]

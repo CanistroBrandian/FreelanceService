@@ -20,18 +20,23 @@ namespace FreelanceService.Web.Controllers
         IUserService _userService;
         IJobService _jobService;
         IMapper _mapper;
-        public HomeController(IJobService jobService, IUserService userService, IMapper mapper)
+        ICategoryService _categoryService;
+        public HomeController(IJobService jobService, 
+            IUserService userService, 
+            IMapper mapper,
+            ICategoryService categoryService)
         {
             _jobService = jobService;
             _userService = userService;
             _mapper = mapper;
+            _categoryService = categoryService;
         }
 
 
         [Authorize(Roles = "Исполнитель,Заказчик")]
         public async Task<ActionResult> Executors(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
-            int pageSize = 5;
+            int pageSize = 3;
             ViewData["CurrentSort"] = sortOrder;
             ViewData["RatingSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Rating_desc" : "";
             ViewData["RegistrationDateTimeSortParm"] = sortOrder == "RegistrationDateTime" ? "RegistrationDateTime_desc" : "RegistrationDateTime";
@@ -57,7 +62,7 @@ namespace FreelanceService.Web.Controllers
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
 
-            int pageSize = 1;
+            int pageSize = 3;
 
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
@@ -71,8 +76,10 @@ namespace FreelanceService.Web.Controllers
 
             var list = await _jobService.GetAllSorting(sortOrder);
             var search = _jobService.Search(searchString, list);
-            var map = _mapper.Map<IEnumerable<JobDTO>, IEnumerable<JobViewModel>>(search);
-            var view = PaginatedListModel<JobViewModel>.Create(map.AsQueryable(), pageNumber ?? 1, pageSize);
+            var allCategory = await _categoryService.GetAll();
+            var mapJobView = _mapper.Map<IEnumerable<JobDTO>, IEnumerable<JobViewModel>>(search);
+           // mapJobView.
+            var view = PaginatedListModel<JobViewModel>.Create(mapJobView.AsQueryable(), pageNumber ?? 1, pageSize);
             return View(view);
 
         }

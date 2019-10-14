@@ -1,5 +1,5 @@
 ﻿@model PaginatedListModel<FreelanceService.Web.Models.UserExecutorViewModel>
-
+@using FreelanceService.Common.Extensions
 <div class="panel-header panel-header-sm">
 </div>
 <div class="content">
@@ -48,16 +48,12 @@
                                         <p>@item.Phone</p>
                                     </td>
                                     <td>
-                                        <p>@item.City</p>
+                                        <p>@item.City.DisplayName()</p>
                                     </td>
                                     <td>
                                         <p>@item.Rating</p>
                                     </td>
                                     <td>
-                                        <p>@item.Role</p>
-                                    </td>
-                                    <td>
-
                                         <a asp-controller="Profile" asp-action="Profile" asp-route-userId="@item.Id">Посмотреть</a>
                                     </td>
                                 </tr>

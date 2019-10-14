@@ -93,21 +93,23 @@ namespace FreelanceService.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (await _validationUser.ValidateNewUser(model.Email,model.Phone))
+            if (ModelState.IsValid)
             {
-
-                var user = await _userService.FindUserByEmail(model.Email);
-                if (user == null)
+                if (await _validationUser.ValidateNewUser(model.Email, model.Phone))
                 {
-                    var modelDTO = _mapper.Map<RegisterViewModel, UserRegistrationDTO>(model);
-                    await _userService.AddUser(modelDTO);
-                    //     await _emailService.SendEmailAsync(model.Email, "Succses registration", "You Login:" + model.Email + " You Pass:" + model.Password);
-                    await Authenticate(await _userService.FindUserByEmail(modelDTO.Email));
-                    return RedirectToAction("Profile", "Profile");
+                    var user = await _userService.FindUserByEmail(model.Email);
+                    if (user == null)
+                    {
+                        var modelDTO = _mapper.Map<RegisterViewModel, UserRegistrationDTO>(model);
+                        await _userService.AddUser(modelDTO);
+                        //     await _emailService.SendEmailAsync(model.Email, "Succses registration", "You Login:" + model.Email + " You Pass:" + model.Password);
+                        await Authenticate(await _userService.FindUserByEmail(modelDTO.Email));
+                        return RedirectToAction("Profile", "Profile");
+                    }
+                    return View(model);
                 }
-                return View(model);
-            }
-           else  ModelState.AddModelError("", "Проверьте введеные данные");
+                else ModelState.AddModelError("", "Такой Email или Телефон уже задействован в системе");
+            }          
             return View(model);
         }
 
@@ -126,7 +128,7 @@ namespace FreelanceService.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userService.FindUserByEmail(model.Email);
-                if (user == null || user !=null) // посмотреть 
+                if (user != null) // посмотреть 
                 {
                     var code = await _userService.GeneratePasswordResetTokenAsync(user);
                     var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
@@ -134,6 +136,7 @@ namespace FreelanceService.Web.Controllers
                         $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>link</a>");
                     return View("ForgotPasswordConfirmation");
                 }
+                else ModelState.AddModelError("", "Такой email не зарегистрирован");
             }
             return View(model);
         }
@@ -157,10 +160,10 @@ namespace FreelanceService.Web.Controllers
             var user = await _userService.FindUserByEmail(model.Email);
             if (user == null)
             {
-                return View("ResetPasswordConfirmation"); // скидывать вюху о том, что нет такого email
+                ModelState.AddModelError("", "Такой email не зарегистрирован"); // скидывать вюху о том, что нет такого email
             }
-            var result = await _userService.ResetPasswordAsync(user, model.Code, model.Password); //разобраться с неймингом 
-            if (result)
+            var ressetSuccsess = await _userService.ResetPasswordAsync(user, model.Code, model.Password); 
+            if (ressetSuccsess)
             {
                 return View("ResetPasswordConfirmation");
             }

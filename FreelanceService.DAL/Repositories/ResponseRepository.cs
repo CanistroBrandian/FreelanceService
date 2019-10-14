@@ -90,7 +90,7 @@ namespace FreelanceService.DAL.Repositories
 
         public async Task Update(Response entity)
         {
-            string query = "UPDATE Responses SET JobId = @JobId, UserId_Executor = @UserId_Executor, Description = @Description, Price = @Price WHERE Id = @Id";
+            string query = "UPDATE Responses SET JobId = @JobId, Description = @Description, Price = @Price WHERE Id = @Id";
             await _context.ExecuteAsync(query,
                      param: entity);
         }

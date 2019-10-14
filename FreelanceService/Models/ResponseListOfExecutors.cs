@@ -13,7 +13,7 @@ namespace FreelanceService.Web.Models
         public string LastNameExecutor { get; set; }
         public string Description { get; set; }
         public DateTime ResponseDateTime { get; set; }
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
 
     }
 }

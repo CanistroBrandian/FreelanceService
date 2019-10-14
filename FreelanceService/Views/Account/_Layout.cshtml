@@ -55,7 +55,14 @@
 
 
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <script>
+        //Код jQuery, установливающий маску для ввода телефона элементу input
+        //1. После загрузки страницы,  когда все элементы будут доступны выполнить...
+        $(function () {
+            //2. Получить элемент, к которому необходимо добавить маску
+            $("#phone").mask("+375(99) 999-99-99");
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
