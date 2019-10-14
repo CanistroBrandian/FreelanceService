@@ -78,6 +78,11 @@ namespace FreelanceService.Web.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Displays a list of all customer orders
+        /// </summary>
+        /// <param name="pageNumber">Сurrent page state</param>
+        /// <returns>View Customer/MyJobs</returns>
         [Authorize(Roles = "Заказчик")]
         public async Task<IActionResult> MyJobs(int? pageNumber)
         {
@@ -90,6 +95,11 @@ namespace FreelanceService.Web.Controllers
             return View(map);
         }
 
+        /// <summary>
+        /// Job editing form
+        /// </summary>
+        /// <param name="jobId">id job parameter</param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Заказчик")]
         public async Task<ViewResult> EditJob(int jobId)
@@ -100,6 +110,11 @@ namespace FreelanceService.Web.Controllers
             return View(mapJob);
         }
 
+        /// <summary>
+        /// Sends a request to edit job data
+        /// </summary>
+        /// <param name="model">model is JobEditViewModel</param>
+        /// <returns>View Customer/EditJob</returns>
         [HttpPost]
         [Authorize(Roles = "Заказчик")]
         public async Task<IActionResult> EditJob(JobEditViewModel model)
@@ -118,6 +133,11 @@ namespace FreelanceService.Web.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// displays a form for deleting a job
+        /// </summary>
+        /// <param name="jobId">parameter of the selected job</param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Заказчик")]
         public async Task<ViewResult> DeleteJob(int jobId)
@@ -125,6 +145,11 @@ namespace FreelanceService.Web.Controllers
             return View(jobId);
         }
 
+        /// <summary>
+        /// Job removal request
+        /// </summary>
+        /// <param name="jobId">parameter id for job</param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "Заказчик")]
         public async Task<IActionResult> ConfirmDeleteJob(int jobId)
@@ -134,7 +159,11 @@ namespace FreelanceService.Web.Controllers
             return RedirectToAction("MyJobs");
         }
 
-
+        /// <summary>
+        /// Displays detailed job information
+        /// </summary>
+        /// <param name="jobId">parameter id for job</param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Заказчик")]
         public async Task<ViewResult> MyJobDetails(int jobId)
@@ -151,6 +180,11 @@ namespace FreelanceService.Web.Controllers
             return View(mapJobDetails);
         }
 
+        /// <summary>
+        /// confirmation of the request for job performed
+        /// </summary>
+        /// <param name="jobId">parameter id for job</param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Заказчик")]
         public async Task<IActionResult> ConfirmationRequestFromExecutorOnJob(int jobId)
@@ -160,7 +194,12 @@ namespace FreelanceService.Web.Controllers
             return RedirectToAction("MyJobs");
         }
 
-
+        /// <summary>
+        /// assigns an executor to the selected job
+        /// </summary>
+        /// <param name="jobId">parameter id for job</param>
+        /// <param name="userId_Executor">parameter id for Executor</param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize(Roles = "Заказчик")]
         public async Task<IActionResult> SelectExecutorForJob(int jobId, int userId_Executor)

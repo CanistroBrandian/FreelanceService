@@ -4,9 +4,7 @@ using FreelanceService.BLL.Interfaces;
 using FreelanceService.BLL.Interfaces.ValidationServices;
 using FreelanceService.Common.Encrypt;
 using FreelanceService.Common.Extensions;
-using FreelanceService.Web.Helpers;
 using FreelanceService.Web.Models;
-using FreelanceService.Web.Validation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -113,13 +111,22 @@ namespace FreelanceService.Web.Controllers
             return View(model);
         }
 
-
+        /// <summary>
+        /// User registration page.
+        /// </summary>
+        /// <returns>View Account/Register</returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
             return View();
         }
+
+        /// <summary>
+        /// Sends a password reset link to the user’s mail
+        /// </summary>
+        /// <param name="model">model of type ForgotPasswordViewModel</param>
+        /// <returns>View Profile/ForgotPasswordConfirmation</returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -141,6 +148,10 @@ namespace FreelanceService.Web.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// New password form
+        /// </summary>
+        /// <returns>View Profile/ResetPassword</returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
@@ -148,10 +159,15 @@ namespace FreelanceService.Web.Controllers
             return code == null ? View("Error") : View();
         }
 
+        /// <summary>
+        /// Sets a new password for the user.
+        /// </summary>
+        /// <param name="model">model of type ResetPasswordViewModel</param>
+        /// <returns>View Profile/ResetPasswordViewModel</returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model) //разобраться с неймингами 
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model) 
         {
             if (!ModelState.IsValid)
             {
@@ -160,7 +176,8 @@ namespace FreelanceService.Web.Controllers
             var user = await _userService.FindUserByEmail(model.Email);
             if (user == null)
             {
-                ModelState.AddModelError("", "Такой email не зарегистрирован"); // скидывать вюху о том, что нет такого email
+                ModelState.AddModelError("", "Такой email не зарегистрирован");
+                return View(model);
             }
             var ressetSuccsess = await _userService.ResetPasswordAsync(user, model.Code, model.Password); 
             if (ressetSuccsess)
