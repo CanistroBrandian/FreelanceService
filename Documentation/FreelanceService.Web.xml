@@ -42,6 +42,32 @@
             <param name="model">model of type RegisterViewModel</param>
             <returns>View Profile/Profile</returns>
         </member>
+        <member name="M:FreelanceService.Web.Controllers.AccountController.ForgotPassword">
+            <summary>
+            User registration page.
+            </summary>
+            <returns>View Account/Register</returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.AccountController.ForgotPassword(FreelanceService.Web.Models.ForgotPasswordViewModel)">
+            <summary>
+            Sends a password reset link to the user’s mail
+            </summary>
+            <param name="model">model of type ForgotPasswordViewModel</param>
+            <returns>View Profile/ForgotPasswordConfirmation</returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.AccountController.ResetPassword(System.String)">
+            <summary>
+            New password form
+            </summary>
+            <returns>View Profile/ResetPassword</returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.AccountController.ResetPassword(FreelanceService.Web.Models.ResetPasswordViewModel)">
+            <summary>
+            Sets a new password for the user.
+            </summary>
+            <param name="model">model of type ResetPasswordViewModel</param>
+            <returns>View Profile/ResetPasswordViewModel</returns>
+        </member>
         <member name="M:FreelanceService.Web.Controllers.AccountController.Authenticate(FreelanceService.BLL.DTO.UserDTO)">
             <summary>
             User authentication method
@@ -62,7 +88,64 @@
             <param name="model"></param>
             <returns>View Home/Index</returns>
         </member>
-        <member name="M:FreelanceService.Web.Controllers.ExecutorController.#ctor(FreelanceService.BLL.Interfaces.IJobService,FreelanceService.BLL.Interfaces.IUserService,FreelanceService.Web.Validation.IViewModelValidationService,FreelanceService.BLL.Interfaces.IResponseService,AutoMapper.IMapper)">
+        <member name="M:FreelanceService.Web.Controllers.CustomerController.MyJobs(System.Nullable{System.Int32})">
+            <summary>
+            Displays a list of all customer orders
+            </summary>
+            <param name="pageNumber">Сurrent page state</param>
+            <returns>View Customer/MyJobs</returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.CustomerController.EditJob(System.Int32)">
+            <summary>
+            Job editing form
+            </summary>
+            <param name="jobId">id job parameter</param>
+            <returns></returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.CustomerController.EditJob(FreelanceService.Web.Models.JobEditViewModel)">
+            <summary>
+            Sends a request to edit job data
+            </summary>
+            <param name="model">model is JobEditViewModel</param>
+            <returns>View Customer/EditJob</returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.CustomerController.DeleteJob(System.Int32)">
+            <summary>
+            displays a form for deleting a job
+            </summary>
+            <param name="jobId">parameter of the selected job</param>
+            <returns></returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.CustomerController.ConfirmDeleteJob(System.Int32)">
+            <summary>
+            Job removal request
+            </summary>
+            <param name="jobId">parameter id for job</param>
+            <returns></returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.CustomerController.MyJobDetails(System.Int32)">
+            <summary>
+            Displays detailed job information
+            </summary>
+            <param name="jobId">parameter id for job</param>
+            <returns></returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.CustomerController.ConfirmationRequestFromExecutorOnJob(System.Int32)">
+            <summary>
+            confirmation of the request for job performed
+            </summary>
+            <param name="jobId">parameter id for job</param>
+            <returns></returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.CustomerController.SelectExecutorForJob(System.Int32,System.Int32)">
+            <summary>
+            assigns an executor to the selected job
+            </summary>
+            <param name="jobId">parameter id for job</param>
+            <param name="userId_Executor">parameter id for Executor</param>
+            <returns></returns>
+        </member>
+        <member name="M:FreelanceService.Web.Controllers.ExecutorController.#ctor(FreelanceService.BLL.Interfaces.IJobService,FreelanceService.BLL.Interfaces.IUserService,FreelanceService.Web.Validation.IViewModelValidationService,FreelanceService.BLL.Interfaces.IResponseService,AutoMapper.IMapper,FreelanceService.BLL.Interfaces.ICategoryService)">
             <summary>
             Dependency Injection for jobService and userService
             </summary>

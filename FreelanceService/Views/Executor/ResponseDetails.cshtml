@@ -1,4 +1,6 @@
 ﻿@model FreelanceService.Web.Models.ResponseDetailsViewModel
+@using FreelanceService.Common.Extensions
+@using FreelanceService.Common.Enum
 <div class="panel-header panel-header-sm">
 </div>
 <div class="content">
@@ -14,10 +16,21 @@
                     <div><label asp-for="Description" class="control-label"></label> <label> : @Model.Description</label></div>
                     <div><label asp-for="Price" class="control-label"></label> <label> : @Model.Price</label></div>
                     <div><label asp-for="ResponseDateTime" class="control-label"></label> <label> : @Model.ResponseDateTime</label></div>
+                    <div><label asp-for="CategoryName" class="control-label"></label> <label> : @Model.CategoryName</label></div>
+                    <div><label asp-for="StatusJob" class="control-label"></label> <label> : @Model.StatusJob.DisplayName()</label></div>
                     <div>
-                        <a asp-action="EditResponse" asp-controller="Executor" asp-route-responseId="@Model.ResponseId"> Редактировать Отклик</a>
-                        <a asp-action="CancelResponse" asp-controller="Executor" asp-route-jobId="@Model.JobId"> Отказаться от заказа</a>
+                        @if (Model.StatusJob == JobStatusEnum.Published || Model.StatusJob == JobStatusEnum.Response)
+                        {
+                            <a asp-action="EditResponse" asp-controller="Executor" asp-route-responseId="@Model.ResponseId"> Редактировать Отклик</a>
+                        }
+                        @if (Model.StatusJob == JobStatusEnum.Deal || Model.StatusJob == JobStatusEnum.Response)
+                        {
+                            <a asp-action="CancelResponse" asp-controller="Executor" asp-route-jobId="@Model.JobId"> Отказаться от заказа</a>
+                        }
+                        @if (Model.StatusJob == JobStatusEnum.Deal)
+                        {
                         <a asp-action="SendForVerification" asp-controller="Executor" asp-route-jobId="@Model.JobId"> Заказ выполнен</a>
+                        }
                     </div>
                 </div>
             </div>

@@ -90,9 +90,15 @@ namespace FreelanceService.Web.Controllers
 
             var user = await _userService.FindUserByEmail(User.Identity.Name);
             var jobs = await _jobService.GetAllJobsOfCustomer(user.Id);
-            var map = PaginatedListModel<JobViewModel>.Create(_mapper.Map<IEnumerable<JobDTO>, IEnumerable<JobViewModel>>(jobs), pageNumber ?? 1, pageSize);
+            foreach(var item in jobs)
+            {
+                var categoryDto = await _categoryService.FindCategoryById(item.CategoryId);
+                item.CategoryName = categoryDto.Name;
+            }
+            var mapJobViewModel = _mapper.Map<IEnumerable<JobDTO>, IEnumerable<JobViewModel>>(jobs);
+            var view = PaginatedListModel<JobViewModel>.Create(mapJobViewModel, pageNumber ?? 1, pageSize);
 
-            return View(map);
+            return View(view);
         }
 
         /// <summary>

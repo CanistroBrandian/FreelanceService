@@ -76,9 +76,12 @@ namespace FreelanceService.Web.Controllers
 
             var list = await _jobService.GetAllSorting(sortOrder);
             var search = _jobService.Search(searchString, list);
-            var allCategory = await _categoryService.GetAll();
             var mapJobView = _mapper.Map<IEnumerable<JobDTO>, IEnumerable<JobViewModel>>(search);
-           // mapJobView.
+            foreach (var item in mapJobView)
+            {
+                var categoryDto = await _categoryService.FindCategoryById(item.CategoryId);
+                item.CategoryName = categoryDto.Name;
+            }
             var view = PaginatedListModel<JobViewModel>.Create(mapJobView.AsQueryable(), pageNumber ?? 1, pageSize);
             return View(view);
 

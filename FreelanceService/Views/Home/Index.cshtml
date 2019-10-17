@@ -33,7 +33,22 @@
                                     <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Имя</a>
                                 </th>
                                 <th>
+                                    <p>Описание</p>
+                                </th>
+                                <th>
+                                    <p>Местоположение</p>
+                                </th>
+                                <th>
+                                    <p>Дата окончания</p>
+                                </th>
+                                <th>
+                                    <p>Категория</p>
+                                </th>
+                                <th>
                                     <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Цена</a>
+                                </th>
+                                <th>
+                                    <p>Действия</p>
                                 </th>
                             </tr>
                         </thead>
@@ -45,33 +60,35 @@
                                     @item.Name
                                 </td>
                                 <td>
-                                    @item.Description
+                                    <p itemprop="text" >@item.Description</p> 
                                 </td>
                                 <td>
-                                    @item.City.DisplayName()
+                                   <p> @item.City.DisplayName()</p>
                                 </td>
                                 <td>
-                                    @item.FinishedDateTime.ToString("d")
+                                    <p>@item.FinishedDateTime.ToString("d")</p>
                                 </td>
                                 <td>
-                                    @item.CategoryId
+                                   <p> @item.CategoryName</p>
                                 </td>
                                 @if (item.Price != null)
                                 {
                                     <td>
-                                        @item.Price
+                                       <p> @item.Price</p>
                                     </td>
                                 }
                                 else
                                 {
                                     <td>
-                                        По договоренности
+                                       <p> По договоренности</p>
                                     </td>
                                 }
-                                <td>
-
-                                    <a asp-controller="Job" asp-action="Job" asp-route-id="@item.Id">Посмотреть</a>
-                                </td>
+                            <td>
+                                <a asp-controller="Job" asp-action="Job" asp-route-id="@item.Id" title="Посмотреть" type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon">
+                                    <i class="now-ui-icons ui-2_settings-90"></i>
+                                </a>
+                               
+                            </td>
                             </tr>
                             }
                         </tbody>

@@ -18,6 +18,7 @@ namespace FreelanceService.Web.Controllers
         IUserService _userService;
         IJobService _jobService;
         IResponseService _responseService;
+        ICategoryService _categoryService;
         IMapper _mapper;
 
 
@@ -33,13 +34,15 @@ namespace FreelanceService.Web.Controllers
             IUserService userService,
             IViewModelValidationService validationService,
             IResponseService responseService,
-            IMapper mapper)
+            IMapper mapper,
+            ICategoryService categoryService)
         {
             _jobService = jobService;
             _userService = userService;
             _validationService = validationService;
             _responseService = responseService;
             _mapper = mapper;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
@@ -58,6 +61,12 @@ namespace FreelanceService.Web.Controllers
         {
             var responseOfExecutor = await _responseService.FindResponseById(responseId);
             var mapResponseDetails = _mapper.Map<ResponseDTO, ResponseDetailsViewModel>(responseOfExecutor);
+            var job = await _jobService.FindJobById(mapResponseDetails.JobId);
+            mapResponseDetails.CategoryId = job.CategoryId;
+            var categoryDto = await _categoryService.FindCategoryById(mapResponseDetails.CategoryId);
+           
+            mapResponseDetails.CategoryName = categoryDto.Name;
+            mapResponseDetails.StatusJob = job.Status;
             return View(mapResponseDetails);
         }
 
@@ -79,7 +88,7 @@ namespace FreelanceService.Web.Controllers
             responseDTO.Price = mapJob.Price; //вынести на bll
             responseDTO.Description = mapJob.Description;
             await _responseService.Update(responseDTO);
-        
+
             return RedirectToAction("MyResponses");
         }
 

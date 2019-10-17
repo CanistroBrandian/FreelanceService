@@ -10,22 +10,30 @@ namespace FreelanceService.Web.Models
         [Display(Name ="Почтовый ящик")]
         [EmailAddress]
         public string Email { get; set; }
+
         [Required(ErrorMessage = "Не указано имя")]
         [Display(Name = "Имя")]
         public string FirstName { get; set; }
+
         [Required(ErrorMessage = "Не указана фамилия")]
         [Display(Name = "Фамилия")]
         public string LastName { get; set; }
+
         [Required(ErrorMessage = "Не указан Телефон")]
         [Display(Name = "Телефон")]
         public string Phone { get; set; }
+
         [Display(Name = "Город")]
         public CityEnum City { get; set; }
+
         [Display(Name = "Ваша роль")]
         public RoleEnum Role { get; set; }
+
         [Display(Name = "Пароль")]
+        [StringLength(18, MinimumLength = 6, ErrorMessage = "Длина пароля должна быть от 6 до 18 символов")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
         [Display(Name = "Повторите пароль")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Пароль введен неверно")]

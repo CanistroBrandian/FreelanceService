@@ -42,8 +42,8 @@ namespace FreelanceService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionStr = Configuration.GetConnectionString("DefaultConnection");
-            string gearHostConnection = "Data Source = den1.mssql7.gear.host;Initial Catalog=freelanceservice;Integrated Security=false;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;User Id=freelanceservice; Password=Vy82Y5g8hT-~;";
+            string connectionStr = Configuration.GetConnectionString("GearHostConnection");
+           
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {

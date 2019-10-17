@@ -76,58 +76,63 @@
             </div>
         </div>
     </div>
-    @if (User.IsInRole("Исполнитель"))
-    {
-        <div class="row">
-            <div class="offset-md-1 col-md-10">
+
+
+
+    <section>
+        <h2 class="text-center">Отклики</h2>
+    </section>
+    <div class="row">
+        <div class="offset-md-1 col-md-10">
+            @if (User.IsInRole("Исполнитель") && !(Model.ResponseListOfExecutors.Any(s => s.Email == User.Identity.Name)))
+            {
                 @await Html.PartialAsync("_PartialResponse")
-            </div>
-        </div>
-    }        @if (Model.ResponseListOfExecutors != null)
-    {
-        <div class="row">
-            <div class="offset-md-1 col-md-10">
+            }
+
+            @foreach (var item in Model.ResponseListOfExecutors)
+            {
+
                 <section>
-                    <h2 class="text-center">Отклики</h2>
-                </section>
-                @foreach (var item in Model.ResponseListOfExecutors)
-                {
-                    <section>
-                        <div class="card">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Card header -->
+                            <div class="card-header">
+                                <h5> @item.FirstNameExecutor @item.LastNameExecutor</h5>
+                            </div>
                             <div class="card-body">
-                                <!-- Card header -->
-                                <div class="card-header">
-                                    <h5> @item.FirstNameExecutor @item.LastNameExecutor</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg" alt="Generic placeholder image">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(8).jpg" alt="Generic placeholder image">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <p><strong>Описание:</strong></p>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <p>
+                                                    @item.Description
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="col-md-8">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <p><strong>Описание:</strong></p>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <p>
-                                                        @item.Description
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <hr />
-                                            <div class="row">
-                                                <div class="col-md-4"><p><strong>Цена:</strong></p></div>
-                                                <div class="col-md-8"><p>@item.Price</p> </div>
-                                            </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-md-4"><p><strong>Цена:</strong></p></div>
+                                            @if (item.Price == 0)
+                                            {
+                                                <div class="col-md-8"><p>По договоренности</p> </div>
+                                            }
+                                            else
+                                            {<div class="col-md-8"><p>@item.Price</p> </div>}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                }
-            </div>
+                    </div>
+                </section>
+            }
         </div>
-    }
+    </div>
+
 </div>
